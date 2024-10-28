@@ -1,4 +1,4 @@
-package team5;
+package team5.game;
 
 import java.io.IOException;
 import javafx.fxml.FXML;

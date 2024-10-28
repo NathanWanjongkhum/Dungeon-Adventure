@@ -1,4 +1,4 @@
-package team5;
+package team5.game;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
