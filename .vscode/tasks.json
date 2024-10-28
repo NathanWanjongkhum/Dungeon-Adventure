@@ -1,19 +1,23 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
         {
             "label": "verify",
             "type": "shell",
-            "command": "mvn -B verify",
-            "group": "build"
+            "command": "./mvnw -B verify",
+            "group": "build",
+            "windows": {
+                "command": ".\\mvnw.cmd -B verify"
+            }
         },
         {
             "label": "test",
             "type": "shell",
-            "command": "mvn -B test",
-            "group": "test"
+            "command": "./mvnw -B test",
+            "group": "test",
+            "windows": {
+                "command": ".\\mvnw.cmd -B test"
+            }
         }
     ]
 }
