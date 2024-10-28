@@ -3,6 +3,6 @@ team5\game\model\DungeonCharacter.class
 team5\game\view\PrimaryController.class
 team5\game\view\SecondaryController.class
 module-info.class
+team5\game\model\Monster.class
 team5\game\controller\temp.class
-team5\game\view\temp.class
 team5\game\App.class
