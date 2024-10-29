@@ -1,15 +1,25 @@
 package team5.game.model;
 
 public abstract class AbstractDungeonCharacter implements DungeonCharacter {
+    /** The name of the character. */
     private String myName;
+    /** The health of the character. */
     private int myHealth;
+    /** The minimum damage of the character. */
     private int myMinDamage;
+    /** The maximum damage of the character. */
     private int myMaxDamage;
+    /** The speed of the character. */
     private int mySpeed;
 
+    /** Creates a new AbstractDungeonCharacter. */
     protected AbstractDungeonCharacter(final String theName, final int theHealth, final int theDamage,
             final int theSpeed) {
-
+        myName = theName;
+        myHealth = theHealth;
+        myMinDamage = theDamage;
+        myMaxDamage = theDamage;
+        mySpeed = theSpeed;
     }
 
     @Override
@@ -23,6 +33,16 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
     }
 
     @Override
+    public int getMinDamage() {
+        return myMinDamage;
+    }
+
+    @Override
+    public int getMaxDamage() {
+        return myMaxDamage;
+    }
+
+    @Override
     public int getSpeed() {
         return mySpeed;
     }
@@ -33,8 +53,13 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
     }
 
     @Override
-    public void setDamage(int theDamage) {
+    public void setMinDamage(int theDamage) {
         myMinDamage = theDamage;
+    }
+
+    @Override
+    public void setMaxDamage(int theDamage) {
+        myMaxDamage = theDamage;
     }
 
     @Override
