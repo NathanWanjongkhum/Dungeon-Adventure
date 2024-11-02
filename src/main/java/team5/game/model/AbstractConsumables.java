@@ -3,7 +3,7 @@ package team5.game.model;
 /**
  * Consumables is an item that can be collected and consumed by the player.
  */
-public class Consumables implements Item {
+public abstract class AbstractConsumables implements Item {
     /** The count of consumables */
     private int myCount;
 
@@ -12,7 +12,7 @@ public class Consumables implements Item {
      * 
      * @param count
      */
-    public Consumables(int count) {
+    public AbstractConsumables(int count) {
         myCount = count;
     }
 

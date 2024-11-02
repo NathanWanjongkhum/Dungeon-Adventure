@@ -1,6 +1,6 @@
 package team5.game.model;
 
-public class Bomb extends Consumables {
+public class Bomb extends AbstractConsumables {
     /** The damage of the bomb */
     private int myDamage = 10;
     /** The radius of the bomb */
@@ -11,7 +11,7 @@ public class Bomb extends Consumables {
      * 
      * @param count
      */
-    public Bomb(String count) {
+    public Bomb(int count) {
         super(count);
     }
 
