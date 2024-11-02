@@ -1,6 +1,8 @@
 package team5.game.model;
 
 public abstract class AbstractDungeonCharacter implements DungeonCharacter {
+    /** Constant for Damage difference */
+    private static final int DAMAGE_DIF = 5;
     /** The name of the character. */
     private String myName;
     /** The health of the character. */
@@ -17,8 +19,8 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
             final int theSpeed) {
         myName = theName;
         myHealth = theHealth;
-        myMinDamage = theDamage;
-        myMaxDamage = theDamage;
+        myMinDamage = theDamage - DAMAGE_DIF;
+        myMaxDamage = theDamage + DAMAGE_DIF;
         mySpeed = theSpeed;
     }
 
