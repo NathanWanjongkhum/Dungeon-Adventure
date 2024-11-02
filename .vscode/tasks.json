@@ -1,0 +1,35 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run JavaFX",
+            "type": "shell",
+            "command": "./mvnw javafx:run",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "windows": {
+                "command": ".\\mvnw.cmd javafx:run"
+            }
+        },
+        {
+            "label": "verify",
+            "type": "shell",
+            "command": "./mvnw -B verify",
+            "group": "build",
+            "windows": {
+                "command": ".\\mvnw.cmd -B verify"
+            }
+        },
+        {
+            "label": "test",
+            "type": "shell",
+            "command": "./mvnw -B test",
+            "group": "test",
+            "windows": {
+                "command": ".\\mvnw.cmd -B test"
+            }
+        }
+    ]
+}

@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: team5.game.controller.tempTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in team5.game.controller.tempTest
