@@ -1,57 +1,90 @@
 package team5.game.model;
 
-import team5.game.model.Room.RoomType;
+import java.util.AbstractMap.SimpleEntry;
 
 /**
  * Dungeon is a class that represents a dungeon.
  */
 public class Dungeon {
+    public enum Difficulty {
+        EASY, MEDIUM, HARD
+    }
+
     /** The dungeon */
-    Room[][] myDungeon;
+    private Room[][] myDungeon;
     /** The width of the dungeon */
-    int myWidth;
+    private int myWidth;
     /** The height of the dungeon */
-    int myHeight;
+    private int myHeight;
+    /** The difficulty of the dungeon */
+    private Difficulty myDifficulty;
 
     /**
      * Dungeon constructor
      * 
-     * @param width
-     * @param height
+     * @param width  the width of the dungeon
+     * @param height the height of the dungeon
      */
-    public Dungeon(int width, int height) {
-        myWidth = width;
-        myHeight = height;
-        myDungeon = new Room[width][height];
+    public Dungeon(final int theWidth, final int theHeight, final Difficulty theDifficulty) {
+        myDungeon = new Room[theWidth][theHeight];
+        myWidth = theWidth;
+        myHeight = theHeight;
+        myDifficulty = theDifficulty;
     }
 
     /**
-     * Add a room to the dungeon
-     * 
-     * @param theRoomType the type of room to add
-     * @param theX        the x coordinate of the room
-     * @param theY        the y coordinate of the room
-     * 
-     * @return
+     * Uses a DungeonBuilder to initialize the dungeon.
      */
-    public void addRoom(RoomType theRoomType, int theX, int theY) {
-        if (theX < 0 || theX >= myWidth || theY < 0 || theY >= myHeight) {
-            System.out.println("Invalid Room Location");
-            return;
-        }
+    public final void init() {
+        myDungeon = new DungeonBuilder()
+                .setDifficulty(myDifficulty)
+                .setWidth(myWidth)
+                .setHeight(myHeight)
+                .build();
+    }
 
-        Room room = new Room(theRoomType);
-        myDungeon[theX][theY] = room;
+    /**
+     * Get the width of the dungeon
+     * 
+     * @return the width
+     */
+    public int getWidth() {
+        return myWidth;
+    }
+
+    /**
+     * Get the height of the dungeon
+     * 
+     * @return the height
+     */
+    public int getHeight() {
+        return myHeight;
+    }
+
+    /**
+     * Get the room at the given coordinates
+     * 
+     * @param theCoordinates the coordinates of the room
+     * 
+     * @return the room at the coordinates
+     */
+    public final Room getRoom(SimpleEntry<Integer, Integer> theCoordinates) {
+        // Get the coordinates
+        int theX = theCoordinates.getKey();
+        int theY = theCoordinates.getValue();
+
+        return myDungeon[theX][theY];
     }
 
     /**
      * Pick a random room from the dungeon
      * 
-     * @return the room
+     * @return the random room
      */
-    public Room pickRandomRoom() {
+    public final Room pickRandomRoom() {
         Room room = null;
 
+        // Pick a random room until we find one that isn't empty
         while (room == null) {
             int x = (int) (Math.random() * myWidth);
             int y = (int) (Math.random() * myHeight);

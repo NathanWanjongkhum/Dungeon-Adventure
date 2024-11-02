@@ -5,6 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import team5.game.model.Dungeon;
+import team5.game.model.Hero;
+import team5.game.model.Mage;
 
 import java.io.IOException;
 
@@ -12,8 +15,12 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
-
+    /** The primary scene */
     private static Scene scene;
+    /** The dungeon */
+    private static Dungeon dungeon;
+    /** The hero */
+    private static Hero hero;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -32,7 +39,11 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+        dungeon = new Dungeon(10, 10, Dungeon.Difficulty.EASY);
+        dungeon.init();
+
+        hero = new Mage("Merlin");
+
         launch();
     }
-
 }

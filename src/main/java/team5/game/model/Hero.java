@@ -1,17 +1,12 @@
 package team5.game.model;
 
 public class Hero extends AbstractDungeonCharacter {
-    /** The directions the hero can move in */
-    enum Direction {
-        UP, DOWN, LEFT, RIGHT
-    }
-
     /** The direction the hero is facing */
     private Direction myDirection;
 
     protected Hero(String theName, int theHealth, int theDamage, int theSpeed) {
         super(theName, theHealth, theDamage, theSpeed);
-        myDirection = Direction.UP;
+        myDirection = Direction.NORTH;
     }
 
     /**
