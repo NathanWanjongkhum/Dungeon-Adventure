@@ -4,6 +4,7 @@ team5\game\model\Goblin.class
 team5\game\model\AbstractConsumables.class
 team5\game\model\DungeonBuilder$1.class
 team5\game\model\AbstractDungeonCharacter.class
+team5\game\DatabaseHandler.class
 module-info.class
 team5\game\model\Room$RoomType.class
 team5\game\model\DungeonBuilder$Quadrant.class

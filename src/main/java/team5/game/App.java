@@ -39,6 +39,8 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+        DatabaseHandler.init();
+
         dungeon = new Dungeon(10, 10, Dungeon.Difficulty.EASY);
         dungeon.init();
 
