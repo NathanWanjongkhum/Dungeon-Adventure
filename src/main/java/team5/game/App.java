@@ -1,15 +1,19 @@
 package team5.game;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import team5.game.model.Dungeon;
 import team5.game.model.Hero;
 import team5.game.model.Mage;
+import team5.game.view.Input;
 
 import java.io.IOException;
+import java.security.Key;
 
 /**
  * JavaFX App
@@ -24,7 +28,33 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        //scene = new Scene(loadFXML("testscene"), 640, 480);
+        //Parent root = FXMLLoader.load(getClass().getResource("testscene.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("testscene.fxml"));
+		Parent root = loader.load();	
+		Input controller = loader.getController();
+        scene = new Scene(root);
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch(event.getCode()) {
+                case W:
+                    controller.up();
+                    break;
+                case S:
+                    controller.down();
+                    break;
+                case A:
+                    controller.left();
+                    break;
+                case D:
+                    controller.right();
+                    break;
+                default:
+                    break;
+                    }
+            }
+        });
         stage.setScene(scene);
         stage.show();
     }
@@ -39,10 +69,10 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        dungeon = new Dungeon(10, 10, Dungeon.Difficulty.EASY);
-        dungeon.init();
+        // dungeon = new Dungeon(10, 10, Dungeon.Difficulty.EASY);
+        // dungeon.init();
 
-        hero = new Mage("Merlin");
+        // hero = new Mage("Merlin");
 
         launch();
     }

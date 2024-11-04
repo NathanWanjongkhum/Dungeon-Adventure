@@ -9,11 +9,17 @@ public abstract class AbstractConsumables implements Item {
 
     /**
      * Consumables constructor
+     */
+    protected AbstractConsumables() {
+        myCount = 0;
+    }
+    /**
+     * Consumables constructor with count
      * 
      * @param count
      */
-    public AbstractConsumables(int count) {
-        myCount = count;
+    protected AbstractConsumables(int theCount) { //Not sure if we want a consumable constructor with a count as we update counts during the game
+        myCount = theCount;
     }
 
     /**

@@ -8,12 +8,18 @@ public class Bomb extends AbstractConsumables {
     /** The radius of the bomb */
     private int myRadius;
 
+
+    public Bomb() {
+        super();
+        myDamage = BOMB_DAMAGE;
+        myRadius = BOMB_RADIUS;
+    }
     /**
      * Bomb constructor
      * 
      * @param count
      */
-    public Bomb(int count) {
+    public Bomb(int count) { //Don't know if need a constructor with count as we create bomb first and should default to 0 items
         super(count);
         myDamage = BOMB_DAMAGE;
         myRadius = BOMB_RADIUS;

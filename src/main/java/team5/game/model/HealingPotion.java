@@ -3,7 +3,19 @@ package team5.game.model;
 public class HealingPotion extends AbstractConsumables {
     private static final int HEALTH_RESTORE = 20;
     private int myHealthRestore;
-
+    
+    /**
+     * Default constructor for healing potion
+     */
+    protected HealingPotion() {
+        super();
+        myHealthRestore = HEALTH_RESTORE;
+    }
+    /**
+     * Overloaded constructor for healing potion
+     * 
+     * @param theCount the amount of healing potions
+     */
     protected HealingPotion(int theCount) {
         super(theCount);
         myHealthRestore = HEALTH_RESTORE;
