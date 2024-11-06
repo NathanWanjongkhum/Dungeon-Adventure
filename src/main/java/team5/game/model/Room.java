@@ -4,46 +4,20 @@ package team5.game.model;
  * Room is a class that represents a room in the dungeon.
  */
 public class Room {
-    /** The type of room */
-    enum RoomType {
-        EMPTY, MONSTER, START, EXIT, PILLAR_A, PILLAR_E, PILLAR_I, PILLAR_P;
-    }
-
-    /** The type of tile */
-    enum TileType {
-        FLOOR, WALL, DOOR
-    }
-
-    /** The type of room */
-    private RoomType myType;
     /** If there is a door on some face of the room */
     private boolean[] myDoors = new boolean[4];
+    /** The item in the room */
+    private Item myItem;
+    /** The monster in the room */
+    private Monster myMonster;
 
     /**
      * Room constructor
      * 
      * @param type
      */
-    public Room(RoomType theType) {
-        myType = theType;
-    }
+    public Room() {
 
-    /**
-     * Get the type of room
-     * 
-     * @return the type
-     */
-    public RoomType getType() {
-        return myType;
-    }
-
-    /**
-     * Set the type of room
-     * 
-     * @param type the type
-     */
-    public void setType(RoomType type) {
-        myType = type;
     }
 
     /**
@@ -55,10 +29,56 @@ public class Room {
         myDoors[theDirection.ordinal()] = true;
     }
 
-    public void addItem(Item item) {
-        // TODO: Add item to room
+    /**
+     * Set the item in the room
+     * 
+     * @param item the item
+     */
+    public void setItem(Item item) {
+        myItem = item;
     }
 
+    /**
+     * Get the item in the room
+     * 
+     * @return the item
+     */
+    public Item getItem() {
+        return myItem;
+    }
+
+    /**
+     * Set the monster in the room
+     * 
+     * @param monster the monster
+     */
+    public void setMonster(Monster monster) {
+        myMonster = monster;
+    }
+
+    /**
+     * Get the monster in the room
+     * 
+     * @return the monster
+     */
+    public Monster getMonster() {
+        return myMonster;
+    }
+
+    /**
+     * Get the doors in the room
+     * 
+     * @return the doors
+     */
+    public boolean[] getDoors() {
+        return myDoors;
+    }
+
+    /**
+     * The symbol of the room
+     * 
+     * @return the symbol
+     */
     @Override
     public String toString() {
         return "R";

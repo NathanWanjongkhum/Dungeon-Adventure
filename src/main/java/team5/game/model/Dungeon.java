@@ -1,11 +1,10 @@
 package team5.game.model;
 
-import java.util.AbstractMap.SimpleEntry;
-
 /**
  * Dungeon is a class that represents a dungeon.
  */
 public class Dungeon {
+
     public enum Difficulty {
         EASY, MEDIUM, HARD
     }
@@ -62,18 +61,21 @@ public class Dungeon {
     }
 
     /**
-     * Get the room at the given coordinates
+     * Get the difficulty of the dungeon
      * 
-     * @param theCoordinates the coordinates of the room
-     * 
-     * @return the room at the coordinates
+     * @return the difficulty
      */
-    public final Room getRoom(SimpleEntry<Integer, Integer> theCoordinates) {
-        // Get the coordinates
-        int theX = theCoordinates.getKey();
-        int theY = theCoordinates.getValue();
+    public Difficulty getDifficulty() {
+        return myDifficulty;
+    }
 
-        return myDungeon[theX][theY];
+    /**
+     * Get the dungeon
+     * 
+     * @return the dungeon
+     */
+    public Room[][] getDungeon() {
+        return myDungeon;
     }
 
     /**
@@ -81,7 +83,7 @@ public class Dungeon {
      * 
      * @return the random room
      */
-    public final Room pickRandomRoom() {
+    public final Room getRandomRoom() {
         Room room = null;
 
         // Pick a random room until we find one that isn't empty
@@ -92,5 +94,15 @@ public class Dungeon {
         }
 
         return room;
+    }
+
+    /**
+     * Get the start room of the dungeon
+     * 
+     * @return the start room
+     */
+    public final Room getStartRoom() {
+        // Avoids an IndexOutOfBoundsException
+        return (myDungeon == null) ? myDungeon[getWidth() / 2][getHeight() / 2] : null;
     }
 }
