@@ -13,6 +13,7 @@ import team5.game.model.Mage;
 import team5.game.view.Input;
 
 import java.io.IOException;
+import java.lang.ModuleLayer.Controller;
 import java.security.Key;
 
 /**
@@ -28,6 +29,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        //scene = new Scene(loadFXML("testscene"), 640, 480);
+        //Parent root = FXMLLoader.load(getClass().getResource("testscene.fxml"));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("testscene.fxml"));
 		Parent root = loader.load();	
 		Input controller = loader.getController();
@@ -67,10 +70,10 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        dungeon = new Dungeon(10, 10, Dungeon.Difficulty.EASY);
-        dungeon.init();
+        // dungeon = new Dungeon(10, 10, Dungeon.Difficulty.EASY);
+        // dungeon.init();
 
-        hero = new Mage("Merlin");
+        // hero = new Mage("Merlin");
 
         launch();
     }

@@ -3,12 +3,20 @@ package team5.game.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 
 public class Input implements Initializable{
+
+
+
     @FXML
     private Circle myCircle;
     private double x;
