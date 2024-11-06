@@ -1,8 +1,8 @@
 package team5.game.model;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class PriestessTest {
     /** Test for Priestess Constructor */
@@ -15,6 +15,7 @@ public class PriestessTest {
         assertTrue(p.getMinDamage() == 15);
         assertTrue(p.getSpeed() == 25);
     }
+
     @Test
     /** Test for Priestess Setter methods */
     public void testArchersetters() {
@@ -29,6 +30,6 @@ public class PriestessTest {
         assertTrue(p.getSpeed() == 10);
         p.setHealth(10);
         p.heal(10);
-        assertTrue(p.getHealth() == 20);    
+        assertTrue(p.getHealth() == 20);
     }
 }
