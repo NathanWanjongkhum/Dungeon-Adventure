@@ -38,7 +38,12 @@ public interface DungeonCharacter {
      * @return the speed of the character.
      */
     int getSpeed();
-
+    /**
+     * Returns if the character is alive or not
+     * 
+     * @return true if character is alive, false otherwise
+     */
+    boolean isAlive();
     /** sets the health of the character. */
     void setHealth(final int theHealth);
 
