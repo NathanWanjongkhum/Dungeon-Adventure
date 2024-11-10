@@ -1,6 +1,7 @@
 package team5.game.model;
 
 public class Hero extends AbstractDungeonCharacter {
+
     /** The direction the hero is facing */
     private Direction myDirection;
 

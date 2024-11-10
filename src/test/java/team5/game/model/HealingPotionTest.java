@@ -1,8 +1,8 @@
 package team5.game.model;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class HealingPotionTest {
     /** Test for HealingPotion Constructor */
@@ -12,12 +12,13 @@ public class HealingPotionTest {
         assertTrue(p.getCount() == 0);
         assertTrue(p.getHealthRestore() == 20);
     }
+
     @Test
     /** Test for Archer Setter methods */
     public void testHealingPotionsetters() {
         final HealingPotion p = new HealingPotion();
         p.setCount(2);
         assertTrue(p.getCount() == 2);
-        
+
     }
 }

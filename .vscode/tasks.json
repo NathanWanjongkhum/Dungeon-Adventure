@@ -2,34 +2,83 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run JavaFX",
+            "label": "Verify and Run JavaFX",
             "type": "shell",
-            "command": "./mvnw javafx:run",
+            "command": "./mvnw",
+            "args": [
+                "clean",
+                "verify",
+                "javafx:run"
+            ],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "windows": {
-                "command": ".\\mvnw.cmd javafx:run"
-            }
+                "command": ".\\mvnw.cmd"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
         },
         {
-            "label": "verify",
+            "label": "Full Project Validation",
             "type": "shell",
-            "command": "./mvnw -B verify",
+            "command": "./mvnw",
+            "args": [
+                "clean",
+                "dependency:resolve",
+                "compiler:compile",
+                "compiler:testCompile",
+                "test",
+                "verify",
+                "package"
+            ],
+            "windows": {
+                "command": ".\\mvnw.cmd"
+            },
             "group": "build",
-            "windows": {
-                "command": ".\\mvnw.cmd -B verify"
-            }
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
         },
         {
-            "label": "test",
+            "label": "Run Tests Only",
             "type": "shell",
-            "command": "./mvnw -B test",
-            "group": "test",
+            "command": "./mvnw",
+            "args": [
+                "test"
+            ],
             "windows": {
-                "command": ".\\mvnw.cmd -B test"
-            }
+                "command": ".\\mvnw.cmd"
+            },
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run JavaFX (Quick)",
+            "type": "shell",
+            "command": "./mvnw",
+            "args": [
+                "javafx:run"
+            ],
+            "windows": {
+                "command": ".\\mvnw.cmd"
+            },
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
         }
     ]
 }

@@ -1,10 +1,10 @@
 package team5.game.model;
 
 import team5.game.model.Dungeon.Difficulty;
-import team5.game.model.Room.RoomType;
+import team5.game.model.Item.ItemType;
+import team5.game.model.PillarOfOO.PillarType;
 
 import java.util.AbstractMap.SimpleEntry;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -75,7 +75,7 @@ final class DungeonBuilder {
         SimpleEntry<Integer, Integer> startPos = new SimpleEntry<>(centerX, centerY);
 
         // Add start room
-        addRoom(startPos, RoomType.START);
+        addRoom(startPos);
 
         // Generate base maze structure for each quadrant
         for (Quadrant quadrant : Quadrant.values()) {
@@ -158,9 +158,6 @@ final class DungeonBuilder {
                 Room newRoom = addRoom(currentPos, dir);
 
                 if (newRoom != null) {
-                    // Ensure the room is marked as EMPTY
-                    newRoom.setType(RoomType.EMPTY);
-
                     // Continue carving from the new position
                     carveQuadrantPassages(
                             new SimpleEntry<>(newX, newY),
@@ -176,9 +173,8 @@ final class DungeonBuilder {
      */
     private void placeQuadrantItems() {
         // Shuffle the pillars
-        List<RoomType> items = Arrays.asList(
-                RoomType.PILLAR_A, RoomType.PILLAR_E,
-                RoomType.PILLAR_I, RoomType.PILLAR_P);
+        List<PillarType> items = Arrays.asList(
+                PillarType.ABSTRACTION, PillarType.ENCAPSULATION, PillarType.INHERITANCE, PillarType.POLYMORPHISM);
         Collections.shuffle(items);
 
         int centerX = myWidth / 2;
@@ -199,7 +195,7 @@ final class DungeonBuilder {
      * @param centerX    The center X coordinate of the dungeon
      * @param centerY    The center Y coordinate of the dungeon
      */
-    private void placePillar(Quadrant quadrant, RoomType pillarType, int centerX, int centerY) {
+    private void placePillar(Quadrant quadrant, PillarType pillarType, int centerX, int centerY) {
         // TODO:: Place pillar in quadrant
     }
 
@@ -246,7 +242,7 @@ final class DungeonBuilder {
      * 
      * @return the new room
      */
-    protected final Room addRoom(SimpleEntry<Integer, Integer> theCoordinates, RoomType theRoomType) {
+    protected final Room addRoom(SimpleEntry<Integer, Integer> theCoordinates) {
         // Get the coordinates
         int theX = theCoordinates.getKey();
         int theY = theCoordinates.getValue();
@@ -259,7 +255,7 @@ final class DungeonBuilder {
         }
 
         // Create the room
-        Room room = new Room(theRoomType);
+        Room room = new Room();
         myDungeon[theX][theY] = room;
 
         return room;
@@ -289,7 +285,7 @@ final class DungeonBuilder {
         }
 
         // Create the room
-        Room newRoom = new Room(RoomType.EMPTY);
+        Room newRoom = new Room();
         myDungeon[newX][newY] = newRoom;
 
         Room previousRoom = getRoom(thePreviousPos);

@@ -1,8 +1,8 @@
 package team5.game.model;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ArcherTest {
     /** Test for Archer Constructor */
@@ -15,6 +15,7 @@ public class ArcherTest {
         assertTrue(a.getMinDamage() == 95);
         assertTrue(a.getSpeed() == 20);
     }
+
     @Test
     /** Test for Archer Setter methods */
     public void testArchersetters() {

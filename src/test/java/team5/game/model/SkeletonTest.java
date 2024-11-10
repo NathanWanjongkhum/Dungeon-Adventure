@@ -1,8 +1,8 @@
 package team5.game.model;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SkeletonTest {
     /** Test for Skeleton Constructor */
@@ -15,6 +15,7 @@ public class SkeletonTest {
         assertTrue(s.getMinDamage() == 5);
         assertTrue(s.getSpeed() == 5);
     }
+
     /** Test for Skeleton Setter methods */
     @Test
     public void testSkeletonSetters() {
