@@ -5,7 +5,7 @@ public class Hero extends AbstractDungeonCharacter {
     /** The direction the hero is facing */
     private Direction myDirection;
 
-    protected Hero(String theName, int theHealth, int theDamage, int theSpeed) {
+    protected Hero(final String theName, final int theHealth, final int theDamage, final int theSpeed) {
         super(theName, theHealth, theDamage, theSpeed);
         myDirection = Direction.NORTH;
     }

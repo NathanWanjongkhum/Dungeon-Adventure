@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" style="-fx-background-color: blue;" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.DungeonController">
+   <children>
+      <Canvas height="400.0" width="600.0" fx:id="gameCanvas" />
+   </children>
+</Pane>
