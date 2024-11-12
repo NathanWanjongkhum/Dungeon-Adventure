@@ -8,6 +8,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import team5.game.DatabaseHandler;
+import team5.game.model.Difficulty;
 import team5.game.model.Dungeon;
 import team5.game.model.Hero;
 import team5.game.model.Mage;
@@ -48,7 +49,7 @@ public class DungeonController {
     private void initialize() throws ClassNotFoundException, IOException {
         // TODO: Get the parameters (width, height, difficulty) from the previous screen
 
-        myDungeon = new Dungeon(10, 10, Dungeon.Difficulty.EASY);
+        myDungeon = new Dungeon(10, 10, Difficulty.EASY);
         myDungeon.init();
 
         setZoom(getMaxZoom());

@@ -4,11 +4,6 @@ package team5.game.model;
  * Dungeon is a class that represents a dungeon.
  */
 public class Dungeon {
-
-    public enum Difficulty {
-        EASY, MEDIUM, HARD
-    }
-
     /** The dungeon */
     private Room[][] myDungeon;
     /** The width of the dungeon */
