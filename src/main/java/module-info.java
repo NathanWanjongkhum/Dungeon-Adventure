@@ -1,6 +1,8 @@
 module team5.game {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.graphics;
+
     requires java.sql;
     requires javafx.graphics;
 
@@ -8,5 +10,4 @@ module team5.game {
     opens team5.game.view to javafx.fxml;
 
     exports team5.game;
-    exports team5.game.view;
 }

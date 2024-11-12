@@ -6,11 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
-import team5.game.model.Monster;
 
 public class DatabaseHandler {
     /** The connection to the database */
@@ -37,19 +36,21 @@ public class DatabaseHandler {
         }
     }
 
-    /** Serialize the database */
-    public static void serialize(final Object theObject) {
-        try {
-            Path path = Path.of("my.db");
-            FileOutputStream file = new FileOutputStream(path.toString());
-            ObjectOutputStream out = new ObjectOutputStream(file);
+    /**
+     * Serialize the database
+     * 
+     * @throws IOException
+     */
+    public static void serialize(final Object theObject) throws IOException {
+        Path path = Path.of("my.db");
+
+        if (!Files.exists(path)) {
+            throw new FileNotFoundException("Database file not found");
+        }
+
+        try (final FileOutputStream file = new FileOutputStream(path.toString());
+                final ObjectOutputStream out = new ObjectOutputStream(file);) {
             out.writeObject(theObject);
-
-            out.close();
-            file.close();
-
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
         }
     }
 
@@ -57,26 +58,26 @@ public class DatabaseHandler {
      * Deserialize the database
      * 
      * @return the deserialized object
+     * @throws IOException
+     * @throws ClassNotFoundException
      */
-    public static Monster[] deserialize() {
-        try {
-            Path path = Path.of("my.db");
-            FileInputStream file = new FileInputStream(path.toString());
-            ObjectInputStream in = new ObjectInputStream(file);
-            Monster[] object = (Monster[]) in.readObject();
+    public static Object deserialize() throws IOException, ClassNotFoundException {
+        Path path = Path.of("my.db");
 
-            in.close();
-            file.close();
-
-            return object;
-        } catch (FileNotFoundException e) {
-            System.err.println(e.getMessage());
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        } catch (ClassNotFoundException e) {
-            System.err.println(e.getMessage());
+        if (!Files.exists(path)) {
+            throw new FileNotFoundException("Database file not found");
         }
 
-        return null;
+        try (FileInputStream file = new FileInputStream(path.toString());
+                ObjectInputStream in = new ObjectInputStream(file)) {
+
+            Object object = in.readObject();
+
+            if (object == null) {
+                throw new IOException("Read null object from database");
+            }
+
+            return object;
+        }
     }
 }

@@ -1,16 +1,16 @@
 package team5.game.model;
 
-import team5.game.model.Dungeon.Difficulty;
-import team5.game.model.Item.ItemType;
-import team5.game.model.PillarOfOO.PillarType;
-
 import java.util.AbstractMap.SimpleEntry;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
+/**
+ * DungeonBuilder is a builder class for Dungeon. Using the builder pattern, it
+ * uses the parameters to create a dungeon.
+ */
 final class DungeonBuilder {
-
     /** The dungeon */
     private Room[][] myDungeon;
     /** The width of the dungeon */
@@ -20,22 +20,56 @@ final class DungeonBuilder {
     /** The difficulty of the dungeon */
     private Difficulty myDifficulty;
 
-    // Default constructor
+    /**
+     * DungeonBuilder no args constructor does nothing
+     */
     protected DungeonBuilder() {
     }
 
-    private enum Quadrant {
-        TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
+    /**
+     * Get the height of the dungeon
+     * 
+     * @return the height
+     */
+    public final int getHeight() {
+        if (myDungeon == null) {
+            return 0;
+        }
+
+        return myDungeon.length;
+    }
+
+    /**
+     * Get the width of the dungeon
+     * 
+     * @return the width
+     */
+    public final int getWidth() {
+        if (myDungeon == null) {
+            return 0;
+        }
+
+        return myDungeon[0].length;
+    }
+
+    /**
+     * Get the difficulty of the dungeon
+     * 
+     * @return the difficulty
+     */
+    public final Difficulty getDifficulty() {
+        return myDifficulty;
     }
 
     /**
      * Set the width of the dungeon
      * 
      * @param theWidth the width
-     * @return dungeon builder
+     * @return the builder
      */
     protected final DungeonBuilder setWidth(final int theWidth) {
         myWidth = theWidth;
+        myDungeon = new Room[myWidth][myHeight];
         return this;
     }
 
@@ -43,11 +77,11 @@ final class DungeonBuilder {
      * Set the height of the dungeon
      * 
      * @param theHeight the height
-     * 
-     * @return dungeon builder
+     * @return the builder
      */
     protected final DungeonBuilder setHeight(final int theHeight) {
         myHeight = theHeight;
+        myDungeon = new Room[myWidth][myHeight];
         return this;
     }
 
@@ -55,260 +89,142 @@ final class DungeonBuilder {
      * Set the difficulty of the dungeon
      * 
      * @param theDifficulty the difficulty
-     * 
-     * @return dungeon builder
+     * @return the builder
      */
     protected final DungeonBuilder setDifficulty(final Difficulty theDifficulty) {
         myDifficulty = theDifficulty;
+        myDungeon = new Room[myWidth][myHeight];
         return this;
     }
 
     /**
-     * Builds the dungeon with guaranteed traversability and item separation
+     * Build the dungeon
+     * 
+     * @return the dungeon
      */
     protected final Room[][] build() {
-        myDungeon = new Room[myWidth][myHeight];
-
-        // Calculate center point
-        int centerX = myWidth / 2;
-        int centerY = myHeight / 2;
-        SimpleEntry<Integer, Integer> startPos = new SimpleEntry<>(centerX, centerY);
-
-        // Add start room
-        addRoom(startPos);
-
-        // Generate base maze structure for each quadrant
-        for (Quadrant quadrant : Quadrant.values()) {
-            generateQuadrantMaze(quadrant, startPos);
+        // Validate parameters before building
+        if (myWidth <= 0 || myHeight <= 0) {
+            throw new IllegalStateException("Width and height must be positive values");
         }
 
-        // Place items in each quadrant
-        placeQuadrantItems();
+        myDungeon = new Room[myWidth][myHeight];
 
-        // Ensure connectivity by adding additional passages
-        ensureConnectivity();
+        // Initialize all rooms first
+        for (int x = 0; x < myWidth; x++) {
+            for (int y = 0; y < myHeight; y++) {
+                myDungeon[x][y] = new Room();
+            }
+        }
+
+        // Start from center for better distribution
+        SimpleEntry<Integer, Integer> startPos = new SimpleEntry<>(0, 0);
+
+        generateMaze(startPos);
 
         return myDungeon;
     }
 
     /**
-     * Generates maze structure for a specific quadrant
+     * Generate the maze using a recursive backtracker
+     * 
+     * @param startPos the start position
      */
-    private void generateQuadrantMaze(Quadrant quadrant, SimpleEntry<Integer, Integer> startPos) {
-        int centerX = startPos.getKey();
-        int centerY = startPos.getValue();
+    private final void generateMaze(final SimpleEntry<Integer, Integer> startPos) {
+        Stack<SimpleEntry<Integer, Integer>> stack = new Stack<>();
+        boolean[][] visited = new boolean[myWidth][myHeight];
 
-        // Define quadrant boundaries
-        int startX, endX, startY, endY;
-        switch (quadrant) {
-            case TOP_LEFT:
-                startX = 0;
-                endX = centerX;
-                startY = centerY;
-                endY = myHeight;
-                break;
-            case TOP_RIGHT:
-                startX = centerX;
-                endX = myWidth;
-                startY = centerY;
-                endY = myHeight;
-                break;
-            case BOTTOM_LEFT:
-                startX = 0;
-                endX = centerX;
-                startY = 0;
-                endY = centerY;
-                break;
-            case BOTTOM_RIGHT:
-                startX = centerX;
-                endX = myWidth;
-                startY = 0;
-                endY = centerY;
-                break;
-            default:
-                throw new IllegalStateException("Invalid quadrant");
-        }
+        stack.push(startPos);
+        visited[startPos.getKey()][startPos.getValue()] = true;
 
-        // Generate maze in quadrant using recursive backtracking
-        carveQuadrantPassages(new SimpleEntry<>(centerX, centerY), startX, endX, startY, endY);
-    }
+        while (!stack.isEmpty()) {
+            SimpleEntry<Integer, Integer> current = stack.peek();
+            List<Direction> unvisitedNeighbors = getUnvisitedNeighbors(current, visited);
 
-    private void carveQuadrantPassages(SimpleEntry<Integer, Integer> currentPos,
-            int startX, int endX, int startY, int endY) {
-        // Shuffle the directions to reduce bias
-        List<Direction> directions = Arrays.asList(Direction.values());
-        Collections.shuffle(directions);
+            if (unvisitedNeighbors.isEmpty()) {
+                stack.pop();
+            } else {
+                Direction randomDir = unvisitedNeighbors.get(
+                        (int) (Math.random() * unvisitedNeighbors.size()));
 
-        // Get current coordinates
-        int currentX = currentPos.getKey();
-        int currentY = currentPos.getValue();
+                SimpleEntry<Integer, Integer> next = new SimpleEntry<>(
+                        randomDir.calculateNewX(current.getKey()),
+                        randomDir.calculateNewY(current.getValue()));
 
-        // Carve passages in each direction
-        for (Direction dir : directions) {
-            int newX = dir.calculateNewX(currentX);
-            int newY = dir.calculateNewY(currentY);
+                // Carve passage between current and next
+                Room currentRoom = myDungeon[current.getKey()][current.getValue()];
+                Room nextRoom = myDungeon[next.getKey()][next.getValue()];
 
-            // Check if the new position is within quadrant bounds and unvisited
-            if (newX >= startX && newX < endX &&
-                    newY >= startY && newY < endY &&
-                    isValidLocation(newX, newY) &&
-                    myDungeon[newX][newY] == null) {
+                carveEdge(randomDir, nextRoom, currentRoom);
 
-                // Create new room
-                Room newRoom = addRoom(currentPos, dir);
-
-                if (newRoom != null) {
-                    // Continue carving from the new position
-                    carveQuadrantPassages(
-                            new SimpleEntry<>(newX, newY),
-                            startX, endX, startY, endY);
-                }
+                visited[next.getKey()][next.getValue()] = true;
+                stack.push(next);
             }
         }
     }
 
     /**
-     * Places item rooms in each quadrant, ensuring some minimum distance from
-     * center
-     */
-    private void placeQuadrantItems() {
-        // Shuffle the pillars
-        List<PillarType> items = Arrays.asList(
-                PillarType.ABSTRACTION, PillarType.ENCAPSULATION, PillarType.INHERITANCE, PillarType.POLYMORPHISM);
-        Collections.shuffle(items);
-
-        int centerX = myWidth / 2;
-        int centerY = myHeight / 2;
-
-        // Place the pillars in each quadrant
-        for (int i = 0; i < items.size(); i++) {
-            Quadrant quadrant = Quadrant.values()[i % Quadrant.values().length];
-            placePillar(quadrant, items.get(i), centerX, centerY);
-        }
-    }
-
-    /**
-     * Places a pillar in a specific quadrant
+     * Get the unvisited neighbors of the given position
      * 
-     * @param quadrant   The quadrant to place the pillar in
-     * @param pillarType The type of pillar to place
-     * @param centerX    The center X coordinate of the dungeon
-     * @param centerY    The center Y coordinate of the dungeon
+     * @param pos     the position
+     * @param visited the visited array
+     * @return the unvisited neighbors
      */
-    private void placePillar(Quadrant quadrant, PillarType pillarType, int centerX, int centerY) {
-        // TODO:: Place pillar in quadrant
-    }
+    private final List<Direction> getUnvisitedNeighbors(
+            SimpleEntry<Integer, Integer> pos,
+            boolean[][] visited) {
+        List<Direction> unvisited = new ArrayList<>();
 
-    /**
-     * Ensures connectivity between quadrants by adding additional passages
-     */
-    private void ensureConnectivity() {
-        int centerX = myWidth / 2;
-        int centerY = myHeight / 2;
+        int newX, newY;
+        for (Direction dir : Direction.values()) {
+            newX = dir.calculateNewX(pos.getKey());
+            newY = dir.calculateNewY(pos.getValue());
 
-        // Add cross-shaped connections from center
-        Direction[] crossDirections = Direction.values().clone();
-        for (Direction dir : crossDirections) {
-            int x = dir.calculateNewX(centerX);
-            int y = dir.calculateNewY(centerY);
-
-            if (isValidLocation(x, y) && myDungeon[x][y] != null) {
-                Room centerRoom = myDungeon[centerX][centerY];
-                Room adjacentRoom = myDungeon[x][y];
-
-                centerRoom.addDoor(dir);
-                adjacentRoom.addDoor(dir.getOpposite());
+            if (isValidLocation(newX, newY) && !visited[newX][newY]) {
+                unvisited.add(dir);
             }
         }
+
+        Collections.shuffle(unvisited);
+
+        return unvisited;
     }
 
     /**
-     * Check if the location is valid
+     * Creates a passage between the adjacent rooms
      * 
-     * @param theX the x coordinate
-     * @param theY the y coordinate
-     * 
-     * @return true if the location is valid
+     * @param theDirection the direction of the passage from current to next
+     * @param newRoom      the room next to the previous room
+     * @param previousRoom the room that is adjacent to the new room
      */
-    protected final boolean isValidLocation(int theX, int theY) {
-        return theX >= 0 && theX < myWidth && theY >= 0 && theY < myHeight;
-    }
-
-    /**
-     * Add a room to the dungeon using coordinates
-     * 
-     * @param theRoomType    the type of room to add
-     * @param theCoordinates the coordinates of the room
-     * 
-     * @return the new room
-     */
-    protected final Room addRoom(SimpleEntry<Integer, Integer> theCoordinates) {
-        // Get the coordinates
-        int theX = theCoordinates.getKey();
-        int theY = theCoordinates.getValue();
-
-        // Check if the location is valid
-        if (!isValidLocation(theX, theY)) {
-            System.out.println("Invalid Room Location at " + theX + ", " + theY);
-            System.out.println("Width: " + myWidth + ", Height: " + myHeight);
-            return null;
-        }
-
-        // Create the room
-        Room room = new Room();
-        myDungeon[theX][theY] = room;
-
-        return room;
-    }
-
-    /**
-     * Add a room to the dungeon using directions relative to the previous room
-     * 
-     * @param thePreviousPos the coordinate previous room
-     * @param theDirection   the direction to add the room
-     * 
-     * @return the new room or null if invalid location
-     */
-    protected final Room addRoom(
-            final SimpleEntry<Integer, Integer> thePreviousPos,
-            final Direction theDirection) {
-        // Deconstruct the coordinates of the previous room
-        int previousX = thePreviousPos.getKey();
-        int previousY = thePreviousPos.getValue();
-
-        // Get the coordinates of the new room
-        int newX = theDirection.calculateNewX(previousX);
-        int newY = theDirection.calculateNewY(previousY);
-
-        if (!isValidLocation(newX, newY) || myDungeon[newX][newY] != null) {
-            return null;
-        }
-
-        // Create the room
-        Room newRoom = new Room();
-        myDungeon[newX][newY] = newRoom;
-
-        Room previousRoom = getRoom(thePreviousPos);
-
-        // Connect the rooms
+    private final void carveEdge(final Direction theDirection,
+            final Room newRoom,
+            final Room previousRoom) {
         previousRoom.addDoor(theDirection);
         newRoom.addDoor(theDirection.getOpposite());
+    }
 
-        return newRoom;
+    /**
+     * Check if the location is valid. Checks if the coordinates are within the
+     * bounds of the dungeon.
+     * 
+     * @param theX
+     * @param theY
+     * @return
+     */
+    public final boolean isValidLocation(final int theX, final int theY) {
+        return theX >= 0 && theX < myWidth && theY >= 0 && theY < myHeight;
     }
 
     /**
      * Get the room at the given coordinates
      * 
-     * @param theCoordinates the coordinates of the room
-     * 
+     * @param theCoordinates the coordinates
      * @return the room at the coordinates
      */
-    public final Room getRoom(SimpleEntry<Integer, Integer> theCoordinates) {
-        // Get the coordinates
+    public final Room getRoom(final SimpleEntry<Integer, Integer> theCoordinates) {
         int theX = theCoordinates.getKey();
         int theY = theCoordinates.getValue();
-
         return myDungeon[theX][theY];
     }
 }
