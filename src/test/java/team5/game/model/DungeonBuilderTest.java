@@ -10,7 +10,6 @@ import java.util.Stack;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.DisplayNameGenerator.Simple;
 
 public class DungeonBuilderTest {
     /** The difficulty of the dungeon */

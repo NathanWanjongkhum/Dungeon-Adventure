@@ -4,7 +4,6 @@ module team5.game {
     requires javafx.graphics;
 
     requires java.sql;
-    requires javafx.graphics;
 
     opens team5.game to javafx.fxml;
     opens team5.game.view to javafx.fxml;
