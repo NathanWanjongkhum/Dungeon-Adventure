@@ -48,7 +48,10 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
     public int getSpeed() {
         return mySpeed;
     }
-
+    @Override
+    public boolean isAlive() {
+        return myHealth > 0;
+    }
     @Override
     public void setHealth(int theHealth) {
         myHealth = theHealth;
