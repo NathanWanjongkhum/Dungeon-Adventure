@@ -63,12 +63,10 @@
             <VBox alignment="TOP_CENTER" prefHeight="250.0" prefWidth="200.0">
                <children>
                   <ImageView fx:id="myHeroImage" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="myName" text="Hero Name" />
-                  <Label text="HP">
+                  <Label fx:id="myName" text="Hero Name">
                      <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </Label>
+                        <Insets top="10.0" />
+                     </VBox.margin></Label>
                   <ProgressBar fx:id="myHeroBar" prefHeight="15.0" prefWidth="200.0" progress="1.0">
                      <VBox.margin>
                         <Insets />
@@ -83,12 +81,10 @@
             <VBox alignment="TOP_CENTER" layoutX="440.0" prefHeight="250.0" prefWidth="200.0">
                <children>
                   <ImageView fx:id="myMonsterImage" fitHeight="150.0" fitWidth="150.0" onMouseClicked="#displayMonster" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="myMonsterName" text="MonsterName" />
-                  <Label text="HP">
+                  <Label fx:id="myMonsterName" text="MonsterName">
                      <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </Label>
+                        <Insets top="10.0" />
+                     </VBox.margin></Label>
                   <ProgressBar fx:id="myMonsterBar" prefHeight="15.0" prefWidth="200.0" progress="1.0">
                      <VBox.margin>
                         <Insets />

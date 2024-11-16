@@ -22,7 +22,7 @@ public class StartController {
  
      @FXML
      void switchToHeroCreation(ActionEvent event) throws IOException {
-        App.setRoot("HeroSelection");
+        App.setRoot("NameSelection");
      }
 
 }

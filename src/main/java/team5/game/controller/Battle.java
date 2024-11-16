@@ -6,19 +6,21 @@ import team5.game.model.DungeonCharacter;
 import team5.game.model.Hero;
 import team5.game.model.Monster;
 
-public class BattleSample {
+public class Battle {
     private Hero myHero;
     private Monster myMonster;
     private String myText;
+    private int myCount;
 
-    public BattleSample(Hero theHero, Monster theMonster) {
+    public Battle(Hero theHero, Monster theMonster) {
         myHero = theHero;
         myMonster = theMonster;
         myText = "";
+        myCount = 1;
     }
     
     public void battle() {
-        myText = "";
+        myText = String.format("Round %d:\n", myCount);
         if (myHero.getSpeed() > myMonster.getSpeed()) {
             attack(myHero, myMonster);
             if (myMonster.isAlive()) {
@@ -30,6 +32,8 @@ public class BattleSample {
                 attack(myHero, myMonster);
             }
         }
+        myText += "\n";
+        myCount++;
     }
     private void attack(DungeonCharacter theAttacker, DungeonCharacter theDefender) {
         Random rand = new Random();

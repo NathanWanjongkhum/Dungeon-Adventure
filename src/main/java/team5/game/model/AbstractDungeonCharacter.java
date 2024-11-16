@@ -1,5 +1,9 @@
 package team5.game.model;
 
+import java.io.File;
+
+import javafx.scene.image.Image;
+
 public abstract class AbstractDungeonCharacter implements DungeonCharacter {
     /** Constant for Damage difference */
     private static final int DAMAGE_DIF = 5;
@@ -47,6 +51,18 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
     @Override
     public int getSpeed() {
         return mySpeed;
+    }
+    @Override
+    public Image getImage() {
+        final StringBuilder builder = new StringBuilder();
+        //builder.append("/resources/team5/game");
+        builder.append("/team5/game/");
+        builder.append(getClass().getSimpleName().toLowerCase());
+        builder.append(".png");
+        System.out.println(builder.toString());
+        // System.out.println(getClass().getResource("archer.png").toString());
+        Image temp = new Image(getClass().getResource(builder.toString()).toString());
+        return temp;
     }
     @Override
     public boolean isAlive() {

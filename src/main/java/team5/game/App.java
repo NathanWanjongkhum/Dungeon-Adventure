@@ -29,7 +29,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("BattleScene"), 640, 480);
+        scene = new Scene(loadFXML("StartScreen"), 640, 480);
         //Parent root = FXMLLoader.load(getClass().getResource("testscene.fxml"));
         // FXMLLoader loader = new FXMLLoader(getClass().getResource("testscene.fxml"));
 		// Parent root = loader.load();	
