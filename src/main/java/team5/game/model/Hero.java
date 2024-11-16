@@ -1,16 +1,16 @@
 package team5.game.model;
 
 public class Hero extends AbstractDungeonCharacter {
-    private static final int ITEM_COUNT = 3; 
+    private static final int ITEM_COUNT = 3;
     /** The direction the hero is facing */
     private Direction myDirection;
+    /** The inventory of the hero */
+    private Inventory myInventory;
 
-    private Item[] myItems;
-
-    protected Hero(String theName, int theHealth, int theDamage, int theSpeed) {
+    protected Hero(final String theName, final int theHealth, final int theDamage, final int theSpeed) {
         super(theName, theHealth, theDamage, theSpeed);
         myDirection = Direction.NORTH;
-        myItems = new Item[ITEM_COUNT];
+        myInventory = new Inventory(ITEM_COUNT);
     }
 
     /**
@@ -21,17 +21,14 @@ public class Hero extends AbstractDungeonCharacter {
     public Direction getDirection() {
         return myDirection;
     }
+
     /**
-     * Gets the item bag
+     * Get the inventory of the hero
      * 
-     * @return all items in bag
+     * @return the inventory
      */
-    public Item[] getItem() {
-        Item[] copy = new Item[ITEM_COUNT];
-        for (int i = 0; i < myItems.length; i++) {
-            copy[i] = myItems[i];
-        }
-        return copy;
+    public Inventory getInventory() {
+        return myInventory.clone();
     }
 
     /**

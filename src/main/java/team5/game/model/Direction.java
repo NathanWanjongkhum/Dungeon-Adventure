@@ -5,9 +5,9 @@ package team5.game.model;
  */
 public enum Direction {
     /** The cardinal directions */
-    NORTH(0, 1),
-    SOUTH(0, -1),
+    NORTH(0, -1),
     EAST(1, 0),
+    SOUTH(0, 1),
     WEST(-1, 0);
 
     /** The x coordinate direction */

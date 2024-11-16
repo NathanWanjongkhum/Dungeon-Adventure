@@ -4,8 +4,10 @@ package team5.game.model;
  * Room is a class that represents a room in the dungeon.
  */
 public class Room {
+    /** The number of directions in a room */
+    private static final int NUM_DIRECTIONS = Direction.values().length;
     /** If there is a door on some face of the room */
-    private boolean[] myDoors = new boolean[4];
+    private boolean[] myDoors;
     /** The item in the room */
     private Item myItem;
     /** The monster in the room */
@@ -17,7 +19,7 @@ public class Room {
      * @param type
      */
     public Room() {
-
+        myDoors = new boolean[NUM_DIRECTIONS];
     }
 
     /**
@@ -75,12 +77,27 @@ public class Room {
     }
 
     /**
-     * The symbol of the room
+     * The string representation of the room. The format is "R[D|W]*" where D
+     * represents a door and W represents a wall.
      * 
      * @return the symbol
      */
     @Override
     public String toString() {
-        return "R";
+        final StringBuilder sb = new StringBuilder("R[");
+
+        for (int i = 0; i < NUM_DIRECTIONS; i++) {
+            if (myDoors[i]) {
+                // Door or wall
+                sb.append(myDoors[i] ? "D" : "W");
+            }
+        }
+
+        sb.append("]");
+        return sb.toString();
+    }
+
+    public void removeDoor(final Direction thDirection) {
+        myDoors[thDirection.ordinal()] = false;
     }
 }
