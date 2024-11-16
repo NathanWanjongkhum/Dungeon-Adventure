@@ -1,5 +1,7 @@
 package team5.game.model;
 
+import javafx.scene.image.Image;
+
 /**
  * DungeonCharacter is an interface that represents a character in the dungeon.
  */
@@ -38,6 +40,12 @@ public interface DungeonCharacter {
      * @return the speed of the character.
      */
     int getSpeed();
+    /**
+     * Returns the image file name
+     * 
+     * @return a string of an image file
+     */
+    public Image getImage();
     /**
      * Returns if the character is alive or not
      * 

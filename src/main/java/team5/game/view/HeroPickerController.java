@@ -11,7 +11,9 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import team5.game.App;
-
+import team5.game.controller.Choices;
+import team5.game.controller.HeroFactory;
+import team5.game.model.Hero;
 import javafx.event.ActionEvent;
 
 public class HeroPickerController implements Initializable {
@@ -36,19 +38,21 @@ public class HeroPickerController implements Initializable {
         myChoice.setOnAction(this::displayImage);
     }
     public void displayImage(ActionEvent event) {
-        String choice = myChoice.getValue(); //Gets the hero selection
+        String choice = myChoice.getValue();
+        Hero hero = HeroFactory.createHero(choice);
+        myImage.setImage(hero.getImage());
+        Choices.getChoices().setHero(hero);
         myNext.setDisable(false);
-        //Need to add a "custom" image for each class in view
     }
     
     @FXML
     void back() throws IOException{
-        App.setRoot("StartScreen");
+        App.setRoot("NameSelection");
     }
 
     @FXML
     void next() throws IOException {
-        App.setRoot("NameSelection");
+        App.setRoot("BattleScene");
     }
 
 }

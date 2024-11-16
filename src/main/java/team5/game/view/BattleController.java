@@ -14,10 +14,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import team5.game.App;
-import team5.game.controller.BattleSample;
+import team5.game.controller.Battle;
+import team5.game.controller.Choices;
 import team5.game.model.Archer;
-import team5.game.model.Dungeon;
-import team5.game.model.DungeonCharacter;
 import team5.game.model.Hero;
 import team5.game.model.Monster;
 import team5.game.model.Ogre;
@@ -59,7 +58,7 @@ public class BattleController implements Initializable{
     @FXML
     private Button myRetreat;
 
-    private BattleSample myBattle;
+    private Battle myBattle;
     private int myHeroMaxHP;
     private int myMonsterMaxHP;
     private Hero myHero;
@@ -70,10 +69,10 @@ public class BattleController implements Initializable{
     @Override
     public void initialize(URL theURL, ResourceBundle theResource) {
         //Dungeon class would get hero and monster so hp would carry over
-        myHero = new Archer("Arch");
+        myHero = Choices.getChoices().getHero();
         myMonster = new Ogre("Og");
 
-        myBattle = new BattleSample(myHero, myMonster);
+        myBattle = new Battle(myHero, myMonster);
         myHeroMaxHP = myHero.getHealth();
         myMonsterMaxHP = myMonster.getHealth();
         myName.setText(myHero.getName());
@@ -82,20 +81,24 @@ public class BattleController implements Initializable{
         myMonsterHP = 100;
         myHeroBar.setStyle("-fx-accent: green");
         myMonsterBar.setStyle("-fx-accent: green");
+        myHeroImage.setImage(myHero.getImage());
+        myMonsterImage.setImage(myMonster.getImage());
+        myMonsterImage.setScaleX(-1);
         setHP();
         myLog.appendText("Battles had started with " + myMonster.getName() + "\n");
     }
     private void setHP() {
-        final String hero = myHero.getHealth() + "/" + myHeroMaxHP;
+        final String hero = "HP " + myHero.getHealth() + "/" + myHeroMaxHP;
         myHPLevel.setText(hero);
         myHeroHP = (double) myHero.getHealth() / myHeroMaxHP;
         myHeroBar.setProgress(myHeroHP);
-        if (myHeroHP < 0.25) {
+        if (myHeroHP <= 0.25) {
             myHeroBar.setStyle("-fx-accent: red;");
-        } else if (myHeroHP < 0.5) {
+        } else if (myHeroHP <= 0.5) {
             myHeroBar.setStyle("-fx-accent: yellow;");
         }
-        final String monster = myMonster.getHealth() + "/" + myMonsterMaxHP;
+        
+        final String monster = "HP " + myMonster.getHealth() + "/" + myMonsterMaxHP;
         myMonsterHPLevel.setText(monster);
         myMonsterHP = (double) myMonster.getHealth() / myMonsterMaxHP;
         myMonsterBar.setProgress(myMonsterHP);
@@ -107,6 +110,10 @@ public class BattleController implements Initializable{
     }
     @FXML
     void attack(ActionEvent event) {
+        attackAction();
+    }
+
+    private void attackAction() {
         myBattle.battle();
         setHP();
         displayText();
@@ -114,7 +121,6 @@ public class BattleController implements Initializable{
             endBattleButtons();
         }
     }
-
     private void displayText() {
         myLog.appendText(myBattle.actionPerformed());
     }
