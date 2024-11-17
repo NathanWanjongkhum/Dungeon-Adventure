@@ -49,14 +49,7 @@ public class DungeonController {
     private void initialize() throws ClassNotFoundException, IOException {
         // TODO: Get the parameters (width, height, difficulty) from the previous screen
 
-        myDungeon = new Dungeon(10, 10, Difficulty.EASY);
-        myDungeon.init();
-
         setZoom(getMaxZoom());
-
-        final int heroX = 0;
-        final int heroY = 0;
-        myHero = new Mage("Merlin");
 
         DatabaseHandler.init();
 
@@ -76,9 +69,17 @@ public class DungeonController {
         // TODO: Place the items in the dungeon
         // TODO: Place the monsters in the dungeon
 
-        System.out.println(myDungeon.toString());
         initializeCanvas();
-        render();
+    }
+
+    public void initHero(final Hero theHero) {
+        myHero = new Mage("Merlin");
+        // TODO: myHero = new Hero(theHero);
+    }
+
+    public void setDungeon(final Dungeon theDungeon) {
+        myDungeon = new Dungeon(theDungeon);
+        myDungeon.init();
     }
 
     /**
@@ -91,7 +92,7 @@ public class DungeonController {
     /**
      * Render the dungeon
      */
-    private void render() {
+    void render() {
         gc.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
 
         // Debug border

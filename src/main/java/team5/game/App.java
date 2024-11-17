@@ -13,25 +13,25 @@ import java.io.IOException;
  */
 public class App extends Application {
     /** The primary scene */
-    private static Scene scene;
+    private static Scene myScene;
 
     @Override
-    public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
-        stage.setScene(scene);
-        stage.show();
+    public void start(Stage myStage) throws IOException {
+        myScene = new Scene(loadFXML("DungeonSetting"), 640, 480);
+        myStage.setScene(myScene);
+        myStage.show();
     }
 
-    public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+    public static void setRoot(String theFXML) throws IOException {
+        myScene.setRoot(loadFXML(theFXML));
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/team5/game/" + fxml + ".fxml"));
+    private static Parent loadFXML(String theFXML) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/team5/game/" + theFXML + ".fxml"));
         return fxmlLoader.load();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] theArgs) {
         launch();
     }
 }

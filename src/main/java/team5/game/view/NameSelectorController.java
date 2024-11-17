@@ -15,7 +15,7 @@ public class NameSelectorController {
 
     @FXML
     private Button myNext;
-    
+
     private String myConfirmedName;
 
     @FXML
@@ -28,13 +28,13 @@ public class NameSelectorController {
     }
 
     @FXML
-    void back() throws IOException{
+    void back() throws IOException {
         App.setRoot("HeroSelection");
     }
 
     @FXML
     void next() throws IOException {
-        App.setRoot("primary");
+        App.setRoot("DungeonSetting");
     }
 
 }

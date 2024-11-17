@@ -14,7 +14,7 @@ public class Dungeon {
     private Difficulty myDifficulty;
 
     /**
-     * Dungeon constructor
+     * Dungeon constructor. Initializes a new dungeon.
      * 
      * @param width  the width of the dungeon
      * @param height the height of the dungeon
@@ -24,6 +24,18 @@ public class Dungeon {
         myWidth = theWidth;
         myHeight = theHeight;
         myDifficulty = theDifficulty;
+    }
+
+    /**
+     * Dungeon constructor. Clones another dungeon.
+     * 
+     * @param theDungeon the dungeon to copy
+     */
+    public Dungeon(final Dungeon theDungeon) {
+        myDungeon = new Room[theDungeon.getWidth()][theDungeon.getHeight()];
+        myWidth = theDungeon.getWidth();
+        myHeight = theDungeon.getHeight();
+        myDifficulty = theDungeon.getDifficulty();
     }
 
     /**
