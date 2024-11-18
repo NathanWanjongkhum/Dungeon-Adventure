@@ -71,7 +71,8 @@ public class Battle {
             myText += String.format("%s is charging their special attack!\n", myHero.getName());
             myHero.getSpecialAttack().setTurns(myHero.getSpecialAttack().getTurns() - 1);
         } else if (myHero.getStatusEffects().isRegen()){
-            myText += String.format("%s casted a healing!\n", myHero.getName());
+            myText += String.format("%s casted a healing and restored %d HP!\n", 
+                        myHero.getName(), myHero.getSpecialAttack().getDamage());
         } else {
             changeHP(theHero, theMonster, damage);
         }

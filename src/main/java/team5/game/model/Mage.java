@@ -12,7 +12,6 @@ public class Mage extends Hero {
         if(this.getSpecialAttack().getTurns() == 0) {
             damage = this.getSpecialAttack().getDamage();
             theOther.setHealth(theOther.getHealth() - damage);
-            System.out.println(this.getSpecialAttack().getTurns());
             this.getSpecialAttack().setTurns(this.getSpecialAttack().getTurns() - 1);
         } else {
             this.getStatusEffects().setVulnerable(true);

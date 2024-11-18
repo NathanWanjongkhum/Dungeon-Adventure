@@ -2,12 +2,18 @@ package team5.game.model;
 
 public class Priestess extends Hero {
     public Priestess(String theName) {
-        super(theName, 100, 20, 25, new SpecialAttack(0, 5));
+        super(theName, 100, 20, 25, new SpecialAttack(1, 5));
     }
     public int useSpecialAttack(DungeonCharacter theOther) {
-        heal(getSpecialAttack().getDamage());
-        getStatusEffects().setRegen(true);
-        getStatusEffects().setRegenDuration(2);
+        if (this.getSpecialAttack().getTurns() < 0) {
+            this.getSpecialAttack().setTurns(1);
+        }
+        if(this.getSpecialAttack().getTurns() == 0) {
+            heal(getSpecialAttack().getDamage());
+            getStatusEffects().setRegen(true);
+            getStatusEffects().setRegenDuration(2);
+            this.getSpecialAttack().setTurns(this.getSpecialAttack().getTurns() - 1);
+        }
         return 0;
     }
     @Override

@@ -14,7 +14,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import team5.game.App;
 import team5.game.controller.Battle;
@@ -162,8 +161,17 @@ public class BattleController implements Initializable{
             displayText();
             if (myBattle.isOver()) {
                 endBattleButtons();
+                break;
             }
         } while(myHero.getSpecialAttack().getTurns() > 0);
+        if (myHero.getSpecialAttack().getMaxTurns() > 0 && !myBattle.isOver()) {
+            myBattle.battleSpecial();
+            setHP();
+            displayText();
+            if (myBattle.isOver()) {
+                endBattleButtons();
+            }
+        }
     }
     @FXML
     void item(ActionEvent event) {
