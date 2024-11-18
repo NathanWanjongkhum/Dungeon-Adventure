@@ -9,13 +9,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.HeroPickerController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.HeroPickerController">
    <children>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+      <VBox alignment="CENTER">
          <children>
             <ImageView fx:id="myImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <VBox.margin>
-                  <Insets top="75.0" />
+                  <Insets top="60.0" />
                </VBox.margin>
             </ImageView>
             <Label fx:id="myName" text="Select A Character">
@@ -28,17 +28,18 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </ChoiceBox>
+            <Label fx:id="myStats" prefHeight="300.0" prefWidth="200.0" text="Label" textAlignment="CENTER" visible="false" wrapText="true" />
          </children>
       </VBox>
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <bottom>
-            <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <ButtonBar BorderPane.alignment="CENTER">
               <buttons>
                 <Button alignment="CENTER" mnemonicParsing="false" onAction="#back" text="Back" ButtonBar.buttonData="LEFT" />
                   <Button fx:id="myNext" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#next" text="Next" ButtonBar.buttonData="RIGHT" />
               </buttons>
                <BorderPane.margin>
-                  <Insets left="10.0" right="10.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
                </BorderPane.margin>
             </ButtonBar>
          </bottom>

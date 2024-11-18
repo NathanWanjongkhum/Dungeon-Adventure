@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import team5.game.App;
 import team5.game.controller.Choices;
@@ -30,10 +31,14 @@ public class HeroPickerController implements Initializable {
     @FXML
     private Button myNext;
 
+    @FXML
+    private Label myStats;
+
     private String[] myCharacters = {"Archer", "Mage", "Priestess", "Warrior"};
 
     @Override
     public void initialize(URL theURL, ResourceBundle theResource) {
+        
         myChoice.getItems().addAll(myCharacters);
         myChoice.setOnAction(this::displayImage);
     }
@@ -42,6 +47,8 @@ public class HeroPickerController implements Initializable {
         Hero hero = HeroFactory.createHero(choice);
         myImage.setImage(hero.getImage());
         Choices.getChoices().setHero(hero);
+        myStats.setText(hero.getStats());
+        myStats.setVisible(true);
         myNext.setDisable(false);
     }
     

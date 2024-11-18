@@ -41,97 +41,112 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.BattleController">
+<AnchorPane minHeight="480.0" minWidth="640.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.BattleController">
   <children>
-    <MenuBar VBox.vgrow="NEVER">
-      <menus>
-        <Menu mnemonicParsing="false" text="Home">
-          <items>
-            <MenuItem mnemonicParsing="false" onAction="#myHome" text="Return to Start Screen" />
-                  <MenuItem mnemonicParsing="false" text="Save Game" />
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
-      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="640.0">
-         <children>
-            <VBox alignment="TOP_CENTER" prefHeight="250.0" prefWidth="200.0">
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fx:id="myHeroImage" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="myName" text="Hero Name">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin></Label>
-                  <ProgressBar fx:id="myHeroBar" prefHeight="15.0" prefWidth="200.0" progress="1.0">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </ProgressBar>
-                  <Label fx:id="myHPLevel" text="100/100" />
-               </children>
-               <padding>
-                  <Insets left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </VBox>
-            <VBox alignment="TOP_CENTER" layoutX="440.0" prefHeight="250.0" prefWidth="200.0">
-               <children>
-                  <ImageView fx:id="myMonsterImage" fitHeight="150.0" fitWidth="150.0" onMouseClicked="#displayMonster" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="myMonsterName" text="MonsterName">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin></Label>
-                  <ProgressBar fx:id="myMonsterBar" prefHeight="15.0" prefWidth="200.0" progress="1.0">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </ProgressBar>
-                  <Label fx:id="myMonsterHPLevel" text="200/200" />
-               </children>
-               <padding>
-                  <Insets left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </VBox>
-            <Button fx:id="myNext" disable="true" layoutX="220.0" layoutY="100.0" mnemonicParsing="false" onAction="#endBattle" prefHeight="50.0" prefWidth="200.0" text="Next" visible="false" />
-         </children>
-      </Pane>
-      <FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="125.0" prefWidth="640.0">
-         <children>
-            <HBox prefHeight="120.0" prefWidth="640.0">
-               <children>
-                  <TextArea fx:id="myLog" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="105.0" prefWidth="480.0">
-                     <HBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </HBox.margin>
-                  </TextArea>
-                  <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="105.0" prefWidth="120.0">
+                <MenuBar VBox.vgrow="NEVER">
+                  <menus>
+                    <Menu mnemonicParsing="false" text="Home">
+                      <items>
+                        <MenuItem mnemonicParsing="false" onAction="#myHome" text="Return to Start Screen" />
+                              <MenuItem mnemonicParsing="false" text="Save Game" />
+                      </items>
+                    </Menu>
+                  </menus>
+                </MenuBar>
+                  <AnchorPane>
                      <children>
-                        <Button fx:id="myAttack" mnemonicParsing="false" onAction="#attack" prefHeight="20.0" prefWidth="100.0" text="Attack" />
-                        <Button fx:id="myItem" mnemonicParsing="false" onAction="#item" prefHeight="20.0" prefWidth="100.0" text="Item">
-                           <VBox.margin>
-                              <Insets top="5.0" />
-                           </VBox.margin>
-                        </Button>
-                        <Button fx:id="myRetreat" mnemonicParsing="false" onAction="#retreat" prefHeight="20.0" prefWidth="100.0" text="Retreat">
-                           <VBox.margin>
-                              <Insets top="5.0" />
-                           </VBox.margin>
-                        </Button>
+                        <VBox alignment="TOP_CENTER" prefHeight="250.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <ImageView fx:id="myHeroImage" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                              <Label fx:id="myName" text="Hero Name">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <ProgressBar fx:id="myHeroBar" prefHeight="15.0" prefWidth="200.0" progress="1.0">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </ProgressBar>
+                              <Label fx:id="myHPLevel" text="100/100" />
+                           </children>
+                           <padding>
+                              <Insets left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" layoutX="440.0" prefHeight="250.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <ImageView fx:id="myMonsterImage" fitHeight="150.0" fitWidth="150.0" onMouseClicked="#displayMonster" pickOnBounds="true" preserveRatio="true" />
+                              <Label fx:id="myMonsterName" text="MonsterName">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <ProgressBar fx:id="myMonsterBar" prefHeight="15.0" prefWidth="200.0" progress="1.0">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </ProgressBar>
+                              <Label fx:id="myMonsterHPLevel" text="200/200" />
+                           </children>
+                           <padding>
+                              <Insets left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                        <Button fx:id="myNext" disable="true" layoutX="220.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#endBattle" prefHeight="50.0" prefWidth="200.0" text="Next" visible="false" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0" AnchorPane.topAnchor="125.0" />
                      </children>
-                     <padding>
-                        <Insets right="10.0" top="10.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </HBox.margin>
-                  </VBox>
+                  </AnchorPane>
                </children>
-            </HBox>
-         </children>
-      </FlowPane>
+            </VBox>
+         </center>
+         <bottom>
+            <AnchorPane BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER" layoutX="7.0" layoutY="34.0" maxHeight="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <children>
+                        <AnchorPane>
+                           <children>
+                              <TextArea fx:id="myLog" editable="false" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Button fx:id="myAttack" mnemonicParsing="false" onAction="#attack" prefHeight="20.0" prefWidth="100.0" text="Attack" />
+                                    <Button fx:id="mySpecial" mnemonicParsing="false" onAction="#useSpecialAttack" prefHeight="20.0" prefWidth="100.0" text="Special">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button fx:id="myItem" mnemonicParsing="false" onAction="#item" prefHeight="20.0" prefWidth="100.0" text="Item">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button fx:id="myRetreat" mnemonicParsing="false" onAction="#retreat" prefHeight="20.0" prefWidth="100.0" text="Retreat">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+         </bottom>
+      </BorderPane>
   </children>
-</VBox>
+</AnchorPane>

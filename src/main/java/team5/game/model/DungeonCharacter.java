@@ -19,6 +19,12 @@ public interface DungeonCharacter {
      * @return the health of the character.
      */
     int getHealth();
+    /**
+     * Returns the max health of the character.
+     *
+     * @return the max health of the character.
+     */
+    int getMaxHealth();
 
     /**
      * Returns the minimum damage of the character.
@@ -63,4 +69,8 @@ public interface DungeonCharacter {
 
     /** sets the speed of the character. */
     void setSpeed(final int theSpeed);
+    /** Returns the damage dealt of the character to other character */
+    int attack(final DungeonCharacter theOther);
+    public String getStats();
+    public StatusEffects getStatusEffects();
 }

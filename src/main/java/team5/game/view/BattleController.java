@@ -11,12 +11,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 import team5.game.App;
 import team5.game.controller.Battle;
 import team5.game.controller.Choices;
-import team5.game.model.Archer;
 import team5.game.model.Hero;
 import team5.game.model.Monster;
 import team5.game.model.Ogre;
@@ -54,6 +56,8 @@ public class BattleController implements Initializable{
     @FXML
     private Button myAttack;
     @FXML
+    private Button mySpecial;
+    @FXML
     private Button myItem;
     @FXML
     private Button myRetreat;
@@ -73,6 +77,13 @@ public class BattleController implements Initializable{
         myMonster = new Ogre("Og");
 
         myBattle = new Battle(myHero, myMonster);
+        initDungeonCharacter();
+        initImages();
+        setHP();
+        myLog.appendText("Battles had started with " + myMonster.getName() + "\n");
+    }
+    
+    private void initDungeonCharacter() {
         myHeroMaxHP = myHero.getHealth();
         myMonsterMaxHP = myMonster.getHealth();
         myName.setText(myHero.getName());
@@ -81,11 +92,18 @@ public class BattleController implements Initializable{
         myMonsterHP = 100;
         myHeroBar.setStyle("-fx-accent: green");
         myMonsterBar.setStyle("-fx-accent: green");
+        
+    }
+    private void initImages() {
         myHeroImage.setImage(myHero.getImage());
         myMonsterImage.setImage(myMonster.getImage());
         myMonsterImage.setScaleX(-1);
-        setHP();
-        myLog.appendText("Battles had started with " + myMonster.getName() + "\n");
+        final Tooltip hero = new Tooltip(myHero.getStats());
+        Tooltip.install(myHeroImage, hero);
+        final Tooltip monster = new Tooltip(myMonster.getStats());
+        Tooltip.install(myMonsterImage, monster);
+        hero.setShowDelay(Duration.seconds(0));
+        monster.setShowDelay(Duration.seconds(0));
     }
     private void setHP() {
         final String hero = "HP " + myHero.getHealth() + "/" + myHeroMaxHP;
@@ -128,9 +146,24 @@ public class BattleController implements Initializable{
         myNext.setVisible(true);
         myNext.setDisable(false);
         myAttack.setDisable(true);
+        mySpecial.setDisable(true);
         myItem.setDisable(true);
         myRetreat.setDisable(true);
 
+    }
+    @FXML
+    void useSpecialAttack(ActionEvent event) {
+        specialAction();
+    }
+    private void specialAction() {
+        do {
+            myBattle.battleSpecial();
+            setHP();
+            displayText();
+            if (myBattle.isOver()) {
+                endBattleButtons();
+            }
+        } while(myHero.getSpecialAttack().getTurns() > 0);
     }
     @FXML
     void item(ActionEvent event) {

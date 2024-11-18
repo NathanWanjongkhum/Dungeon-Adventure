@@ -1,16 +1,19 @@
 package team5.game.model;
 
-public class Hero extends AbstractDungeonCharacter {
+public abstract class Hero extends AbstractDungeonCharacter implements Special{
     private static final int ITEM_COUNT = 3;
     /** The direction the hero is facing */
     private Direction myDirection;
     /** The inventory of the hero */
     private Inventory myInventory;
+    /**Special Attack of hero */
+    private SpecialAttack mySpecial;
 
-    protected Hero(final String theName, final int theHealth, final int theDamage, final int theSpeed) {
+    protected Hero(final String theName, final int theHealth, final int theDamage, final int theSpeed, final SpecialAttack theSpecial) {
         super(theName, theHealth, theDamage, theSpeed);
         myDirection = Direction.NORTH;
         myInventory = new Inventory(ITEM_COUNT);
+        mySpecial = theSpecial;
     }
 
     /**
@@ -30,6 +33,9 @@ public class Hero extends AbstractDungeonCharacter {
     public Inventory getInventory() {
         return myInventory.clone();
     }
+    public SpecialAttack getSpecialAttack() {
+        return mySpecial;
+    }
 
     /**
      * Set the direction the hero is facing
@@ -39,4 +45,12 @@ public class Hero extends AbstractDungeonCharacter {
     public void setDirection(Direction direction) {
         myDirection = direction;
     }
+    public void heal(int theHeal) {
+        if (getHealth() + theHeal >= getMaxHealth()) {
+            setHealth(getMaxHealth());
+        } else {
+            setHealth(getHealth() + theHeal);
+        }
+    }
+
 }

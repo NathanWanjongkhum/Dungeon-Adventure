@@ -21,7 +21,7 @@ public class Battle {
     
     public void battle() {
         myText = String.format("Round %d:\n", myCount);
-        if (myHero.getSpeed() > myMonster.getSpeed()) {
+        if (myHero.getSpeed() >= myMonster.getSpeed()) {
             attack(myHero, myMonster);
             if (myMonster.isAlive()) {
                 attack(myMonster, myHero);
@@ -32,25 +32,72 @@ public class Battle {
                 attack(myHero, myMonster);
             }
         }
+        if (myHero.getStatusEffects().isRegen()) {
+            healed(myHero.getSpecialAttack().getDamage());
+        }
+        checkStatus(myMonster, myHero);
         myText += "\n";
         myCount++;
     }
     private void attack(DungeonCharacter theAttacker, DungeonCharacter theDefender) {
-        Random rand = new Random();
-        final int damage = rand.nextInt(theAttacker.getMaxDamage() - theAttacker.getMinDamage() + 1) + theAttacker.getMinDamage();
-        int hp = theDefender.getHealth() - damage;
-        if (hp < 1) {
-            theDefender.setHealth(0);
-            addText(theAttacker, theDefender, damage);
-            myText += String.format("%s has defeated %s\n", theAttacker.getName(), theDefender.getName());
-        } else {
-            theDefender.setHealth(hp);
-            addText(theAttacker, theDefender, damage);
-        }
+        final int damage = theAttacker.attack(theDefender);
+        changeHP(theAttacker, theDefender, damage);
         
     }
-    private void addText(DungeonCharacter theAttacker, DungeonCharacter theDefender, int theDamage) {
+    public void battleSpecial() {
+        myText = String.format("Round %d:\n", myCount);
+        if (myHero.getSpeed() >= myMonster.getSpeed()) {
+            special(myHero, myMonster);
+            if (myMonster.isAlive()) {
+                attack(myMonster, myHero);
+            }
+        } else {
+            attack(myMonster, myHero);
+            if (myHero.isAlive()) {
+                special(myHero, myMonster);
+            }
+        }
+        if (myHero.getStatusEffects().isRegen()) {
+            healed(myHero.getSpecialAttack().getDamage());
+        }
+        checkStatus(myMonster, myHero);
+        myText += "\n";
+        myCount++;                
+    }
+    private void special(Hero theHero, Monster theMonster) {
+        final int damage = theHero.useSpecialAttack(theMonster);
+        int charge = theHero.getSpecialAttack().getTurns();
+        if (charge > 0) {
+            myText += String.format("%s is charging their special attack!\n", myHero.getName());
+            myHero.getSpecialAttack().setTurns(myHero.getSpecialAttack().getTurns() - 1);
+        } else if (myHero.getStatusEffects().isRegen()){
+            myText += String.format("%s casted a healing!\n", myHero.getName());
+        } else {
+            changeHP(theHero, theMonster, damage);
+        }
+        
+
+    }
+    private void healed(int theHeal) {
+            myHero.heal(theHeal);
+            myText += String.format("%s has healed %d HP!\n", myHero.getName(), theHeal);
+    }
+    private void addAttackText(DungeonCharacter theAttacker, DungeonCharacter theDefender, int theDamage) {
         myText += String.format("%s has hit %s for %d\n", theAttacker.getName(), theDefender.getName(), theDamage);
+    }
+    private void checkStatus(DungeonCharacter theFirst, DungeonCharacter theSecond) {
+        if (theFirst.getStatusEffects().isVulnerable()) {
+            theFirst.getStatusEffects().setVulnerableDuration(theFirst.getStatusEffects().getVulurableDuration() - 1);
+        }
+        if (theFirst.getStatusEffects().isRegen()) {
+            theFirst.getStatusEffects().setRegenDuration(theFirst.getStatusEffects().getRegenDuration() - 1);
+        }
+        if (theSecond.getStatusEffects().isVulnerable()) {
+            theSecond.getStatusEffects().setVulnerableDuration(theSecond.getStatusEffects().getVulurableDuration() - 1);
+        }
+        if (theSecond.getStatusEffects().isRegen()) {
+            theSecond.getStatusEffects().setRegenDuration(theSecond.getStatusEffects().getRegenDuration() - 1);
+        }
     }
     public boolean isOver() {
         return !myHero.isAlive() || !myMonster.isAlive();
@@ -58,7 +105,19 @@ public class Battle {
     public String actionPerformed() {
         return myText;
     }
-    protected void item() {
+    public void changeHP(DungeonCharacter theAttacker, DungeonCharacter theDefender,  final int theDamage) {
+        int hp = theDefender.getHealth();
+        if (hp > 0) {
+            theDefender.setHealth(hp);
+            addAttackText(theAttacker, theDefender, theDamage);
+        } else {
+            theDefender.setHealth(0);
+            addAttackText(theAttacker, theDefender, theDamage);
+            myText += String.format("%s has defeated %s!\n", theAttacker.getName(), theDefender.getName());
+        }
+    }
+    public void item() {
 
     }
+
 }
