@@ -49,7 +49,7 @@ public class Warrior extends Hero {
                 break;
             case 6:
                 multiplier += 0;
-                mySpecialText = "Normal Attack";
+                mySpecialText = "\nNormal Attack\n";
                 break;
             case 7:
                 this.getStatusEffects().setVulnerableDuration(3);

@@ -144,7 +144,7 @@ public class Battle {
     private void checkStatus(final DungeonCharacter theCharacter) {
         checkHeal(theCharacter);
         if (theCharacter.getStatusEffects().isVulnerable()) {
-            theCharacter.getStatusEffects().setVulnerableDuration(theCharacter.getStatusEffects().getVulurableDuration() - 1);
+            theCharacter.getStatusEffects().setVulnerableDuration(theCharacter.getStatusEffects().getVulnerableDuration() - 1);
         }
         if (theCharacter.getStatusEffects().isRegen()) {
             theCharacter.getStatusEffects().setRegenDuration(theCharacter.getStatusEffects().getRegenDuration() - 1);

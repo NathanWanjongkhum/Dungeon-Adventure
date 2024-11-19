@@ -84,6 +84,10 @@ public class BattleController implements Initializable{
 
         myBackground.setStyle("-fx-background-color: black");
         myBattle = new Battle(myHero, myMonster);
+        
+        myHeroTooltip = new Tooltip(myHero.getStats());
+        myMonsterTooltip = new Tooltip(myMonster.getStats());
+
         initDungeonCharacter();
         initImages();
         setHP();
@@ -95,7 +99,7 @@ public class BattleController implements Initializable{
         myHeroHP = 100;
         myHeroBar.setStyle("-fx-accent: green");
 
-        
+
         myMonsterName.setText(myMonster.getName());
         myMonsterHP = 100;
         myMonsterBar.setStyle("-fx-accent: green");
@@ -103,13 +107,11 @@ public class BattleController implements Initializable{
     private void initImages() {
         initImages(myHeroImage, myHero, myHeroTooltip);
         initImages(myMonsterImage, myMonster, myMonsterTooltip);
-
         myMonsterImage.setScaleX(-1);
     }
 
     private void initImages(final ImageView theView, final DungeonCharacter theCharacter, Tooltip theTooltip) {
         theView.setImage(theCharacter.getImage());
-        theTooltip = new Tooltip(theCharacter.getStats());
         Tooltip.install(theView, theTooltip);
         theTooltip.setShowDelay(Duration.seconds(0));
     }

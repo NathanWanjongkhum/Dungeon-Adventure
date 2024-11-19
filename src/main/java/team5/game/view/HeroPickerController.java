@@ -41,7 +41,7 @@ public class HeroPickerController implements Initializable {
         myChoice.getItems().addAll(myCharacters);
         myChoice.setOnAction(this::displayImage);
     }
-    public void displayImage(ActionEvent event) {
+    private void displayImage(ActionEvent event) {
         String choice = myChoice.getValue();
         Hero hero = HeroFactory.createHero(choice);
         myImage.setImage(hero.getImage());
