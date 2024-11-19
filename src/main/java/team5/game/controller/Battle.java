@@ -27,7 +27,7 @@ public class Battle {
      * @param theHero the hero controlled by player
      * @param theMonster the monster object
      */
-    public Battle(Hero theHero, Monster theMonster) {
+    public Battle(final Hero theHero, final Monster theMonster) {
         myHero = theHero;
         myMonster = theMonster;
         myText = "";
@@ -98,7 +98,7 @@ public class Battle {
      * @param theAttacker the attacking character
      * @param theDefender the defending character
      */
-    private void attack(DungeonCharacter theAttacker, DungeonCharacter theDefender) {
+    private void attack(final DungeonCharacter theAttacker, final DungeonCharacter theDefender) {
         final int damage = theAttacker.attack(theDefender);
         changeHP(theAttacker, theDefender, damage);
         
@@ -110,7 +110,7 @@ public class Battle {
      * @param theMonster the monster object
      */
     //Probably could just use the instance field myHero instead of using a parameter as private
-    private void special(Hero theHero, Monster theMonster) {
+    private void special(final Hero theHero, final Monster theMonster) {
         final int damage = theHero.useSpecialAttack(theMonster);
         int charge = theHero.getSpecialAttack().getTurns();
         if (charge > 0) {
@@ -133,7 +133,7 @@ public class Battle {
      * @param theDefender the defending character
      * @param theDamage the damage the attacker dealt
      */
-    private void addAttackText(DungeonCharacter theAttacker, DungeonCharacter theDefender, int theDamage) {
+    private void addAttackText(final DungeonCharacter theAttacker, final DungeonCharacter theDefender, final int theDamage) {
         myText += String.format("%s has hit %s for %d\n", theAttacker.getName(), theDefender.getName(), theDamage);
     }
     /**
@@ -141,7 +141,7 @@ public class Battle {
      * 
      * @param theCharacter the dungeon character whose status condition needs to be checked
      */
-    private void checkStatus(DungeonCharacter theCharacter) {
+    private void checkStatus(final DungeonCharacter theCharacter) {
         checkHeal(theCharacter);
         if (theCharacter.getStatusEffects().isVulnerable()) {
             theCharacter.getStatusEffects().setVulnerableDuration(theCharacter.getStatusEffects().getVulurableDuration() - 1);
@@ -155,7 +155,7 @@ public class Battle {
      * 
      * @param theCharacter the dungeon character who is checked to be healed
      */
-    private void checkHeal(DungeonCharacter theCharacter) {
+    private void checkHeal(final DungeonCharacter theCharacter) {
         if (theCharacter.getStatusEffects().isRegen()) {
             healed(theCharacter.getStatusEffects().getRegenAmount(), theCharacter);
         }
@@ -166,9 +166,27 @@ public class Battle {
      * @param theHeal the heal amount
      * @param theCharacter the targeted character
      */
-    private void healed(int theHeal, DungeonCharacter theCharacter) {
+    private void healed(final int theHeal, final DungeonCharacter theCharacter) {
         theCharacter.heal(theHeal);
         myText += String.format("%s has healed %d HP!\n", theCharacter.getName(), theHeal);
+    }
+     /**
+     * Checks if hp is below 0, in which would be set to 0 and add text if battle is over.
+     * 
+     * @param theAttacker
+     * @param theDefender
+     * @param theDamage
+     */
+    private void changeHP(final DungeonCharacter theAttacker, final DungeonCharacter theDefender,  final int theDamage) {
+        int hp = theDefender.getHealth();
+        if (hp > 0) {
+            theDefender.setHealth(hp);
+            addAttackText(theAttacker, theDefender, theDamage);
+        } else {
+            theDefender.setHealth(0);
+            addAttackText(theAttacker, theDefender, theDamage);
+            myText += String.format("%s has defeated %s!\n", theAttacker.getName(), theDefender.getName());
+        }
     }
     /**
      * Returns true if one character's hp is 0.
@@ -185,23 +203,6 @@ public class Battle {
      */
     public String actionPerformed() {
         return myText;
-    }
-    /**
-     * 
-     * @param theAttacker
-     * @param theDefender
-     * @param theDamage
-     */
-    private void changeHP(DungeonCharacter theAttacker, DungeonCharacter theDefender,  final int theDamage) {
-        int hp = theDefender.getHealth();
-        if (hp > 0) {
-            theDefender.setHealth(hp);
-            addAttackText(theAttacker, theDefender, theDamage);
-        } else {
-            theDefender.setHealth(0);
-            addAttackText(theAttacker, theDefender, theDamage);
-            myText += String.format("%s has defeated %s!\n", theAttacker.getName(), theDefender.getName());
-        }
     }
     public void item(Hero theHero, Item theItem) {
 

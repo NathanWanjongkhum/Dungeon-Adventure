@@ -8,7 +8,15 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special{
     private Inventory myInventory;
     /**Special Attack of hero */
     private SpecialAttack mySpecial;
-
+    /**
+     * The Hero constructor
+     * 
+     * @param theName the name of the hero
+     * @param theHealth the health of the hero 
+     * @param theDamage the damage of the hero
+     * @param theSpeed the speed of the hero
+     * @param theSpecial the special attack of the hero
+     */
     protected Hero(final String theName, final int theHealth, final int theDamage, final int theSpeed, final SpecialAttack theSpecial) {
         super(theName, theHealth, theDamage, theSpeed);
         myDirection = Direction.NORTH;
@@ -33,6 +41,7 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special{
     public Inventory getInventory() {
         return myInventory.clone();
     }
+    @Override
     public SpecialAttack getSpecialAttack() {
         return mySpecial;
     }
@@ -42,7 +51,7 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special{
      * 
      * @param direction the direction
      */
-    public void setDirection(Direction direction) {
+    public void setDirection(final Direction direction) {
         myDirection = direction;
     }
     @Override

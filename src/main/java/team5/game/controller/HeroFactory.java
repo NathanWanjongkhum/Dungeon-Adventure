@@ -9,7 +9,7 @@ import team5.game.model.Warrior;
 /**
  * The Hero Factory to create heroes
  * 
- * @author Holden Tsang
+ * @author 
  * @version
  */
 public class HeroFactory {
@@ -19,7 +19,7 @@ public class HeroFactory {
      * @param theHero the string of the hero
      * @return a new hero object of selected hero
      */
-    public static Hero createHero(String theHero) {
+    public static Hero createHero(final String theHero) {
         switch(theHero) {
             case "Archer":
                 return new Archer(Choices.getChoices().getName());

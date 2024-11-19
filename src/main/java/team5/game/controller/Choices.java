@@ -5,7 +5,7 @@ import team5.game.model.Hero;
 /**
  * A singleton class to get the choices that occur when starting
  * 
- * @author Holden Tsang
+ * @author 
  * @version
  */
 public class Choices {
@@ -42,7 +42,7 @@ public class Choices {
      * 
      * @param theName the string of the name
      */
-    public void setName(String theName) {
+    public void setName(final String theName) {
         myName = theName;
     }
     /**
@@ -50,7 +50,7 @@ public class Choices {
      * 
      * @param theHero the hero object
      */
-    public void setHero(Hero theHero) {
+    public void setHero(final Hero theHero) {
         myHero = theHero;
     }
     /**

@@ -1,7 +1,17 @@
 package team5.game.model;
-
+/**
+ * The Goblin Monster Class
+ * 
+ * @author
+ * @version
+ */
 public class Goblin extends Monster {
-    public Goblin(String theName) {
+    /**
+     * The goblin constructor
+     * 
+     * @param theName the name of the goblin
+     */
+    public Goblin(final String theName) {
         super(theName, 50, 5, 3);
     }
 }

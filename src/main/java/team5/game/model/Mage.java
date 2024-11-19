@@ -1,11 +1,26 @@
 package team5.game.model;
-
+/**
+ * The Mage Hero Class
+ * 
+ * @author
+ * @version
+ */
 public class Mage extends Hero {
+    /** The windup time for the special ability for Priestess */
     private static final int TURNS = 2;
-    public Mage(String theName) {
+    /**
+     * The Mage constructor
+     * 
+     * @param theName the name of the mage hero
+     */
+    public Mage(final String theName) {
         super(theName, 250, 50, 10, new SpecialAttack(TURNS, 300));
     }
-    public int useSpecialAttack(DungeonCharacter theOther) {
+    /**
+     * The mage's special attack 
+     */
+    @Override
+    public int useSpecialAttack(final DungeonCharacter theOther) {
         if (this.getSpecialAttack().getTurns() < 0) {
         }
         int damage = 0;
@@ -15,7 +30,6 @@ public class Mage extends Hero {
             theOther.setHealth(theOther.getHealth() - damage);
             this.getSpecialAttack().setTurns(this.getSpecialAttack().getTurns() - 1);
         } else {
-            this.getStatusEffects().setVulnerable(true);
             this.getStatusEffects().setVulnerableDuration(this.getSpecialAttack().getTurns());
         }
         return damage;
@@ -31,6 +45,7 @@ public class Mage extends Hero {
     public void resetTurns() {
         getSpecialAttack().setTurns(TURNS);
     }
+    @Override
     public String specialAttackText() {
         return "\nUnleashed their magic!\n";
     }

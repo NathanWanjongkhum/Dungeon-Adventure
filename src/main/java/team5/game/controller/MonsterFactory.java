@@ -8,7 +8,7 @@ import team5.game.model.Skeleton;
 /**
  * The Monster Factory to create monsters
  * 
- * @author Holden Tsang
+ * @author 
  * @version
  */
 public class MonsterFactory {
@@ -20,7 +20,7 @@ public class MonsterFactory {
      * @param theName the string for monster name
      * @return a monster object of a certain type
      */
-    public static Monster createHero(final char theMonster, String theName) {
+    public static Monster createHero(final char theMonster, final String theName) {
         switch(theMonster) {
             case 'O':
                 return new Ogre(theName);

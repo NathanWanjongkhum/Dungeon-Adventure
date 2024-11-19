@@ -3,14 +3,23 @@ package team5.game.model;
 import java.util.Random;
 
 public class Warrior extends Hero {
+    /** Different special attack text for the different outcomes */
     private String mySpecialText;
-
-    public Warrior(String theName) {
+    /**
+     * Warrior Hero constructor
+     * 
+     * @param theName the name of the hero
+     */
+    public Warrior(final String theName) {
         super(theName, 500, 20, 8, new SpecialAttack(0, 15));
         mySpecialText = "";
     }
+    /**
+     * The Warrior's special attack is random effects
+     */
+    @Override
     public int useSpecialAttack(DungeonCharacter theOther) {
-        int damage = getSpecialAttack().getDamage();
+        int damage = this.getSpecialAttack().getDamage();
         double multiplier = 1 + Math.random();
         Random rand = new Random();
         int value = rand.nextInt(10);
@@ -29,8 +38,8 @@ public class Warrior extends Hero {
                 mySpecialText = "\nSomehow healed the enemy 10 HP for 3 turns!\n";
                 break;
             case 4:
-                getStatusEffects().setRegenAmount(10);
-                getStatusEffects().setRegenDuration(2);
+                this.getStatusEffects().setRegenAmount(10);
+                this.getStatusEffects().setRegenDuration(2);
                 mySpecialText = "\nGained Regeneration for 10 HP for 2 turns!\n";
                 break;
 
@@ -43,7 +52,7 @@ public class Warrior extends Hero {
                 mySpecialText = "Normal Attack";
                 break;
             case 7:
-                getStatusEffects().setVulnerableDuration(3);
+                this.getStatusEffects().setVulnerableDuration(3);
                 mySpecialText = "\nTripped and became vulnerable for 2 turns!\n";
                 break;
             case 8:
@@ -60,7 +69,7 @@ public class Warrior extends Hero {
                 break;
         }
         damage = (int) (damage * multiplier);
-        damage = super.checkVulnerableDamage(theOther, damage);
+        damage = this.checkVulnerableDamage(theOther, damage);
         theOther.setHealth(theOther.getHealth() - damage);
         return damage;
     }

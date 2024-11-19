@@ -18,6 +18,7 @@ import javafx.util.Duration;
 import team5.game.App;
 import team5.game.controller.Battle;
 import team5.game.controller.Choices;
+import team5.game.model.DungeonCharacter;
 import team5.game.model.Hero;
 import team5.game.model.Monster;
 import team5.game.model.Ogre;
@@ -68,8 +69,6 @@ public class BattleController implements Initializable{
     private Label myMonsterStatus;
 
     private Battle myBattle;
-    // private int myHeroMaxHP;
-    // private int myMonsterMaxHP;
     private Hero myHero;
     private Monster myMonster;
     private double myHeroHP;
@@ -92,45 +91,51 @@ public class BattleController implements Initializable{
     }
     
     private void initDungeonCharacter() {
-        // myHeroMaxHP = myHero.getHealth();
-        // myMonsterMaxHP = myMonster.getHealth();
         myName.setText(myHero.getName());
-        myMonsterName.setText(myMonster.getName());
         myHeroHP = 100;
-        myMonsterHP = 100;
         myHeroBar.setStyle("-fx-accent: green");
+
+        
+        myMonsterName.setText(myMonster.getName());
+        myMonsterHP = 100;
         myMonsterBar.setStyle("-fx-accent: green");
     }
     private void initImages() {
-        myHeroImage.setImage(myHero.getImage());
-        myMonsterImage.setImage(myMonster.getImage());
+        initImages(myHeroImage, myHero, myHeroTooltip);
+        initImages(myMonsterImage, myMonster, myMonsterTooltip);
+
         myMonsterImage.setScaleX(-1);
-        myHeroTooltip = new Tooltip(myHero.getStats());
-        Tooltip.install(myHeroImage, myHeroTooltip);
-        myMonsterTooltip = new Tooltip(myMonster.getStats());
-        Tooltip.install(myMonsterImage, myMonsterTooltip);
-        myHeroTooltip.setShowDelay(Duration.seconds(0));
-        myMonsterTooltip.setShowDelay(Duration.seconds(0));
+    }
+
+    private void initImages(final ImageView theView, final DungeonCharacter theCharacter, Tooltip theTooltip) {
+        theView.setImage(theCharacter.getImage());
+        theTooltip = new Tooltip(theCharacter.getStats());
+        Tooltip.install(theView, theTooltip);
+        theTooltip.setShowDelay(Duration.seconds(0));
     }
     private void setHP() {
-        final String hero = "HP " + myHero.getHealth() + "/" + myHero.getMaxHealth();
-        myHPLevel.setText(hero);
-        myHeroHP = (double) myHero.getHealth() / myHero.getMaxHealth();
-        myHeroBar.setProgress(myHeroHP);
-        if (myHeroHP <= 0.25) {
-            myHeroBar.setStyle("-fx-accent: red;");
-        } else if (myHeroHP <= 0.5) {
-            myHeroBar.setStyle("-fx-accent: yellow;");
-        }
+        setHP(myHero, myHPLevel, myHeroHP);
+        setHPBar(myHeroBar,myHeroHP);
 
-        final String monster = "HP " + myMonster.getHealth() + "/" + myMonster.getMaxHealth();
-        myMonsterHPLevel.setText(monster);
-        myMonsterHP = (double) myMonster.getHealth() / myMonster.getMaxHealth();
-        myMonsterBar.setProgress(myMonsterHP);
-        if (myMonsterHP < 0.25) {
-            myMonsterBar.setStyle("-fx-accent: red;");
-        } else if (myMonsterHP < 0.5) {
-            myMonsterBar.setStyle("-fx-accent: yellow;");
+        setHP(myMonster, myMonsterHPLevel, myMonsterHP);
+        setHPBar(myMonsterBar, myMonsterHP);
+    }
+    private void setHP(final DungeonCharacter theCharacter, final Label theLabel, double theHP) {
+        final String character = "HP " + theCharacter.getHealth() + "/" + theCharacter.getMaxHealth();
+        theLabel.setText(character);
+        theHP = (double) theCharacter.getHealth() / theCharacter.getMaxHealth();
+    }
+    private void setHPBar(final ProgressBar theBar, final double theHP) {
+        theBar.setProgress(theHP);
+        checkHPBar(theBar, theHP);
+    }
+    private void checkHPBar(final ProgressBar theBar, final double theHP) {
+        if (theHP < 0.25) {
+            theBar.setStyle("-fx-accent: red;");
+        } else if (theHP < 0.5) {
+            theBar.setStyle("-fx-accent: yellow;");
+        } else {
+            theBar.setStyle("-fx-accent: green");
         }
     }
     @FXML
@@ -146,42 +151,7 @@ public class BattleController implements Initializable{
             over();
         }
     }
-    private void displayText() {
-        myLog.appendText(myBattle.actionPerformed());
-        if (myHero.getStatusEffects().isRegen() || myHero.getStatusEffects().isVulnerable()) {
-            myHeroTooltip.setText(myHero.getStats() + myHero.getStatusEffects().toString());
-            myHeroStatus.setText(myHero.getStatusEffects().toString());
-            myHeroStatus.setVisible(true);
-        } else {
-            myHeroTooltip.setText(myHero.getStats());
-            myHeroStatus.setVisible(false);
-        }
-        if (myMonster.getStatusEffects().isRegen() || myMonster.getStatusEffects().isVulnerable()) {
-            myMonsterTooltip.setText(myMonster.getStats() + myMonster.getStatusEffects().toString());
-            myMonsterStatus.setText(myMonster.getStatusEffects().toString());
-            myMonsterStatus.setVisible(true);
-        } else {
-            myMonsterTooltip.setText(myMonster.getStats());
-            myMonsterStatus.setVisible(false);
-        }
-    }
-
-
-    private void over() {
-        setBattleButtons(false);
-        setNextButton(true);
-    }
-    private void setBattleButtons(boolean theBoolean) {
-        myAttack.setDisable(!theBoolean);
-        mySpecial.setDisable(!theBoolean);
-        myItem.setDisable(!theBoolean);
-        myRetreat.setDisable(!theBoolean);
-
-    }
-    private void setNextButton(boolean theBoolean) {
-        myNext.setVisible(theBoolean);
-        myNext.setDisable(!theBoolean);
-    }
+    
     @FXML
     void useSpecialAttack(ActionEvent event) {
         specialAction();
@@ -218,5 +188,38 @@ public class BattleController implements Initializable{
     void endBattle(ActionEvent event) throws IOException{
         App.setRoot("primary");
     }
+
+    private void displayText() {
+        myLog.appendText(myBattle.actionPerformed());
+        displayEffect(myHero, myHeroTooltip, myHeroStatus);
+        displayEffect(myMonster, myMonsterTooltip, myMonsterStatus);
+    }
+    
+    private void displayEffect(final DungeonCharacter theCharacter, final Tooltip theTooltip, final Label theLabel) {
+        if (theCharacter.getStatusEffects().isRegen() || theCharacter.getStatusEffects().isVulnerable()) {
+            theTooltip.setText(theCharacter.getStats() + theCharacter.getStatusEffects().toString());
+            theLabel.setText(theCharacter.getStatusEffects().toString());
+            theLabel.setVisible(true);
+        } else {
+            theTooltip.setText(theCharacter.getStats());
+            theLabel.setVisible(false);
+        }
+    }
+    private void over() {
+        setBattleButtons(false);
+        setNextButton(true);
+    }
+    private void setBattleButtons(boolean theBoolean) {
+        myAttack.setDisable(!theBoolean);
+        mySpecial.setDisable(!theBoolean);
+        myItem.setDisable(!theBoolean);
+        myRetreat.setDisable(!theBoolean);
+
+    }
+    private void setNextButton(boolean theBoolean) {
+        myNext.setVisible(theBoolean);
+        myNext.setDisable(!theBoolean);
+    }
+
 }
 

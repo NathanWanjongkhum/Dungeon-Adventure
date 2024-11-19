@@ -1,19 +1,30 @@
 package team5.game.model;
 
-
+/**
+ * The Archer Class
+ * 
+ * @author
+ * @version
+ */
 public class Archer extends Hero {
-    public Archer(String theName) {
+    /**
+     * The Archer Constructor
+     * 
+     * @param theName the name of the archer
+     */
+    public Archer(final String theName) {
         super(theName, 150, 10, 20, new SpecialAttack(0, 5));
     }
-    public int useSpecialAttack(DungeonCharacter theOther) {
+    @Override
+    public int useSpecialAttack(final DungeonCharacter theOther) {
         int damage = 0;
-        if(getSpecialAttack().getTurns() == 0) {
+        if(this.getSpecialAttack().getTurns() == 0) {
             theOther.getStatusEffects().setVulnerableDuration(2);
-            damage = getSpecialAttack().getDamage();
-            damage = super.checkVulnerableDamage(theOther, damage);
+            damage = this.getSpecialAttack().getDamage();
+            damage = this.checkVulnerableDamage(theOther, damage);
             theOther.setHealth(theOther.getHealth() - damage);
         } else {
-            getSpecialAttack().setTurns(getSpecialAttack().getTurns() - 1);
+            this.getSpecialAttack().setTurns(getSpecialAttack().getTurns() - 1);
         }
         return damage;
     }
@@ -25,6 +36,7 @@ public class Archer extends Hero {
                         "enemies take double damage on the next basic attack\n");
         return builder.toString();
     }
+    @Override
     public String specialAttackText() {
         return "Vulnerabled the enemy for the next normal attack!\n";
     }

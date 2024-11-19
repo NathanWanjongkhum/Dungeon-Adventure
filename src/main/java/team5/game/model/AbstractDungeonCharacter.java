@@ -80,12 +80,12 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
         return myEffects;
     }
     @Override
-    public void setHealth(int theHealth) {
+    public void setHealth(final int theHealth) {
         myHealth = theHealth;
     }
 
     @Override
-    public void setMinDamage(int theDamage) {
+    public void setMinDamage(final int theDamage) {
         if (theDamage > 0) {
             myMinDamage = theDamage;
         } else {
@@ -95,12 +95,12 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
     }
 
     @Override
-    public void setMaxDamage(int theDamage) {
+    public void setMaxDamage(final int theDamage) {
         myMaxDamage = theDamage;
     }
 
     @Override
-    public void setSpeed(int theSpeed) {
+    public void setSpeed(final int theSpeed) {
         mySpeed = theSpeed;
     }
     @Override
@@ -120,21 +120,23 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
         return builder.toString();
     }
     @Override
-    public int attack(DungeonCharacter theOther) {
+    public int attack(final DungeonCharacter theOther) {
         Random rand = new Random();
         int damage = rand.nextInt(myMaxDamage - myMinDamage + 1) + myMinDamage;
         damage = checkVulnerableDamage(theOther, damage);
         theOther.setHealth(theOther.getHealth() - damage);
         return damage;
     }
-    public void heal(int theHeal) {
+    @Override
+    public void heal(final int theHeal) {
         if (getHealth() + theHeal >= getMaxHealth()) {
             setHealth(getMaxHealth());
         } else {
             setHealth(getHealth() + theHeal);
         }
     }
-    public int checkVulnerableDamage(DungeonCharacter theOther, int theDamage) {
+    @Override
+    public int checkVulnerableDamage(final DungeonCharacter theOther, final int theDamage) {
         int damage = theDamage;
         if(theOther.getStatusEffects().isVulnerable()) {
             damage *= 2;
