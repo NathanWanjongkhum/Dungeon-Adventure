@@ -5,21 +5,27 @@ public class StatusEffects {
     private boolean myRegen;
     private int myVulDuration;
     private int myRegenDuration;
+    private int myRegenAmount;
 
     public StatusEffects() {
         myVulnerable = false;
         myRegen = false;
         myVulDuration = 0;
         myRegenDuration = 0;
+        myRegenAmount = 0;
     }
     public boolean isVulnerable() {
-        if (myVulDuration == 0) {
+        if (myVulDuration > 0) {
+            myVulnerable = true;
+        } else {
             myVulnerable = false;
         }
         return myVulnerable;
     }
     public boolean isRegen() {
-        if (myRegenDuration == 0) {
+        if (myRegenDuration > 0) {
+            myRegen = true;
+        } else {
             myRegen = false;
         }
         return myRegen;
@@ -29,6 +35,9 @@ public class StatusEffects {
     }
     public int getRegenDuration() {
         return myRegenDuration;
+    }
+    public int getRegenAmount() {
+        return myRegenAmount;
     }
     public void setVulnerable(final boolean theStatus) {
         myVulnerable = theStatus;
@@ -41,5 +50,23 @@ public class StatusEffects {
     }
     public void setRegenDuration(final int theDuration) {
         myRegenDuration = theDuration;
+    }
+    public void setRegenAmount(final int theAmount) {
+        myRegenAmount = theAmount;
+    }
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Active Status Effects:\n");
+        if(isVulnerable()) {
+            String vul = String.format("Vulnerable for %d turns\n", getVulurableDuration());
+            builder.append(vul);
+        }
+        if (isRegen()) {
+            String regen = String.format("Regen for %d HP for %d turns\n", getRegenAmount(), getRegenDuration());
+            builder.append(regen);
+        }
+        return builder.toString();
+
     }
 }

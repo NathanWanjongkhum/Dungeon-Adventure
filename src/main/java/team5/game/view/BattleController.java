@@ -13,7 +13,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import team5.game.App;
 import team5.game.controller.Battle;
@@ -23,6 +23,8 @@ import team5.game.model.Monster;
 import team5.game.model.Ogre;
 
 public class BattleController implements Initializable{
+    @FXML
+    private AnchorPane myBackground;
 
     @FXML
     private Label myHPLevel;
@@ -60,14 +62,20 @@ public class BattleController implements Initializable{
     private Button myItem;
     @FXML
     private Button myRetreat;
+    @FXML 
+    private Label myHeroStatus;
+    @FXML
+    private Label myMonsterStatus;
 
     private Battle myBattle;
-    private int myHeroMaxHP;
-    private int myMonsterMaxHP;
+    // private int myHeroMaxHP;
+    // private int myMonsterMaxHP;
     private Hero myHero;
     private Monster myMonster;
     private double myHeroHP;
     private double myMonsterHP;
+    private Tooltip myHeroTooltip;
+    private Tooltip myMonsterTooltip;
 
     @Override
     public void initialize(URL theURL, ResourceBundle theResource) {
@@ -75,6 +83,7 @@ public class BattleController implements Initializable{
         myHero = Choices.getChoices().getHero();
         myMonster = new Ogre("Og");
 
+        myBackground.setStyle("-fx-background-color: black");
         myBattle = new Battle(myHero, myMonster);
         initDungeonCharacter();
         initImages();
@@ -83,41 +92,40 @@ public class BattleController implements Initializable{
     }
     
     private void initDungeonCharacter() {
-        myHeroMaxHP = myHero.getHealth();
-        myMonsterMaxHP = myMonster.getHealth();
+        // myHeroMaxHP = myHero.getHealth();
+        // myMonsterMaxHP = myMonster.getHealth();
         myName.setText(myHero.getName());
         myMonsterName.setText(myMonster.getName());
         myHeroHP = 100;
         myMonsterHP = 100;
         myHeroBar.setStyle("-fx-accent: green");
         myMonsterBar.setStyle("-fx-accent: green");
-        
     }
     private void initImages() {
         myHeroImage.setImage(myHero.getImage());
         myMonsterImage.setImage(myMonster.getImage());
         myMonsterImage.setScaleX(-1);
-        final Tooltip hero = new Tooltip(myHero.getStats());
-        Tooltip.install(myHeroImage, hero);
-        final Tooltip monster = new Tooltip(myMonster.getStats());
-        Tooltip.install(myMonsterImage, monster);
-        hero.setShowDelay(Duration.seconds(0));
-        monster.setShowDelay(Duration.seconds(0));
+        myHeroTooltip = new Tooltip(myHero.getStats());
+        Tooltip.install(myHeroImage, myHeroTooltip);
+        myMonsterTooltip = new Tooltip(myMonster.getStats());
+        Tooltip.install(myMonsterImage, myMonsterTooltip);
+        myHeroTooltip.setShowDelay(Duration.seconds(0));
+        myMonsterTooltip.setShowDelay(Duration.seconds(0));
     }
     private void setHP() {
-        final String hero = "HP " + myHero.getHealth() + "/" + myHeroMaxHP;
+        final String hero = "HP " + myHero.getHealth() + "/" + myHero.getMaxHealth();
         myHPLevel.setText(hero);
-        myHeroHP = (double) myHero.getHealth() / myHeroMaxHP;
+        myHeroHP = (double) myHero.getHealth() / myHero.getMaxHealth();
         myHeroBar.setProgress(myHeroHP);
         if (myHeroHP <= 0.25) {
             myHeroBar.setStyle("-fx-accent: red;");
         } else if (myHeroHP <= 0.5) {
             myHeroBar.setStyle("-fx-accent: yellow;");
         }
-        
-        final String monster = "HP " + myMonster.getHealth() + "/" + myMonsterMaxHP;
+
+        final String monster = "HP " + myMonster.getHealth() + "/" + myMonster.getMaxHealth();
         myMonsterHPLevel.setText(monster);
-        myMonsterHP = (double) myMonster.getHealth() / myMonsterMaxHP;
+        myMonsterHP = (double) myMonster.getHealth() / myMonster.getMaxHealth();
         myMonsterBar.setProgress(myMonsterHP);
         if (myMonsterHP < 0.25) {
             myMonsterBar.setStyle("-fx-accent: red;");
@@ -131,46 +139,65 @@ public class BattleController implements Initializable{
     }
 
     private void attackAction() {
-        myBattle.battle();
+        myBattle.battle("attack");
         setHP();
         displayText();
         if (myBattle.isOver()) {
-            endBattleButtons();
+            over();
         }
     }
     private void displayText() {
         myLog.appendText(myBattle.actionPerformed());
+        if (myHero.getStatusEffects().isRegen() || myHero.getStatusEffects().isVulnerable()) {
+            myHeroTooltip.setText(myHero.getStats() + myHero.getStatusEffects().toString());
+            myHeroStatus.setText(myHero.getStatusEffects().toString());
+            myHeroStatus.setVisible(true);
+        } else {
+            myHeroTooltip.setText(myHero.getStats());
+            myHeroStatus.setVisible(false);
+        }
+        if (myMonster.getStatusEffects().isRegen() || myMonster.getStatusEffects().isVulnerable()) {
+            myMonsterTooltip.setText(myMonster.getStats() + myMonster.getStatusEffects().toString());
+            myMonsterStatus.setText(myMonster.getStatusEffects().toString());
+            myMonsterStatus.setVisible(true);
+        } else {
+            myMonsterTooltip.setText(myMonster.getStats());
+            myMonsterStatus.setVisible(false);
+        }
     }
-    private void endBattleButtons() {
-        myNext.setVisible(true);
-        myNext.setDisable(false);
-        myAttack.setDisable(true);
-        mySpecial.setDisable(true);
-        myItem.setDisable(true);
-        myRetreat.setDisable(true);
 
+
+    private void over() {
+        setBattleButtons(false);
+        setNextButton(true);
+    }
+    private void setBattleButtons(boolean theBoolean) {
+        myAttack.setDisable(!theBoolean);
+        mySpecial.setDisable(!theBoolean);
+        myItem.setDisable(!theBoolean);
+        myRetreat.setDisable(!theBoolean);
+
+    }
+    private void setNextButton(boolean theBoolean) {
+        myNext.setVisible(theBoolean);
+        myNext.setDisable(!theBoolean);
     }
     @FXML
     void useSpecialAttack(ActionEvent event) {
         specialAction();
     }
     private void specialAction() {
-        do {
-            myBattle.battleSpecial();
-            setHP();
-            displayText();
-            if (myBattle.isOver()) {
-                endBattleButtons();
-                break;
-            }
-        } while(myHero.getSpecialAttack().getTurns() > 0);
-        if (myHero.getSpecialAttack().getMaxTurns() > 0 && !myBattle.isOver()) {
-            myBattle.battleSpecial();
-            setHP();
-            displayText();
-            if (myBattle.isOver()) {
-                endBattleButtons();
-            }
+        if (myHero.getSpecialAttack().getTurns() > 0) {
+            setBattleButtons(false);
+            mySpecial.setDisable(false);
+        } else {
+            setBattleButtons(true);
+        }
+        myBattle.battle("special");
+        setHP();
+        displayText();
+        if (myBattle.isOver()) {
+            over();
         }
     }
     @FXML
@@ -184,16 +211,12 @@ public class BattleController implements Initializable{
     }
 
     @FXML
-    void retreat(ActionEvent event) {
-
+    void retreat(ActionEvent event) throws IOException{
+        App.setRoot("HeroSelection");
     }
     @FXML
     void endBattle(ActionEvent event) throws IOException{
         App.setRoot("primary");
-    }
-    @FXML
-    void displayMonster(MouseEvent event) {
-        //When clicking on image, display monster details
     }
 }
 

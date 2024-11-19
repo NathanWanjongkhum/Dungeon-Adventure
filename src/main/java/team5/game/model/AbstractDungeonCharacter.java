@@ -108,22 +108,37 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
         StringBuilder builder = new StringBuilder();
         builder.append("Name: ");
         builder.append(myName);
-        builder.append("\nMax HP: ");
-        builder.append(myHealth);
+        String hp = String.format("\nHP: %d/%d", myHealth, myMaxHealth);
+        builder.append(hp);
+        // builder.append("\nMax HP: ");
+        // builder.append(myHealth);
         String damage = String.format("\nDamage Range: %d - %d\n", myMinDamage, myMaxDamage);
         builder.append(damage);
         builder.append("Speed: ");
         builder.append(mySpeed);
+        builder.append("\n");
         return builder.toString();
     }
     @Override
     public int attack(DungeonCharacter theOther) {
         Random rand = new Random();
         int damage = rand.nextInt(myMaxDamage - myMinDamage + 1) + myMinDamage;
+        damage = checkVulnerableDamage(theOther, damage);
+        theOther.setHealth(theOther.getHealth() - damage);
+        return damage;
+    }
+    public void heal(int theHeal) {
+        if (getHealth() + theHeal >= getMaxHealth()) {
+            setHealth(getMaxHealth());
+        } else {
+            setHealth(getHealth() + theHeal);
+        }
+    }
+    public int checkVulnerableDamage(DungeonCharacter theOther, int theDamage) {
+        int damage = theDamage;
         if(theOther.getStatusEffects().isVulnerable()) {
             damage *= 2;
         }
-        theOther.setHealth(theOther.getHealth() - damage);
         return damage;
     }
 

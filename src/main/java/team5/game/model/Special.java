@@ -6,4 +6,8 @@ public interface Special{
 
     public int useSpecialAttack(DungeonCharacter theOther);
 
+    public String specialAttackText();
+
+    public void resetTurns();
+
 }

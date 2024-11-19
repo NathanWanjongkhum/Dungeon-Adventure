@@ -6,7 +6,19 @@ import team5.game.model.Mage;
 import team5.game.model.Priestess;
 import team5.game.model.Warrior;
 
+/**
+ * The Hero Factory to create heroes
+ * 
+ * @author Holden Tsang
+ * @version
+ */
 public class HeroFactory {
+    /**
+     * Takes a string and returns the hero chosen because of the string.
+     * 
+     * @param theHero the string of the hero
+     * @return a new hero object of selected hero
+     */
     public static Hero createHero(String theHero) {
         switch(theHero) {
             case "Archer":

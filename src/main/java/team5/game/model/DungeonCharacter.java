@@ -73,4 +73,6 @@ public interface DungeonCharacter {
     int attack(final DungeonCharacter theOther);
     public String getStats();
     public StatusEffects getStatusEffects();
+    public void heal(final int theHeal);
+    
 }

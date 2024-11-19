@@ -45,12 +45,9 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special{
     public void setDirection(Direction direction) {
         myDirection = direction;
     }
-    public void heal(int theHeal) {
-        if (getHealth() + theHeal >= getMaxHealth()) {
-            setHealth(getMaxHealth());
-        } else {
-            setHealth(getHealth() + theHeal);
-        }
+    @Override
+    public void resetTurns() {
+        mySpecial.setTurns(0);
     }
 
 }

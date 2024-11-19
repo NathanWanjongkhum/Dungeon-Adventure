@@ -8,10 +8,10 @@ public class Archer extends Hero {
     public int useSpecialAttack(DungeonCharacter theOther) {
         int damage = 0;
         if(getSpecialAttack().getTurns() == 0) {
-            damage = getSpecialAttack().getDamage();
-            theOther.setHealth(theOther.getHealth() - damage);
-            theOther.getStatusEffects().setVulnerable(true);
             theOther.getStatusEffects().setVulnerableDuration(2);
+            damage = getSpecialAttack().getDamage();
+            damage = super.checkVulnerableDamage(theOther, damage);
+            theOther.setHealth(theOther.getHealth() - damage);
         } else {
             getSpecialAttack().setTurns(getSpecialAttack().getTurns() - 1);
         }
@@ -21,8 +21,11 @@ public class Archer extends Hero {
     public String getStats() {
         StringBuilder builder = new StringBuilder();
         builder.append(super.getStats());
-        builder.append("\nSpecial Move: Does low damage, but makes " + 
-                        "enemies take double damage on the next basic attack");
+        builder.append("Special Move: Does low damage, but makes " + 
+                        "enemies take double damage on the next basic attack\n");
         return builder.toString();
+    }
+    public String specialAttackText() {
+        return "Vulnerabled the enemy for the next normal attack!\n";
     }
 }
