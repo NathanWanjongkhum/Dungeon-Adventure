@@ -18,8 +18,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("StartScreen"), 640, 480);
-        stage.setScene(scene);
+        myScene = new Scene(loadFXML("StartScreen"), 640, 480);
+        stage.setScene(myScene);
         // Makes it so that resizing the scene won't break visuals
         stage.setResizable(false);
         stage.show();
