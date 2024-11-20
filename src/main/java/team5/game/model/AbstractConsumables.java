@@ -39,4 +39,8 @@ public abstract class AbstractConsumables implements Item {
     public void setCount(int count) {
         myCount = count;
     }
+    @Override
+    public String toString() {
+        return getClass().getSimpleName();
+    }
 }

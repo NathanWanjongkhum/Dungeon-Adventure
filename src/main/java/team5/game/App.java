@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import team5.game.controller.Choices;
 
 import java.io.IOException;
 
@@ -16,10 +17,18 @@ public class App extends Application {
     private static Scene myScene;
 
     @Override
-    public void start(Stage myStage) throws IOException {
-        myScene = new Scene(loadFXML("DungeonSetting"), 640, 480);
-        myStage.setScene(myScene);
-        myStage.show();
+    public void start(Stage stage) throws IOException {
+        scene = new Scene(loadFXML("StartScreen"), 640, 480);
+        stage.setScene(scene);
+        // Makes it so that resizing the scene won't break visuals
+        stage.setResizable(false);
+        stage.show();
+        stage.setTitle("Dungeon Adventures");
+        // Add a icon to the scene
+        // stage.getIcons().add();
+
+        // stage.setMinHeight(480);
+        // stage.setMinWidth(640);
     }
 
     public static void setRoot(String theFXML) throws IOException {
