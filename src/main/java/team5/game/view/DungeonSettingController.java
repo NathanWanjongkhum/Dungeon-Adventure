@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import team5.game.App;
 import team5.game.model.Difficulty;
 import team5.game.model.Dungeon;
+import team5.game.model.Mage;
 
 /**
  * The controller for the dungeon settings screen.
@@ -67,6 +68,9 @@ public class DungeonSettingController {
 
         // Sets the dungeon
         final Dungeon myDungeon = new Dungeon(width, height, difficulty);
+        // Temporary
+        controller.setHero(new Mage("Merlin"));
+
         controller.setDungeon(myDungeon);
         controller.render();
 

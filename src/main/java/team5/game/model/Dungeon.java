@@ -97,6 +97,38 @@ public class Dungeon {
     }
 
     /**
+     * Check if there's a valid connection from the current position to the new room
+     * inthe given direction.
+     * 
+     * @param thePos       the position of the current room
+     * @param theDirection the direction to check
+     * 
+     * @return true if the current room an new room are connected
+     */
+    public boolean isConnected(final int theX, final int theY, final Direction theDirection) {
+        final int newX = theDirection.calculateNewX(theX);
+        final int newY = theDirection.calculateNewY(theY);
+
+        // Check bounds first
+        if (!isValidLocation(newX, newY)) {
+            return false;
+        }
+
+        final Room currentRoom = myDungeon[theX][theY];
+        final Room newRoom = myDungeon[newX][newY];
+
+        if (currentRoom == null || newRoom == null) {
+            return false;
+        }
+
+        // Check if both rooms have doors connecting them
+        final boolean currentRoomConnects = currentRoom.getDoors()[theDirection.ordinal()];
+        final boolean newRoomConnects = newRoom.getDoors()[theDirection.getOpposite().ordinal()];
+
+        return currentRoomConnects && newRoomConnects;
+    }
+
+    /**
      * Get the room at the given coordinates
      * 
      * @param theX the x coordinate

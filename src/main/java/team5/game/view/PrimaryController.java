@@ -8,7 +8,7 @@ public class PrimaryController {
 
     @FXML
     private void switchToDungeon() throws IOException {
-        App.setRoot("dungeon2");
+        App.setRoot("DungeonSetting");
     }
 
     @FXML

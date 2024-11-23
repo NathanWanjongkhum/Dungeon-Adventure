@@ -1,23 +1,29 @@
 package team5.game.model;
 
-public abstract class Hero extends AbstractDungeonCharacter implements Special{
+public abstract class Hero extends AbstractDungeonCharacter implements Special {
     private static final int ITEM_COUNT = 3;
     /** The direction the hero is facing */
     private Direction myDirection;
     /** The inventory of the hero */
     private Inventory myInventory;
-    /**Special Attack of hero */
+    /** Special Attack of hero */
     private SpecialAttack mySpecial;
+    /** The x coordinate of the hero */
+    private int myX;
+    /** The y coordinate of the hero */
+    private int myY;
+
     /**
      * The Hero constructor
      * 
-     * @param theName the name of the hero
-     * @param theHealth the health of the hero 
-     * @param theDamage the damage of the hero
-     * @param theSpeed the speed of the hero
+     * @param theName    the name of the hero
+     * @param theHealth  the health of the hero
+     * @param theDamage  the damage of the hero
+     * @param theSpeed   the speed of the hero
      * @param theSpecial the special attack of the hero
      */
-    protected Hero(final String theName, final int theHealth, final int theDamage, final int theSpeed, final SpecialAttack theSpecial) {
+    protected Hero(final String theName, final int theHealth, final int theDamage, final int theSpeed,
+            final SpecialAttack theSpecial) {
         super(theName, theHealth, theDamage, theSpeed);
         myDirection = Direction.NORTH;
         myInventory = new Inventory(ITEM_COUNT);
@@ -34,19 +40,6 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special{
     }
 
     /**
-     * Get the inventory of the hero
-     * 
-     * @return the inventory
-     */
-    public Inventory getInventory() {
-        return myInventory.clone();
-    }
-    @Override
-    public SpecialAttack getSpecialAttack() {
-        return mySpecial;
-    }
-
-    /**
      * Set the direction the hero is facing
      * 
      * @param direction the direction
@@ -54,6 +47,78 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special{
     public void setDirection(final Direction direction) {
         myDirection = direction;
     }
+
+    /**
+     * Get the x coordinate of the hero
+     * 
+     * @return the x coordinate
+     */
+    public int getX() {
+        return myX;
+    }
+
+    /**
+     * Get the y coordinate of the hero
+     * 
+     * @return the y coordinate
+     */
+    public int getY() {
+        return myY;
+    }
+
+    /**
+     * Set the x coordinate of the hero
+     * 
+     * @param theX the x coordinate
+     */
+    public void setX(final int theX) {
+        myX = theX;
+    }
+
+    /**
+     * Set the y coordinate of the hero
+     * 
+     * @param theY the y coordinate
+     */
+    public void setY(final int theY) {
+        myY = theY;
+    }
+
+    public int[] getDirectionsLocation(final Direction theDirection) {
+        final int dx = theDirection.calculateNewX(getX());
+        final int dy = theDirection.calculateNewY(getY());
+        return new int[] { dx, dy };
+    }
+
+    /**
+     * Set the x and y location of the hero
+     * 
+     * @param theLocation the new location
+     */
+    public void moveTo(final Direction theDirection) {
+        setDirection(myDirection);
+
+        final int dx = theDirection.calculateNewX(getX());
+        final int dy = theDirection.calculateNewY(getY());
+
+        setX(dx);
+        setY(dy);
+    }
+
+    /**
+     * Get the inventory of the hero
+     * 
+     * @return the inventory
+     */
+    public Inventory getInventory() {
+        return myInventory.clone();
+    }
+
+    @Override
+    public SpecialAttack getSpecialAttack() {
+        return mySpecial;
+    }
+
     @Override
     public void resetTurns() {
         mySpecial.setTurns(0);
