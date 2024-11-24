@@ -2,6 +2,7 @@ package team5.game.view;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Random;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -14,12 +15,13 @@ import team5.game.model.Direction;
 import team5.game.model.Dungeon;
 import team5.game.model.GameState;
 import team5.game.model.Hero;
+import team5.game.model.Item;
 import team5.game.model.Monster;
 import team5.game.model.Room;
 
 public class DungeonController {
     /** The original size of the tiles sprite */
-    private final int ORIGINAL_TILE_SIZE = 16;
+    private static final int ORIGINAL_TILE_SIZE = 16;
 
     /** The dungeon maze */
     private static Dungeon myDungeon;
@@ -169,6 +171,10 @@ public class DungeonController {
         gc.setFill(Color.WHITE);
         gc.fillRect(theScreenX, theScreenY, myTileSize, myTileSize);
 
+        if (room.getItem() != null) {
+            drawItem(room.getItem(), theScreenX, theScreenY);
+        }
+
         boolean[] doors = room.getDoors();
 
         gc.setStroke(Color.BLACK);
@@ -197,6 +203,11 @@ public class DungeonController {
             gc.strokeLine(theScreenX, theScreenY,
                     theScreenX, theScreenY + myTileSize);
         }
+    }
+
+    private void drawItem(final Item item, final double theScreenX, final double theScreenY) {
+        gc.setFill(Color.BLUE);
+        gc.fillOval(theScreenX, theScreenY, myTileSize, myTileSize);
     }
 
     /**
@@ -275,6 +286,14 @@ public class DungeonController {
 
         if (isConnected) {
             myHero.moveTo(theDirection);
+
+            Room room = myDungeon.getRoom(myHero.getX(), myHero.getY());
+            if (room.getItem() != null) {
+                Item item = room.getItem();
+                myHero.getInventory().addItem(item);
+                room.removeItem();
+            }
+
             render();
         }
     }

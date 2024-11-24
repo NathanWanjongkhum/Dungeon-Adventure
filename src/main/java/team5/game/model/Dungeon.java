@@ -1,5 +1,7 @@
 package team5.game.model;
 
+import java.util.Random;
+
 /**
  * Dungeon is a class that represents a dungeon.
  */
@@ -12,6 +14,8 @@ public class Dungeon {
     private int myHeight;
     /** The difficulty of the dungeon */
     private Difficulty myDifficulty;
+    /** A random number generator */
+    private Random random = new Random();
 
     /**
      * Dungeon constructor. Initializes a new dungeon.
@@ -47,6 +51,9 @@ public class Dungeon {
                 .setWidth(myWidth)
                 .setHeight(myHeight)
                 .build();
+
+        // Places items in the dungeon
+        placeItems();
     }
 
     /**
@@ -164,6 +171,32 @@ public class Dungeon {
     public final Room getStartRoom() {
         // Avoids an IndexOutOfBoundsException
         return (myDungeon != null) ? myDungeon[getWidth() / 2][getHeight() / 2] : null;
+    }
+
+    private void placeItems() {
+        for (int i = 0; i < getWidth(); i++) {
+            for (int j = 0; j < getHeight(); j++) {
+                if (random.nextInt(100) < 5) {
+                    Room room = getRoom(i, j);
+                    room.setItem(getRandomItem());
+                }
+            }
+        }
+    }
+
+    private Item getRandomItem() {
+        int itemType = random.nextInt(2);
+
+        Item item = null;
+        // TODO: Add more items
+        switch (itemType) {
+            case 0 -> item = new HealingPotion();
+            case 1 -> item = new Bomb();
+            // case 2 -> new VisionPotion();
+            default -> throw new IllegalStateException("Unexpected itemType: " + itemType);
+        }
+
+        return item;
     }
 
     /**

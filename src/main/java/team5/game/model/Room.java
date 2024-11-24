@@ -40,6 +40,11 @@ public class Room {
         myItem = item;
     }
 
+    /** Remove the item in the room */
+    public void removeItem() {
+        myItem = null;
+    }
+
     /**
      * Get the item in the room
      * 
