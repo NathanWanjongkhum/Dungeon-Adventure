@@ -12,8 +12,8 @@ import team5.game.App;
 import team5.game.DatabaseHandler;
 import team5.game.model.Direction;
 import team5.game.model.Dungeon;
+import team5.game.model.GameState;
 import team5.game.model.Hero;
-import team5.game.model.Mage;
 import team5.game.model.Monster;
 import team5.game.model.Room;
 
@@ -49,6 +49,17 @@ public class DungeonController {
 
     @FXML
     private void initialize() throws ClassNotFoundException, IOException {
+        myDungeon = GameState.getInstance().getDungeon();
+        myHero = GameState.getInstance().getHero();
+
+        // Initializes the dungeon
+        myDungeon.init();
+
+        // Places the hero in the dungeon
+        myHero.setX(0);
+        myHero.setY(0);
+
+        // Initializes the monsters
         DatabaseHandler.init();
 
         Monster[] monsters = null;
@@ -63,17 +74,9 @@ public class DungeonController {
 
         DatabaseHandler.close();
 
+        // Initializes the canvas
         initializeCanvas();
-    }
-
-    public void setHero(final Hero theHero) {
-        myHero = new Mage("Merlin");
-        // TODO: myHero = new Hero(theHero);
-    }
-
-    public void setDungeon(final Dungeon theDungeon) {
-        myDungeon = new Dungeon(theDungeon);
-        myDungeon.init();
+        render();
     }
 
     /**
@@ -92,6 +95,19 @@ public class DungeonController {
      * Render the dungeon
      */
     void render() {
+        if (GameState.getInstance() == null) {
+            System.err.println("Game state not initialized");
+            return;
+        }
+        if (myDungeon == null) {
+            System.err.println("Dungeon not initialized");
+            return;
+        }
+        if (myHero == null) {
+            System.err.println("Hero not initialized");
+            return;
+        }
+
         gc.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
 
         // Debug border

@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import team5.game.App;
-import team5.game.controller.Choices;
+import team5.game.model.GameState;
 
 public class NameSelectorController {
 
@@ -23,19 +23,18 @@ public class NameSelectorController {
     void confirm(ActionEvent event) {
         myConfirmedName = myName.getText();
         if (myConfirmedName != "") {
-            Choices.getChoices().setName(myConfirmedName);
+            GameState.getInstance().setName(myConfirmedName);
             myNext.setDisable(false);
         }
     }
 
     @FXML
     void back() throws IOException {
-        App.setRoot("HeroSelection");
+        App.setRoot("StartScreen");
     }
 
     @FXML
     void next() throws IOException {
-        App.setRoot("primary");
+        App.setRoot("HeroSelection");
     }
-
 }
