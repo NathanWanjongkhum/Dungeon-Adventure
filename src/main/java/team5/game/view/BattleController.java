@@ -22,9 +22,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import team5.game.App;
 import team5.game.controller.Battle;
-import team5.game.model.Consumable;
+import team5.game.model.AttackPotion;
+import team5.game.model.Bomb;
 import team5.game.model.DungeonCharacter;
 import team5.game.model.GameState;
+import team5.game.model.HealingPotion;
 import team5.game.model.Hero;
 import team5.game.model.Monster;
 import team5.game.model.Ogre;
@@ -77,7 +79,6 @@ public class BattleController implements Initializable {
     private Stage myStage;
     private Battle myBattle;
     private Hero myHero;
-    private Consumable myConsumable;
     private Monster myMonster;
     private Tooltip myHeroTooltip;
     private Tooltip myMonsterTooltip;
@@ -88,9 +89,18 @@ public class BattleController implements Initializable {
         myHero = GameState.getInstance().getHero();
         myMonster = new Ogre("Og");
 
+        AttackPotion potion = new AttackPotion();
+        Bomb bomb = new Bomb();
+        HealingPotion heal = new HealingPotion();
+        myHero.getInventory().addItem(heal);
+        myHero.getInventory().addItem(bomb);
+        myHero.getInventory().addItem(potion);
+        myHero.getInventory().addItem(potion);
+        
+
+
         myBackground.setStyle("-fx-background-color: black");
         myBattle = new Battle(myHero, myMonster);
-        myConsumable = null;
         myHeroTooltip = new Tooltip(myHero.getStats());
         myMonsterTooltip = new Tooltip(myMonster.getStats());
         initDungeonCharacter();
@@ -190,12 +200,15 @@ public class BattleController implements Initializable {
         myStage.initModality(Modality.APPLICATION_MODAL);
         myStage.initOwner(myItem.getScene().getWindow());
         myStage.showAndWait();
+        if (GameState.getInstance().getHero().isConUsed()) {
+            useItem();
+        }
     }
     // protected void itemActio(String theItem) {
     //     myBattle.battle(theItem);
     // }
-    protected void setConsumable(Consumable theConsumable) {
-        myBattle.setConsumable(theConsumable);
+    private void useItem() {
+        myBattle.setConsumable(GameState.getInstance().getHero().useConsumable());
         myBattle.battle("item");
         setHP();
         displayText();
@@ -251,9 +264,6 @@ public class BattleController implements Initializable {
     private void setNextButton(boolean theBoolean) {
         myNext.setVisible(theBoolean);
         myNext.setDisable(!theBoolean);
-    }
-    protected Hero getHero() {
-        return myHero;
     }
 
 }

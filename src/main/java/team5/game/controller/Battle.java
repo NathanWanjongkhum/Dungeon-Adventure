@@ -213,10 +213,10 @@ public class Battle {
     public void item(Hero theHero, Consumable theConsu) {
         if("Bomb".equals(theConsu.getName())) {
             theConsu.useItem(myMonster);
-            myText += "Used Bomb";
+            myText += String.format("%s used Bomb", myHero.getName());
         } else {
             theConsu.useItem(theHero);
-            myText += String.format("Used %s", theConsu.getName());
+            myText += String.format("%s used a %s.\n", myHero.getName(), theConsu.getName());
         }
         theConsu.setCount(theConsu.getCount() - 1);
     }

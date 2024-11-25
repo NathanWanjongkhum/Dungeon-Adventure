@@ -7,7 +7,7 @@ public class AttackPotion extends AbstractConsumables {
     /**
      * Default constructor for healing potion
      */
-    protected AttackPotion() {
+    public AttackPotion() {
         super();
         myAttackIncrease = ATTACK_INCREASE;
     }

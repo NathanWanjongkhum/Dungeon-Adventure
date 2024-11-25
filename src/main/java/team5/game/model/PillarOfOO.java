@@ -65,4 +65,12 @@ public class PillarOfOO implements Item {
     public String getName() {
         return getClass().getSimpleName();
     }
+    @Override
+    public int getCount() {
+        return myCount;
+    }
+    @Override
+    public void setCount(int count) {
+        myCount = count;
+    }
 }

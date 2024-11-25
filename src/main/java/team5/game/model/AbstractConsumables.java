@@ -11,7 +11,7 @@ public abstract class AbstractConsumables implements Consumable {
      * Consumables constructor
      */
     protected AbstractConsumables() {
-        myCount = 0;
+        myCount = 1;
     }
     @Override
     public int getCount() {

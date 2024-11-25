@@ -8,7 +8,9 @@ public class Inventory {
     private int myInventorySize;
     /** The items in the inventory */
     private Item[] myItems;
+    public Inventory() {
 
+    }
     /**
      * Create an empty inventory
      * 
@@ -45,7 +47,11 @@ public class Inventory {
                 return true;
             }
             if (myItems[i].equals(item)) {
+                if(myItems[i].isPillar()) {
 
+                } else {
+                    ((Consumable)myItems[i]).setCount(((Consumable)myItems[i]).getCount() + ((Consumable)item).getCount());
+                }
             }
         }
 
@@ -85,12 +91,20 @@ public class Inventory {
             return null;
         }
     }
+    public Item getItem(final Item theItem) {
+        int index = 0;
+        while (!myItems[index].getName().equals(theItem.getName())) {
+            index++;
+        }
+        return myItems[index];
+    }
 
     /**
      * Clone the inventory and return a new one
      * 
      * @return the cloned inventory
      */
+    @Override
     public Inventory clone() {
         final Inventory inventory = new Inventory(myInventorySize);
 
@@ -114,6 +128,9 @@ public class Inventory {
         }
 
         return true;
+    }
+    public boolean isEmpty() {
+        return getItem(0) == null;
     }
 
     /**
