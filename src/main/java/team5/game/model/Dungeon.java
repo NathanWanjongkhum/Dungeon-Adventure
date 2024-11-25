@@ -14,7 +14,7 @@ public class Dungeon {
     private Difficulty myDifficulty;
 
     /**
-     * Dungeon constructor
+     * Dungeon constructor. Initializes a new dungeon.
      * 
      * @param width  the width of the dungeon
      * @param height the height of the dungeon
@@ -24,6 +24,18 @@ public class Dungeon {
         myWidth = theWidth;
         myHeight = theHeight;
         myDifficulty = theDifficulty;
+    }
+
+    /**
+     * Dungeon constructor. Clones another dungeon.
+     * 
+     * @param theDungeon the dungeon to copy
+     */
+    public Dungeon(final Dungeon theDungeon) {
+        myDungeon = new Room[theDungeon.getWidth()][theDungeon.getHeight()];
+        myWidth = theDungeon.getWidth();
+        myHeight = theDungeon.getHeight();
+        myDifficulty = theDungeon.getDifficulty();
     }
 
     /**
@@ -82,6 +94,38 @@ public class Dungeon {
      */
     public boolean isValidLocation(final int theX, final int theY) {
         return myDungeon != null && theX >= 0 && theX < myWidth && theY >= 0 && theY < myHeight;
+    }
+
+    /**
+     * Check if there's a valid connection from the current position to the new room
+     * inthe given direction.
+     * 
+     * @param thePos       the position of the current room
+     * @param theDirection the direction to check
+     * 
+     * @return true if the current room an new room are connected
+     */
+    public boolean isConnected(final int theX, final int theY, final Direction theDirection) {
+        final int newX = theDirection.calculateNewX(theX);
+        final int newY = theDirection.calculateNewY(theY);
+
+        // Check bounds first
+        if (!isValidLocation(newX, newY)) {
+            return false;
+        }
+
+        final Room currentRoom = myDungeon[theX][theY];
+        final Room newRoom = myDungeon[newX][newY];
+
+        if (currentRoom == null || newRoom == null) {
+            return false;
+        }
+
+        // Check if both rooms have doors connecting them
+        final boolean currentRoomConnects = currentRoom.getDoors()[theDirection.ordinal()];
+        final boolean newRoomConnects = newRoom.getDoors()[theDirection.getOpposite().ordinal()];
+
+        return currentRoomConnects && newRoomConnects;
     }
 
     /**
