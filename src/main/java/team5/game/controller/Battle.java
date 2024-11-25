@@ -1,8 +1,8 @@
 package team5.game.controller;
 
+import team5.game.model.Consumable;
 import team5.game.model.DungeonCharacter;
 import team5.game.model.Hero;
-import team5.game.model.Item;
 import team5.game.model.Monster;
 /**
  * A controller class for battles
@@ -21,6 +21,8 @@ public class Battle {
     private int myCount;
     /** The action of the hero */
     private String myAction;
+    /** The consumable item */
+    private Consumable myConsumable;
     /**
      * Constructor for battle
      * 
@@ -33,6 +35,7 @@ public class Battle {
         myText = "";
         myAction = "";
         myCount = 1;
+        myConsumable = null;
     }
     /**
      * The method to perform an action in battle
@@ -88,7 +91,7 @@ public class Battle {
                 special(myHero, myMonster);
                 break;
             case "item":
-                // item(myHero);
+                item(myHero, myConsumable);
                 break;
         }
     }
@@ -204,8 +207,18 @@ public class Battle {
     public String actionPerformed() {
         return myText;
     }
-    public void item(Hero theHero, Item theItem) {
-
+    public void setConsumable(Consumable theConsumable) {
+        myConsumable = theConsumable;
+    }
+    public void item(Hero theHero, Consumable theConsu) {
+        if("Bomb".equals(theConsu.getName())) {
+            theConsu.useItem(myMonster);
+            myText += "Used Bomb";
+        } else {
+            theConsu.useItem(theHero);
+            myText += String.format("Used %s", theConsu.getName());
+        }
+        theConsu.setCount(theConsu.getCount() - 1);
     }
 
 }

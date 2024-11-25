@@ -44,6 +44,9 @@ public class Inventory {
                 myItems[i] = item;
                 return true;
             }
+            if (myItems[i].equals(item)) {
+
+            }
         }
 
         return false;

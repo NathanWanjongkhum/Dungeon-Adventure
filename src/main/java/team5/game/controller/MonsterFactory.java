@@ -20,7 +20,7 @@ public class MonsterFactory {
      * @param theName the string for monster name
      * @return a monster object of a certain type
      */
-    public static Monster createHero(final char theMonster, final String theName) {
+    public static Monster createMonster(final char theMonster, final String theName) {
         switch(theMonster) {
             case 'O':
                 return new Ogre(theName);

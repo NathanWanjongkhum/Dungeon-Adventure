@@ -8,23 +8,14 @@ public class Bomb extends AbstractConsumables {
     /** The radius of the bomb */
     private int myRadius;
 
-
+    /**
+     * The bomb constructor
+     */
     public Bomb() {
         super();
         myDamage = BOMB_DAMAGE;
         myRadius = BOMB_RADIUS;
     }
-    /**
-     * Bomb constructor
-     * 
-     * @param count
-     */
-    public Bomb(int count) { //Don't know if need a constructor with count as we create bomb first and should default to 0 items
-        super(count);
-        myDamage = BOMB_DAMAGE;
-        myRadius = BOMB_RADIUS;
-    }
-
     /**
      * Get the damage of the bomb
      * 
@@ -57,5 +48,8 @@ public class Bomb extends AbstractConsumables {
      */
     public void setRadius(int theRadius) {
         myRadius = theRadius;
+    }
+    public void useItem(DungeonCharacter theCharacter) {
+        theCharacter.setHealth(theCharacter.getHealth() - this.getDamage());
     }
 }

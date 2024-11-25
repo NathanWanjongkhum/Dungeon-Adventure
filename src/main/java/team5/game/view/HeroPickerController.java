@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -14,7 +15,6 @@ import team5.game.App;
 import team5.game.controller.HeroFactory;
 import team5.game.model.GameState;
 import team5.game.model.Hero;
-import javafx.event.ActionEvent;
 
 public class HeroPickerController implements Initializable {
 
@@ -59,7 +59,7 @@ public class HeroPickerController implements Initializable {
 
     @FXML
     void next() throws IOException {
-        App.setRoot("DungeonSetting");
+        App.setRoot("BattleScene");
     }
 
 }

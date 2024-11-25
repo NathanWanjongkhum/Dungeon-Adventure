@@ -6,7 +6,10 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -14,9 +17,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import team5.game.App;
 import team5.game.controller.Battle;
+import team5.game.model.Consumable;
 import team5.game.model.DungeonCharacter;
 import team5.game.model.GameState;
 import team5.game.model.Hero;
@@ -68,11 +74,11 @@ public class BattleController implements Initializable {
     @FXML
     private Label myMonsterStatus;
 
+    private Stage myStage;
     private Battle myBattle;
     private Hero myHero;
+    private Consumable myConsumable;
     private Monster myMonster;
-    private double myHeroHP;
-    private double myMonsterHP;
     private Tooltip myHeroTooltip;
     private Tooltip myMonsterTooltip;
 
@@ -84,10 +90,9 @@ public class BattleController implements Initializable {
 
         myBackground.setStyle("-fx-background-color: black");
         myBattle = new Battle(myHero, myMonster);
-
+        myConsumable = null;
         myHeroTooltip = new Tooltip(myHero.getStats());
         myMonsterTooltip = new Tooltip(myMonster.getStats());
-
         initDungeonCharacter();
         initImages();
         setHP();
@@ -96,11 +101,9 @@ public class BattleController implements Initializable {
 
     private void initDungeonCharacter() {
         myName.setText(myHero.getName());
-        myHeroHP = 100;
         myHeroBar.setStyle("-fx-accent: green");
 
         myMonsterName.setText(myMonster.getName());
-        myMonsterHP = 100;
         myMonsterBar.setStyle("-fx-accent: green");
     }
 
@@ -117,17 +120,15 @@ public class BattleController implements Initializable {
     }
 
     private void setHP() {
-        setHP(myHero, myHPLevel, myHeroHP);
-        setHPBar(myHeroBar, myHeroHP);
-
-        setHP(myMonster, myMonsterHPLevel, myMonsterHP);
-        setHPBar(myMonsterBar, myMonsterHP);
+        setHP(myHero, myHPLevel, myHeroBar);
+        setHP(myMonster, myMonsterHPLevel, myMonsterBar);
     }
 
-    private void setHP(final DungeonCharacter theCharacter, final Label theLabel, double theHP) {
+    private void setHP(final DungeonCharacter theCharacter, final Label theLabel, final ProgressBar theBar) {
         final String character = "HP " + theCharacter.getHealth() + "/" + theCharacter.getMaxHealth();
         theLabel.setText(character);
-        theHP = (double) theCharacter.getHealth() / theCharacter.getMaxHealth();
+        final double hp = (double) theCharacter.getHealth() / theCharacter.getMaxHealth();
+        setHPBar(theBar, hp);
     }
 
     private void setHPBar(final ProgressBar theBar, final double theHP) {
@@ -178,12 +179,30 @@ public class BattleController implements Initializable {
             over();
         }
     }
-
+    private Parent loadFXML(String theFXML) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/team5/game/" + theFXML + ".fxml"));
+        return fxmlLoader.load();
+     }
     @FXML
-    void item(ActionEvent event) {
-
+    void item(ActionEvent event) throws IOException {
+        myStage = new Stage();
+        myStage.setScene(new Scene(loadFXML("ItemBag")));
+        myStage.initModality(Modality.APPLICATION_MODAL);
+        myStage.initOwner(myItem.getScene().getWindow());
+        myStage.showAndWait();
     }
-
+    // protected void itemActio(String theItem) {
+    //     myBattle.battle(theItem);
+    // }
+    protected void setConsumable(Consumable theConsumable) {
+        myBattle.setConsumable(theConsumable);
+        myBattle.battle("item");
+        setHP();
+        displayText();
+        if (myBattle.isOver()) {
+            over();
+        }
+    }
     @FXML
     void myHome(ActionEvent event) throws IOException {
         App.setRoot("StartScreen");
@@ -232,6 +251,9 @@ public class BattleController implements Initializable {
     private void setNextButton(boolean theBoolean) {
         myNext.setVisible(theBoolean);
         myNext.setDisable(!theBoolean);
+    }
+    protected Hero getHero() {
+        return myHero;
     }
 
 }

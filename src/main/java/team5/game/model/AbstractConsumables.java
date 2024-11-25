@@ -3,7 +3,7 @@ package team5.game.model;
 /**
  * Consumables is an item that can be collected and consumed by the player.
  */
-public abstract class AbstractConsumables implements Item {
+public abstract class AbstractConsumables implements Consumable {
     /** The count of consumables */
     private int myCount;
 
@@ -13,34 +13,28 @@ public abstract class AbstractConsumables implements Item {
     protected AbstractConsumables() {
         myCount = 0;
     }
-    /**
-     * Consumables constructor with count
-     * 
-     * @param count
-     */
-    protected AbstractConsumables(int theCount) { //Not sure if we want a consumable constructor with a count as we update counts during the game
-        myCount = theCount;
-    }
-
-    /**
-     * Get the count of consumables
-     * 
-     * @return the count
-     */
+    @Override
     public int getCount() {
         return myCount;
     }
-
-    /**
-     * Set the count of consumables
-     * 
-     * @param count the count
-     */
+    @Override
     public void setCount(int count) {
         myCount = count;
     }
     @Override
     public String toString() {
+        return getClass().getSimpleName();
+    }
+    @Override
+    public boolean isConsumable() {
+        return true;
+    }
+    @Override
+    public boolean isPillar() {
+        return false;
+    }
+    @Override
+    public String getName() {
         return getClass().getSimpleName();
     }
 }
