@@ -11,13 +11,13 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import team5.game.App;
-import team5.game.controller.Choices;
 import team5.game.controller.HeroFactory;
+import team5.game.model.GameState;
 import team5.game.model.Hero;
 import javafx.event.ActionEvent;
 
 public class HeroPickerController implements Initializable {
-    
+
     @FXML
     private Label myName;
 
@@ -33,33 +33,33 @@ public class HeroPickerController implements Initializable {
     @FXML
     private Label myStats;
 
-    private String[] myCharacters = {"Archer", "Mage", "Priestess", "Warrior"};
+    private String[] myCharacters = { "Archer", "Mage", "Priestess", "Warrior" };
 
     @Override
     public void initialize(URL theURL, ResourceBundle theResource) {
-        
+
         myChoice.getItems().addAll(myCharacters);
         myChoice.setOnAction(this::displayImage);
     }
+
     private void displayImage(ActionEvent event) {
         String choice = myChoice.getValue();
         Hero hero = HeroFactory.createHero(choice);
         myImage.setImage(hero.getImage());
-        Choices.getChoices().setHero(hero);
+        GameState.getInstance().setHero(hero);
         myStats.setText(hero.getStats());
         myStats.setVisible(true);
         myNext.setDisable(false);
     }
-    
+
     @FXML
-    void back() throws IOException{
-        App.setRoot("NameSelection");
+    void back() throws IOException {
+        App.setRoot("HeroSelection");
     }
 
     @FXML
     void next() throws IOException {
-        App.setRoot("BattleScene");
+        App.setRoot("DungeonSetting");
     }
 
 }
-

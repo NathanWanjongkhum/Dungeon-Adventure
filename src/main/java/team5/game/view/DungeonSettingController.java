@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import team5.game.App;
 import team5.game.model.Difficulty;
 import team5.game.model.Dungeon;
+import team5.game.model.GameState;
 
 /**
  * The controller for the dungeon settings screen.
@@ -53,6 +54,10 @@ public class DungeonSettingController {
             throw new IllegalArgumentException("Invalid parameters");
         }
 
+        // Sets the dungeon
+        final Dungeon myDungeon = new Dungeon(width, height, difficulty);
+        GameState.getInstance().setDungeon(myDungeon);
+
         // Loads the next screen
         final FXMLLoader loader = new FXMLLoader(App.class.getResource("/team5/game/dungeon2.fxml"));
 
@@ -61,14 +66,6 @@ public class DungeonSettingController {
 
         // Set the stage to the new scene
         final Scene newScene = new Scene(loader.load());
-
-        // Gets the controller
-        final DungeonController controller = loader.getController();
-
-        // Sets the dungeon
-        final Dungeon myDungeon = new Dungeon(width, height, difficulty);
-        controller.setDungeon(myDungeon);
-        controller.render();
 
         currentStage.setScene(newScene);
     }

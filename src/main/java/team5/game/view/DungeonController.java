@@ -6,12 +6,14 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import team5.game.App;
 import team5.game.DatabaseHandler;
-import team5.game.model.Difficulty;
+import team5.game.model.Direction;
 import team5.game.model.Dungeon;
+import team5.game.model.GameState;
 import team5.game.model.Hero;
-import team5.game.model.Mage;
 import team5.game.model.Monster;
 import team5.game.model.Room;
 
@@ -47,10 +49,17 @@ public class DungeonController {
 
     @FXML
     private void initialize() throws ClassNotFoundException, IOException {
-        // TODO: Get the parameters (width, height, difficulty) from the previous screen
+        myDungeon = GameState.getInstance().getDungeon();
+        myHero = GameState.getInstance().getHero();
 
-        setZoom(getMaxZoom());
+        // Initializes the dungeon
+        myDungeon.init();
 
+        // Places the hero in the dungeon
+        myHero.setX(0);
+        myHero.setY(0);
+
+        // Initializes the monsters
         DatabaseHandler.init();
 
         Monster[] monsters = null;
@@ -65,21 +74,9 @@ public class DungeonController {
 
         DatabaseHandler.close();
 
-        // TODO: Place the hero in the dungeon
-        // TODO: Place the items in the dungeon
-        // TODO: Place the monsters in the dungeon
-
+        // Initializes the canvas
         initializeCanvas();
-    }
-
-    public void initHero(final Hero theHero) {
-        myHero = new Mage("Merlin");
-        // TODO: myHero = new Hero(theHero);
-    }
-
-    public void setDungeon(final Dungeon theDungeon) {
-        myDungeon = new Dungeon(theDungeon);
-        myDungeon.init();
+        render();
     }
 
     /**
@@ -87,12 +84,30 @@ public class DungeonController {
      */
     private void initializeCanvas() {
         gc = gameCanvas.getGraphicsContext2D();
+        gameCanvas.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                newScene.setOnKeyPressed(this::handleKeyPressed);
+            }
+        });
     }
 
     /**
      * Render the dungeon
      */
     void render() {
+        if (GameState.getInstance() == null) {
+            System.err.println("Game state not initialized");
+            return;
+        }
+        if (myDungeon == null) {
+            System.err.println("Dungeon not initialized");
+            return;
+        }
+        if (myHero == null) {
+            System.err.println("Hero not initialized");
+            return;
+        }
+
         gc.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
 
         // Debug border
@@ -100,8 +115,8 @@ public class DungeonController {
         gc.strokeRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
 
         // Get hero's position (currently center of dungeon)
-        final int heroWorldX = 0;
-        final int heroWorldY = 0;
+        final int heroWorldX = myHero.getX();
+        final int heroWorldY = myHero.getY();
 
         // Calculate viewport bounds
         final int startX = Math.max(0, heroWorldX - myMaxScreenCols / 2);
@@ -237,5 +252,30 @@ public class DungeonController {
         myMaxScreenRows = (theZoomFactor * 2) + 1;
         myMaxScreenCols = (theZoomFactor * 2) + 1;
         updateScreen();
+    }
+
+    private void handleKeyPressed(final KeyEvent theEvent) {
+        try {
+            switch (theEvent.getCode()) {
+                case ESCAPE -> App.setRoot("DungeonSetting");
+                case W, UP -> tryMove(Direction.NORTH);
+                case S, DOWN -> tryMove(Direction.SOUTH);
+                case A, LEFT -> tryMove(Direction.WEST);
+                case D, RIGHT -> tryMove(Direction.EAST);
+                default -> {
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error handling key press: " + e.getMessage());
+        }
+    }
+
+    private void tryMove(final Direction theDirection) {
+        final boolean isConnected = myDungeon.isConnected(myHero.getX(), myHero.getY(), theDirection);
+
+        if (isConnected) {
+            myHero.moveTo(theDirection);
+            render();
+        }
     }
 }

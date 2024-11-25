@@ -228,7 +228,7 @@ public class DungeonBuilderTest {
         stack.push(new SimpleEntry<>(0, 0));
 
         while (!stack.isEmpty()) {
-            SimpleEntry<Integer, Integer> current = stack.peek(); // Changed from pop() to peek()
+            SimpleEntry<Integer, Integer> current = stack.peek();
             currentX = current.getKey();
             currentY = current.getValue();
 
