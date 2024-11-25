@@ -27,7 +27,7 @@ public class Room {
      * 
      * @param theDirection the direction of the item
      */
-    public void addDoor(Direction theDirection) {
+    public void addDoor(final Direction theDirection) {
         myDoors[theDirection.ordinal()] = true;
     }
 
@@ -36,8 +36,8 @@ public class Room {
      * 
      * @param item the item
      */
-    public void setItem(Item item) {
-        myItem = item;
+    public void setItem(final Item theItem) {
+        myItem = theItem;
     }
 
     /** Remove the item in the room */
@@ -57,10 +57,10 @@ public class Room {
     /**
      * Set the monster in the room
      * 
-     * @param monster the monster
+     * @param theMonster the monster
      */
-    public void setMonster(Monster monster) {
-        myMonster = monster;
+    public void setMonster(final Monster theMonster) {
+        myMonster = theMonster;
     }
 
     /**

@@ -1,6 +1,13 @@
 package team5.game.model;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
+
+import team5.game.DatabaseHandler;
 
 /**
  * Dungeon is a class that represents a dungeon.
@@ -14,6 +21,10 @@ public class Dungeon {
     private int myHeight;
     /** The difficulty of the dungeon */
     private Difficulty myDifficulty;
+    /** The monster in the dungeon */
+    private Monster[] myMonsters;
+    /** The number of pillars collected in the dungeon */
+    private int myPillarCount;
     /** A random number generator */
     private Random random = new Random();
 
@@ -52,8 +63,10 @@ public class Dungeon {
                 .setHeight(myHeight)
                 .build();
 
-        // Places items in the dungeon
+        // Post build initialization
+        placePillars();
         placeItems();
+        placeMonsters();
     }
 
     /**
@@ -173,17 +186,70 @@ public class Dungeon {
         return (myDungeon != null) ? myDungeon[getWidth() / 2][getHeight() / 2] : null;
     }
 
+    /** Places pillars in the dungeon at dead ends */
+    private void placePillars() {
+        List<int[]> deadEnds = new ArrayList<>();
+
+        for (int x = 0; x < getWidth(); x++) {
+            for (int y = 0; y < getHeight(); y++) {
+                Room room = getRoom(x, y);
+                if (room == null) {
+                    continue;
+                }
+
+                int connections = 0;
+                for (Direction direction : Direction.values()) {
+                    if (isConnected(x, y, direction)) {
+                        connections++;
+                    }
+                }
+
+                if (connections == 1) {
+                    deadEnds.add(new int[] { x, y });
+                }
+            }
+        }
+
+        if (deadEnds.size() < 4) {
+            throw new IllegalStateException("Not enough dead ends to place all pillars!");
+        }
+
+        Collections.shuffle(deadEnds, random);
+
+        PillarOfOO.PillarType[] types = PillarOfOO.PillarType.values();
+
+        for (int i = 0; i < types.length; i++) {
+            int[] coords = deadEnds.get(i);
+            Room room = getRoom(coords[0], coords[1]);
+
+            room.setItem(new PillarOfOO(1, types[i]));
+        }
+    }
+
+    /** Places items in the dungeon */
     private void placeItems() {
         for (int i = 0; i < getWidth(); i++) {
             for (int j = 0; j < getHeight(); j++) {
-                if (random.nextInt(100) < 5) {
-                    Room room = getRoom(i, j);
-                    room.setItem(getRandomItem());
+                if (random.nextInt(100) > 5) {
+                    continue;
                 }
+
+                Room room = getRoom(i, j);
+
+                if (room.getItem() != null) {
+                    continue;
+                }
+
+                room.setItem(getRandomItem());
             }
         }
     }
 
+    /**
+     * Get a random item from a list of items
+     *
+     * @return the random item
+     */
     private Item getRandomItem() {
         int itemType = random.nextInt(2);
 
@@ -197,6 +263,48 @@ public class Dungeon {
         }
 
         return item;
+    }
+
+    /** Places monsters evenly throughout the dungeon */
+    private void placeMonsters() {
+        DatabaseHandler.init();
+
+        try {
+            myMonsters = (Monster[]) DatabaseHandler.deserialize();
+        } catch (FileNotFoundException e) {
+            System.err.println("Database file not found: " + e.getMessage());
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Failed to load monster database: " + e.getMessage());
+        }
+
+        if (myMonsters == null) {
+            System.err.println("No monsters found");
+            return;
+        }
+
+        DatabaseHandler.close();
+
+        final int monsterDensity = myMonsters.length / myWidth / myHeight;
+
+        for (int i = 0; i < myDungeon.length * myDungeon[0].length; i += monsterDensity) {
+            myDungeon[i / myDungeon.length][i % myDungeon.length].setMonster(myMonsters[i]);
+        }
+
+    }
+
+    /** The number of pillars collected in the dungeon */
+    public int getPillarCount() {
+        return myPillarCount;
+    }
+
+    /** Set the number of pillars collected in the dungeon */
+    public void collectPillar() {
+        myPillarCount += 1;
+    }
+
+    public void addExit() {
+        Room room = getStartRoom();
+        room.setItem(new Exit());
     }
 
     /**
@@ -225,4 +333,5 @@ public class Dungeon {
 
         return sb.toString();
     }
+
 }
