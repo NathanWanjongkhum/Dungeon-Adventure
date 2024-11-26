@@ -54,12 +54,17 @@ public class DungeonSettingController {
             throw new IllegalArgumentException("Invalid parameters");
         }
 
+        if (width < 10 || height < 10) {
+            // Needs enough space for the pillars to be safley placed
+            throw new IllegalArgumentException("Dungeon size too small");
+        }
+
         // Sets the dungeon
         final Dungeon myDungeon = new Dungeon(width, height, difficulty);
         GameState.getInstance().setDungeon(myDungeon);
 
         // Loads the next screen
-        final FXMLLoader loader = new FXMLLoader(App.class.getResource("/team5/game/dungeon2.fxml"));
+        final FXMLLoader loader = new FXMLLoader(App.class.getResource("/team5/game/DungeonScene.fxml"));
 
         // Get the current stage from any node in the current scene
         final Stage currentStage = (Stage) myWidth.getScene().getWindow();
