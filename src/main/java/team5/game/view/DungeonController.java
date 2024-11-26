@@ -1,8 +1,6 @@
 package team5.game.view;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Random;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -8,5 +8,4 @@ public class Exit implements Item {
     public String toString() {
         return "E";
     }
-
 }

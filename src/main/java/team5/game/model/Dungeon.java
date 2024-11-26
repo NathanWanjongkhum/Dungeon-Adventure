@@ -1,7 +1,5 @@
 package team5.game.model;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,6 +37,7 @@ public class Dungeon {
         myWidth = theWidth;
         myHeight = theHeight;
         myDifficulty = theDifficulty;
+        myPillarCount = 0;
     }
 
     /**
@@ -51,6 +50,7 @@ public class Dungeon {
         myWidth = theDungeon.getWidth();
         myHeight = theDungeon.getHeight();
         myDifficulty = theDungeon.getDifficulty();
+        myPillarCount = theDungeon.getPillarCount();
     }
 
     /**
@@ -165,11 +165,8 @@ public class Dungeon {
      * @return the random room
      */
     public final Room getRandomRoom() {
-        int x, y;
-        do {
-            x = (int) (Math.random() * myWidth);
-            y = (int) (Math.random() * myHeight);
-        } while (!isValidLocation(myWidth, myHeight));
+        int x = random.nextInt(myWidth);
+        int y = random.nextInt(myHeight);
 
         final Room room = myDungeon[x][y];
 
@@ -182,8 +179,7 @@ public class Dungeon {
      * @return the start room
      */
     public final Room getStartRoom() {
-        // Avoids an IndexOutOfBoundsException
-        return (myDungeon != null) ? myDungeon[getWidth() / 2][getHeight() / 2] : null;
+        return myDungeon[getWidth() / 2][getHeight() / 2];
     }
 
     /** Places pillars in the dungeon at dead ends */
@@ -269,27 +265,28 @@ public class Dungeon {
     private void placeMonsters() {
         DatabaseHandler.init();
 
-        try {
-            myMonsters = (Monster[]) DatabaseHandler.deserialize();
-        } catch (FileNotFoundException e) {
-            System.err.println("Database file not found: " + e.getMessage());
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Failed to load monster database: " + e.getMessage());
-        }
+        // try {
+        // myMonsters = DatabaseHandler.loadMonsters(); // Changed from deserialize
+        // } catch (Exception e) {
+        // System.err.println("Failed to load monster database: " + e.getMessage());
+        // return;
+        // }
 
-        if (myMonsters == null) {
+        if (myMonsters == null || myMonsters.length == 0) {
             System.err.println("No monsters found");
             return;
         }
 
-        DatabaseHandler.close();
-
-        final int monsterDensity = myMonsters.length / myWidth / myHeight;
-
-        for (int i = 0; i < myDungeon.length * myDungeon[0].length; i += monsterDensity) {
-            myDungeon[i / myDungeon.length][i % myDungeon.length].setMonster(myMonsters[i]);
+        for (int x = 0; x < myWidth; x++) {
+            for (int y = 0; y < myHeight; y++) {
+                if (random.nextDouble() < 0.2) { // 20% chance of monster in a room
+                    int monsterIndex = random.nextInt(myMonsters.length);
+                    myDungeon[x][y].setMonster(myMonsters[monsterIndex]);
+                }
+            }
         }
 
+        DatabaseHandler.close();
     }
 
     /** The number of pillars collected in the dungeon */
@@ -304,7 +301,9 @@ public class Dungeon {
 
     public void addExit() {
         Room room = getStartRoom();
-        room.setItem(new Exit());
+        if (room != null) {
+            room.setItem(new Exit());
+        }
     }
 
     /**
