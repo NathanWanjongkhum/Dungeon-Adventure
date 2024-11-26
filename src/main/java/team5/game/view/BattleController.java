@@ -17,6 +17,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -34,6 +35,12 @@ import team5.game.model.Ogre;
 public class BattleController implements Initializable {
     @FXML
     private AnchorPane myBackground;
+
+    @FXML
+    private AnchorPane myScene;
+
+    @FXML
+    private HBox myControls;
 
     @FXML
     private Label myHPLevel;
@@ -97,8 +104,17 @@ public class BattleController implements Initializable {
         myHero.getInventory().addItem(potion);
         myHero.getInventory().addItem(potion);
         
+        //CustomBackground code
+        // BackgroundSize size = new BackgroundSize(640, 480, true, true, true, false);
+        // final StringBuilder builder = new StringBuilder();
+        // builder.append("/team5/game/");
+        // builder.append("dungeonBackground");
+        // builder.append(".png");
+        // Image temp = new Image(getClass().getResource(builder.toString()).toString());
+        // BackgroundImage back = new BackgroundImage(temp, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, size);
+        // myScene.setBackground(new Background(back));
 
-
+        myControls.setStyle(("-fx-background-color: grey"));
         myBackground.setStyle("-fx-background-color: black");
         myBattle = new Battle(myHero, myMonster);
         myHeroTooltip = new Tooltip(myHero.getStats());
@@ -130,11 +146,11 @@ public class BattleController implements Initializable {
     }
 
     private void setHP() {
-        setHP(myHero, myHPLevel, myHeroBar);
-        setHP(myMonster, myMonsterHPLevel, myMonsterBar);
+        setCharHP(myHero, myHPLevel, myHeroBar);
+        setCharHP(myMonster, myMonsterHPLevel, myMonsterBar);
     }
 
-    private void setHP(final DungeonCharacter theCharacter, final Label theLabel, final ProgressBar theBar) {
+    private void setCharHP(final DungeonCharacter theCharacter, final Label theLabel, final ProgressBar theBar) {
         final String character = "HP " + theCharacter.getHealth() + "/" + theCharacter.getMaxHealth();
         theLabel.setText(character);
         final double hp = (double) theCharacter.getHealth() / theCharacter.getMaxHealth();
@@ -143,10 +159,6 @@ public class BattleController implements Initializable {
 
     private void setHPBar(final ProgressBar theBar, final double theHP) {
         theBar.setProgress(theHP);
-        checkHPBar(theBar, theHP);
-    }
-
-    private void checkHPBar(final ProgressBar theBar, final double theHP) {
         if (theHP < 0.25) {
             theBar.setStyle("-fx-accent: red;");
         } else if (theHP < 0.5) {
@@ -155,7 +167,6 @@ public class BattleController implements Initializable {
             theBar.setStyle("-fx-accent: green");
         }
     }
-
     @FXML
     void attack(ActionEvent event) {
         attackAction();
@@ -204,9 +215,6 @@ public class BattleController implements Initializable {
             useItem();
         }
     }
-    // protected void itemActio(String theItem) {
-    //     myBattle.battle(theItem);
-    // }
     private void useItem() {
         myBattle.setConsumable(GameState.getInstance().getHero().useConsumable());
         myBattle.battle("item");
@@ -228,7 +236,11 @@ public class BattleController implements Initializable {
 
     @FXML
     void endBattle(ActionEvent event) throws IOException {
-        App.setRoot("primary");
+        if (myBattle.isOver() && myHero.getHealth() == 0) {
+            App.setRoot("LosingScene");//Still need to make 
+        } else {
+            App.setRoot("DungeonScene");
+        }
     }
 
     private void displayText() {

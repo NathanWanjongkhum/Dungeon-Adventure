@@ -37,9 +37,13 @@ public class HeroPickerController implements Initializable {
 
     @Override
     public void initialize(URL theURL, ResourceBundle theResource) {
-
-        myChoice.getItems().addAll(myCharacters);
-        myChoice.setOnAction(this::displayImage);
+        if (GameState.getInstance().getHero() != null) {
+            System.out.println("True");
+        } else {
+            myChoice.getItems().addAll(myCharacters);
+            myChoice.setOnAction(this::displayImage);
+        }
+        
     }
 
     private void displayImage(ActionEvent event) {

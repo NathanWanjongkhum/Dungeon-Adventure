@@ -27,6 +27,7 @@ public class AttackPotion extends AbstractConsumables {
     public void setAttackIncrease(int theAttackIncrease) {
         myAttackIncrease = theAttackIncrease;
     }
+    @Override
     public void useItem(DungeonCharacter theCharacter) {
         theCharacter.setMaxDamage(theCharacter.getMaxDamage() + getAttackIncrease());
         theCharacter.setMinDamage(theCharacter.getMinDamage() + getAttackIncrease());

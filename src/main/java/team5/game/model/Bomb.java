@@ -1,7 +1,7 @@
 package team5.game.model;
 
 public class Bomb extends AbstractConsumables {
-    private static final int BOMB_DAMAGE = 10;
+    private static final int BOMB_DAMAGE = 1000;
     private static final int BOMB_RADIUS = 1;
     /** The damage of the bomb */
     private int myDamage;
@@ -49,6 +49,7 @@ public class Bomb extends AbstractConsumables {
     public void setRadius(int theRadius) {
         myRadius = theRadius;
     }
+    @Override
     public void useItem(DungeonCharacter theCharacter) {
         theCharacter.setHealth(theCharacter.getHealth() - this.getDamage());
     }

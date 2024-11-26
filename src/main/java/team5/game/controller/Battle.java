@@ -210,7 +210,7 @@ public class Battle {
     public void setConsumable(Consumable theConsumable) {
         myConsumable = theConsumable;
     }
-    public void item(Hero theHero, Consumable theConsu) {
+    private  void item(Hero theHero, Consumable theConsu) {
         if("Bomb".equals(theConsu.getName())) {
             theConsu.useItem(myMonster);
             myText += String.format("%s used Bomb", myHero.getName());

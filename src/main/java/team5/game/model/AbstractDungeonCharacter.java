@@ -8,11 +8,11 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
     /** Constant for Damage difference */
     private static final int DAMAGE_DIF = 5;
     /** The name of the character. */
-    private String myName;
+    private final String myName;
     /** The health of the character. */
     private int myHealth;
     /** The max health of the character */
-    private int myMaxHealth;
+    private final int myMaxHealth;
     /** The minimum damage of the character. */
     private int myMinDamage;
     /** The maximum damage of the character. */
@@ -20,7 +20,7 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
     /** The speed of the character. */
     private int mySpeed;
     /** The status effect on character */
-    private StatusEffects myEffects;
+    private final StatusEffects myEffects;
 
     /** Creates a new AbstractDungeonCharacter. */
     protected AbstractDungeonCharacter(final String theName, final int theHealth, final int theDamage,
@@ -110,8 +110,6 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
         builder.append(myName);
         String hp = String.format("\nHP: %d/%d", myHealth, myMaxHealth);
         builder.append(hp);
-        // builder.append("\nMax HP: ");
-        // builder.append(myHealth);
         String damage = String.format("\nDamage Range: %d - %d\n", myMinDamage, myMaxDamage);
         builder.append(damage);
         builder.append("Speed: ");
