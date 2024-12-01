@@ -1,6 +1,8 @@
 package team5.game.model;
 
-public abstract class Hero extends AbstractDungeonCharacter implements Special {
+import java.io.Serializable;
+
+public abstract class Hero extends AbstractDungeonCharacter implements Special, Serializable {
     private static final int ITEM_COUNT = 3;
     /** The direction the hero is facing */
     private Direction myDirection;
@@ -13,6 +15,8 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special {
     /** The y coordinate of the hero */
     private int myY;
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The Hero constructor
      * 
@@ -22,7 +26,7 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special {
      * @param theSpeed   the speed of the hero
      * @param theSpecial the special attack of the hero
      */
-    protected Hero(final String theName, final int theHealth, final int theDamage, final int theSpeed,
+    public Hero(final String theName, final int theHealth, final int theDamage, final int theSpeed,
             final SpecialAttack theSpecial) {
         super(theName, theHealth, theDamage, theSpeed);
         myDirection = Direction.NORTH;

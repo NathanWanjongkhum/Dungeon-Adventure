@@ -1,11 +1,16 @@
 package team5.game.model;
+
+import java.io.Serializable;
+
 /**
  * The status effect class
  * 
  * @author Holden Tsang
  * @version
  */
-public class StatusEffects {
+public class StatusEffects implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     /** The boolean if vulnerable is active */
     private boolean myVulnerable;
     /** The boolean if regen is active */
@@ -16,6 +21,7 @@ public class StatusEffects {
     private int myRegenDuration;
     /** The regen healing amount */
     private int myRegenAmount;
+
     /**
      * Constructor for status effect
      */
@@ -26,6 +32,7 @@ public class StatusEffects {
         myRegenDuration = 0;
         myRegenAmount = 0;
     }
+
     /**
      * Checks if vulnerable is active
      * 
@@ -39,6 +46,7 @@ public class StatusEffects {
         }
         return myVulnerable;
     }
+
     /**
      * Checks if regen is active
      * 
@@ -52,6 +60,7 @@ public class StatusEffects {
         }
         return myRegen;
     }
+
     /**
      * Gets the vulnerable duration
      * 
@@ -60,6 +69,7 @@ public class StatusEffects {
     public int getVulnerableDuration() {
         return myVulDuration;
     }
+
     /**
      * Gets the regen duration
      * 
@@ -68,6 +78,7 @@ public class StatusEffects {
     public int getRegenDuration() {
         return myRegenDuration;
     }
+
     /**
      * Gets the regen amount
      * 
@@ -76,6 +87,7 @@ public class StatusEffects {
     public int getRegenAmount() {
         return myRegenAmount;
     }
+
     /**
      * Sets the Vulnerable duration
      * 
@@ -84,6 +96,7 @@ public class StatusEffects {
     public void setVulnerableDuration(final int theDuration) {
         myVulDuration = theDuration;
     }
+
     /**
      * Sets the regen duration
      * 
@@ -92,6 +105,7 @@ public class StatusEffects {
     public void setRegenDuration(final int theDuration) {
         myRegenDuration = theDuration;
     }
+
     /**
      * Sets the regen amount
      * 
@@ -100,12 +114,13 @@ public class StatusEffects {
     public void setRegenAmount(final int theAmount) {
         myRegenAmount = theAmount;
     }
-    //Could just be like getStatusDescriptions instead of toString
+
+    // Could just be like getStatusDescriptions instead of toString
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Active Status Effects:\n");
-        if(isVulnerable()) {
+        if (isVulnerable()) {
             String vul = String.format("Vulnerable for %d turns\n", getVulnerableDuration());
             builder.append(vul);
         }

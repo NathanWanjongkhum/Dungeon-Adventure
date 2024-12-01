@@ -60,7 +60,12 @@ public class DungeonController {
 
         // Set up the zoom and scale
         setScale(1);
-        setZoom(1);
+
+        // For demo and debugging purposes zoom out to reveal the entire maze
+        // setZoom(1);
+        setZoom(getMaxZoom());
+
+        GameState.saveGame();
     }
 
     @FXML

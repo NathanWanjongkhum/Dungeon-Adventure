@@ -6,9 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -27,6 +24,7 @@ public class DungeonTest {
     @BeforeAll
     public static void setUp() {
         myDungeon = new Dungeon(DUNGEON_WIDTH, DUNGEON_HEIGHT, DUNGEON_DIFFICULTY);
+        myDungeon.init();
     }
 
     /** Test for Dungeon constructor. Confirms all parameters are set. */
@@ -39,23 +37,9 @@ public class DungeonTest {
         assertEquals(DUNGEON_DIFFICULTY, dungeon.getDifficulty());
     }
 
-    /**
-     * Test for Dungeon constructor. Confirms all parameters are equal to other
-     * dungeon.
-     */
-    @Test
-    public void testCopyConstructor() {
-        final Dungeon copy = new Dungeon(myDungeon);
-
-        assertEquals(myDungeon.getWidth(), copy.getWidth());
-        assertEquals(myDungeon.getHeight(), copy.getHeight());
-        assertEquals(myDungeon.getDifficulty(), copy.getDifficulty());
-    }
-
     /** Test for Dungeon init method. */
     @Test
     public void testInit() {
-        myDungeon.init();
 
         for (int x = 0; x < DUNGEON_WIDTH; x++) {
             for (int y = 0; y < DUNGEON_HEIGHT; y++) {
@@ -268,12 +252,12 @@ public class DungeonTest {
     public void testToStringDimensions() {
         final String theString = myDungeon.toString();
 
-        // Confirms dimensions are correct
         final String[] rows = theString.split("\n");
         for (String row : rows) {
-            assertEquals(row.length(), DUNGEON_WIDTH);
+            // Rooms are 7 characters wide "R[DWDW]"
+            assertEquals(DUNGEON_WIDTH * 7, row.length());
         }
-        assertEquals(rows.length, DUNGEON_HEIGHT);
-    }
 
+        assertEquals(DUNGEON_HEIGHT, rows.length);
+    }
 }

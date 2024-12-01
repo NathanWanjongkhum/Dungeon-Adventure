@@ -9,4 +9,5 @@ module team5.game {
     opens team5.game.view to javafx.fxml;
 
     exports team5.game;
+    exports team5.game.model;
 }

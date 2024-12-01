@@ -1,10 +1,13 @@
 package team5.game.model;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import javafx.scene.image.Image;
 
-public abstract class AbstractDungeonCharacter implements DungeonCharacter {
+public abstract class AbstractDungeonCharacter implements DungeonCharacter, Serializable {
+    private static final long serialVersionUID = 1L;
+
     /** Constant for Damage difference */
     private static final int DAMAGE_DIF = 5;
     /** The name of the character. */
@@ -43,6 +46,7 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
     public int getHealth() {
         return myHealth;
     }
+
     @Override
     public int getMaxHealth() {
         return myMaxHealth;
@@ -62,6 +66,7 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
     public int getSpeed() {
         return mySpeed;
     }
+
     @Override
     public Image getImage() {
         final StringBuilder builder = new StringBuilder();
@@ -71,14 +76,17 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
         Image temp = new Image(getClass().getResource(builder.toString()).toString());
         return temp;
     }
+
     @Override
     public boolean isAlive() {
         return myHealth > 0;
     }
+
     @Override
     public StatusEffects getStatusEffects() {
         return myEffects;
     }
+
     @Override
     public void setHealth(final int theHealth) {
         myHealth = theHealth;
@@ -91,7 +99,7 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
         } else {
             myMinDamage = 1;
         }
-        
+
     }
 
     @Override
@@ -103,6 +111,7 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
     public void setSpeed(final int theSpeed) {
         mySpeed = theSpeed;
     }
+
     @Override
     public String getStats() {
         StringBuilder builder = new StringBuilder();
@@ -119,6 +128,7 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
         builder.append("\n");
         return builder.toString();
     }
+
     @Override
     public int attack(final DungeonCharacter theOther) {
         Random rand = new Random();
@@ -127,6 +137,7 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
         theOther.setHealth(theOther.getHealth() - damage);
         return damage;
     }
+
     @Override
     public void heal(final int theHeal) {
         if (getHealth() + theHeal >= getMaxHealth()) {
@@ -135,10 +146,11 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
             setHealth(getHealth() + theHeal);
         }
     }
+
     @Override
     public int checkVulnerableDamage(final DungeonCharacter theOther, final int theDamage) {
         int damage = theDamage;
-        if(theOther.getStatusEffects().isVulnerable()) {
+        if (theOther.getStatusEffects().isVulnerable()) {
             damage *= 2;
         }
         return damage;

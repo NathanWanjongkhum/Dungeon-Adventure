@@ -1,17 +1,23 @@
 package team5.game.model;
+
+import java.io.Serializable;
+
 /**
  * Special attack object
  * 
  * @author Holden Tsang
  * @version
  */
-public class SpecialAttack {
+public class SpecialAttack implements Serializable {
     /** The amount of turns the special attack needs */
     private int myTurns;
     /** The damage (or heal) amount of special attack */
     private int myDamage;
     /** The amount of turns for special attack */
     private int myMaxTurns;
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * Default Constructor for SpecialAttack
      */
@@ -20,10 +26,11 @@ public class SpecialAttack {
         myDamage = 0;
         myMaxTurns = 1;
     }
+
     /**
      * Overloaded Constructor for SpecialAttack
      * 
-     * @param theTurns the windup time for special attack
+     * @param theTurns  the windup time for special attack
      * @param theDamage damage or heal of special attack
      */
     public SpecialAttack(final int theTurns, final int theDamage) {
@@ -31,6 +38,7 @@ public class SpecialAttack {
         myDamage = theDamage;
         myMaxTurns = theTurns;
     }
+
     /**
      * Gets the current turns until special attack
      * 
@@ -39,6 +47,7 @@ public class SpecialAttack {
     public int getTurns() {
         return myTurns;
     }
+
     /**
      * Gets the damage/ heal amount for special attack
      * 
@@ -47,6 +56,7 @@ public class SpecialAttack {
     public int getDamage() {
         return myDamage;
     }
+
     /**
      * The starting amount of turns for special attacks
      * 
@@ -55,6 +65,7 @@ public class SpecialAttack {
     public int getMaxTurns() {
         return myMaxTurns;
     }
+
     /**
      * Sets the turns for the special attacks
      * 
@@ -63,6 +74,7 @@ public class SpecialAttack {
     public void setTurns(final int theTurns) {
         myTurns = theTurns;
     }
+
     /**
      * Change damage of special attacks
      * 

@@ -1,6 +1,10 @@
 package team5.game.model;
 
-public class Exit implements Item {
+import java.io.Serializable;
+
+public class Exit implements Item, Serializable {
+    private static final long serialVersionUID = 1L;
+
     public Exit() {
     }
 

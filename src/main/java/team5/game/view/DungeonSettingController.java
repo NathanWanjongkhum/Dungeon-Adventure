@@ -63,16 +63,7 @@ public class DungeonSettingController {
         final Dungeon myDungeon = new Dungeon(width, height, difficulty);
         GameState.getInstance().setDungeon(myDungeon);
 
-        // Loads the next screen
-        final FXMLLoader loader = new FXMLLoader(App.class.getResource("/team5/game/DungeonScene.fxml"));
-
-        // Get the current stage from any node in the current scene
-        final Stage currentStage = (Stage) myWidth.getScene().getWindow();
-
-        // Set the stage to the new scene
-        final Scene newScene = new Scene(loader.load());
-
-        currentStage.setScene(newScene);
+        App.setRoot("DungeonScene");
     }
 
     /**
