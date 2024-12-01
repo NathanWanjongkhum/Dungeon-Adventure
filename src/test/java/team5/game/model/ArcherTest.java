@@ -1,7 +1,6 @@
 package team5.game.model;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
 
 public class ArcherTest {
@@ -11,8 +10,8 @@ public class ArcherTest {
         final Archer a = new Archer("Arch");
         assertTrue(a.getName().equals("Arch"));
         assertTrue(a.getHealth() == 150);
-        assertTrue(a.getMaxDamage() == 105);
-        assertTrue(a.getMinDamage() == 95);
+        assertTrue(a.getMaxDamage() == 15);
+        assertTrue(a.getMinDamage() == 5);
         assertTrue(a.getSpeed() == 20);
     }
 

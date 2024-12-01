@@ -50,7 +50,9 @@ public class Bomb extends AbstractConsumables {
         myRadius = theRadius;
     }
     @Override
-    public void useItem(DungeonCharacter theCharacter) {
-        theCharacter.setHealth(theCharacter.getHealth() - this.getDamage());
+    public int useItem(DungeonCharacter theCharacter) {
+        final int damage = theCharacter.checkVulnerableDamage(theCharacter, this.getDamage());
+        theCharacter.setHealth(theCharacter.getHealth() - damage);
+        return damage;
     }
 }

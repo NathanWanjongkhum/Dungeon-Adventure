@@ -48,10 +48,12 @@ public class InventoryTest {
         myInventory = new Inventory(TEST_SIZE);
 
         final Bomb expectedItem = new Bomb();
-        final boolean actualIsAdded = myInventory.addItem(expectedItem);
+        boolean actualIsAdded = myInventory.addItem(expectedItem);
+        final Bomb expectedItem2 = new Bomb();
+        actualIsAdded = myInventory.addItem(expectedItem2);
 
         final Item actualItems = myInventory.getItem(0);
-
+        assertTrue(myInventory.getItem(0).getCount() == 2);
         assertTrue(actualIsAdded);
         assertEquals(expectedItem, actualItems);
     }

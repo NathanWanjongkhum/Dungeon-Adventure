@@ -28,7 +28,8 @@ public class HealingPotion extends AbstractConsumables {
         myHealthRestore = theHealthRestore;
     }
     @Override
-    public void useItem(DungeonCharacter theCharacter) {
+    public int useItem(DungeonCharacter theCharacter) {
         theCharacter.heal(getHealthRestore());
+        return getHealthRestore();
     }
 }

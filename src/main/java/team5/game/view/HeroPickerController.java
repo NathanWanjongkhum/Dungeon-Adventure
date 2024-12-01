@@ -11,6 +11,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.VBox;
 import team5.game.App;
 import team5.game.controller.HeroFactory;
 import team5.game.model.GameState;
@@ -33,17 +36,17 @@ public class HeroPickerController implements Initializable {
     @FXML
     private Label myStats;
 
+    @FXML
+    private VBox myBack;
+
     private String[] myCharacters = { "Archer", "Mage", "Priestess", "Warrior" };
 
     @Override
     public void initialize(URL theURL, ResourceBundle theResource) {
-        if (GameState.getInstance().getHero() != null) {
-            System.out.println("True");
-        } else {
-            myChoice.getItems().addAll(myCharacters);
-            myChoice.setOnAction(this::displayImage);
-        }
-        
+        BackgroundImage back = App.getBackgroundImage("selection background");
+        myBack.setBackground(new Background(back));
+        myChoice.getItems().addAll(myCharacters);
+        myChoice.setOnAction(this::displayImage); 
     }
 
     private void displayImage(ActionEvent event) {
@@ -58,12 +61,12 @@ public class HeroPickerController implements Initializable {
 
     @FXML
     void back() throws IOException {
-        App.setRoot("HeroSelection");
+        App.setRoot("NameSelection");
     }
 
     @FXML
     void next() throws IOException {
-        App.setRoot("BattleScene");
+        App.setRoot("BattleScene"); //DungeonSetting
     }
 
 }

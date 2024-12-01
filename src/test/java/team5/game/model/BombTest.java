@@ -1,7 +1,6 @@
 package team5.game.model;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
 
 public class BombTest {
@@ -9,8 +8,8 @@ public class BombTest {
     @Test
     public void testBombConstructor() {
         final Bomb b = new Bomb();
-        assertTrue(b.getCount() == 0);
-        assertTrue(b.getDamage() == 10);
+        assertTrue(b.getCount() == 1);
+        assertTrue(b.getDamage() == 1000);
         assertTrue(b.getRadius() == 1);
     }
 

@@ -33,11 +33,11 @@ public class Archer extends Hero {
         StringBuilder builder = new StringBuilder();
         builder.append(super.getStats());
         builder.append("Special Move: Does low damage, but makes " + 
-                        "enemies take double damage on the next basic attack\n");
+                        "enemies take double damage on the next attack\n");
         return builder.toString();
     }
     @Override
     public String specialAttackText() {
-        return "Vulnerabled the enemy for the next normal attack!\n";
+        return "Vulnerabled the enemy for the next attack!\n";
     }
 }

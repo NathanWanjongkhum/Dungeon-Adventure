@@ -7,27 +7,39 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import team5.game.App;
 
 public class StartController implements Initializable{
+   @FXML
+   private Button myLoad;
+
+   @FXML
+   private Button myNew;
+
+   @FXML
+
+   private Button myQuit;
+
+    @FXML
+    private Text myTitle;
 
    @FXML
    private VBox myScene;
 
+
    @Override
     public void initialize(URL theURL, ResourceBundle theResource) {
-      // BackgroundSize size = new BackgroundSize(640, 480, true, true, true, false);
-      // final StringBuilder builder = new StringBuilder();
-      //   builder.append("/team5/game/");
-      //   builder.append("dungeonBackground");
-      //   builder.append(".png");
-      //   Image temp = new Image(getClass().getResource(builder.toString()).toString());
-      // BackgroundImage back = new BackgroundImage(temp, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, size);
-      // myScene.setBackground(new Background(back));
+      BackgroundImage back = App.getBackgroundImage("TitleScreen");
+      myScene.setBackground(new Background(back));
+      // String css = getClass().getResource("/team5/game/Button.css").toExternalForm();
+      // myScene.getStylesheets().add(css);
     }
-
    @FXML
    void exitGame(ActionEvent event) {
       Stage stage = (Stage) myScene.getScene().getWindow();

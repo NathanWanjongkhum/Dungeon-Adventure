@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="myScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.ItemController">
+<VBox fx:id="myScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@DungeonAdventureStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.ItemController">
    <children>
       <GridPane prefHeight="200.0" prefWidth="600.0">
         <columnConstraints>
@@ -29,19 +29,19 @@
                         <Image url="@Attack%20Potion.png" />
                      </image>
                   </ImageView>
-                  <Label text="Attack Potion">
+                  <Label text="Attack Potion" textFill="WHITE">
                      <font>
-                        <Font size="10.0" />
+                        <Font name="High Tower Text" size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="myAttackButton" mnemonicParsing="false" onAction="#useAttackPotion" prefHeight="25.0" prefWidth="50.0" text="Use">
+                  <Button fx:id="myAttackButton" mnemonicParsing="false" onAction="#useAttackPotion" text="Use">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Button>
-                  <Label fx:id="myAttackCount" text="Count">
+                  <Label fx:id="myAttackCount" text="Count" textFill="WHITE">
                      <font>
-                        <Font size="10.0" />
+                        <Font name="High Tower Text" size="15.0" />
                      </font>
                   </Label>
                </children>
@@ -56,19 +56,19 @@
                         <Image url="@Healing%20Potion.png" />
                      </image>
                   </ImageView>
-                  <Label text="Healing Potion">
+                  <Label text="Healing Potion" textFill="WHITE">
                      <font>
-                        <Font size="10.0" />
+                        <Font name="High Tower Text" size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="myHealingButton" mnemonicParsing="false" onAction="#useHealingPotion" prefHeight="25.0" prefWidth="50.0" text="Use">
+                  <Button fx:id="myHealingButton" mnemonicParsing="false" onAction="#useHealingPotion" text="Use">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Button>
-                  <Label fx:id="myHealingCount" text="Count">
+                  <Label fx:id="myHealingCount" text="Count" textFill="WHITE">
                      <font>
-                        <Font size="10.0" />
+                        <Font name="High Tower Text" size="15.0" />
                      </font>
                   </Label>
                </children>
@@ -85,19 +85,19 @@
                   <Image url="@Bomb.png" />
                </image>
             </ImageView>
-            <Label text="Bomb">
+            <Label text="Bomb" textFill="WHITE">
                <font>
-                  <Font size="10.0" />
+                  <Font name="High Tower Text" size="24.0" />
                </font>
             </Label>
-            <Button fx:id="myBombButton" mnemonicParsing="false" onAction="#useBomb" prefHeight="25.0" prefWidth="50.0" text="Use">
+            <Button fx:id="myBombButton" mnemonicParsing="false" onAction="#useBomb" text="Use">
                <font>
                   <Font size="10.0" />
                </font>
             </Button>
-            <Label fx:id="myBombCount" text="Count">
+            <Label fx:id="myBombCount" text="Count" textFill="WHITE">
                <font>
-                  <Font size="10.0" />
+                  <Font name="High Tower Text" size="15.0" />
                </font>
             </Label>
          </children>

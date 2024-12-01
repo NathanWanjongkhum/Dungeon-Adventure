@@ -138,5 +138,10 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special {
     public boolean isConUsed() {
         return myUsed;
     }
+    @Override
+    public void addMinDamage(final int theAddedDamage) {
+        super.addMinDamage(theAddedDamage);
+        mySpecial.addDamage(theAddedDamage);
+    }
 
 }

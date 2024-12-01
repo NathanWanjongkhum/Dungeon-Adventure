@@ -83,20 +83,21 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
     public void setHealth(final int theHealth) {
         myHealth = theHealth;
     }
-
     @Override
     public void setMinDamage(final int theDamage) {
-        if (theDamage > 0) {
-            myMinDamage = theDamage;
-        } else {
-            myMinDamage = 1;
-        }
-        
+        myMinDamage = theDamage;   
     }
-
     @Override
     public void setMaxDamage(final int theDamage) {
         myMaxDamage = theDamage;
+    }
+    @Override
+    public void addMinDamage(final int theAddedDamage) {
+        myMinDamage += theAddedDamage;   
+    }
+    @Override
+    public void addMaxDamage(final int theAddedDamage) {
+        myMaxDamage =+ theAddedDamage;
     }
 
     @Override
@@ -127,6 +128,8 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
     }
     @Override
     public void heal(final int theHeal) {
+        // Random rand = new Random();
+        // int heal = rand.nextInt(theHeal + 1);
         if (getHealth() + theHeal >= getMaxHealth()) {
             setHealth(getMaxHealth());
         } else {

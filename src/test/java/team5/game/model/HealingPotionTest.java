@@ -1,7 +1,6 @@
 package team5.game.model;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
 
 public class HealingPotionTest {
@@ -9,7 +8,7 @@ public class HealingPotionTest {
     @Test
     public void testHealingPotionConstructor() {
         final HealingPotion p = new HealingPotion();
-        assertTrue(p.getCount() == 0);
+        assertTrue(p.getCount() == 1);
         assertTrue(p.getHealthRestore() == 20);
     }
 

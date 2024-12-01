@@ -26,46 +26,46 @@ public class Warrior extends Hero {
         switch(value) {
             case 1:
                 multiplier += 2;
-                mySpecialText = "\nTriple Damage!\n";
+                mySpecialText = "Triple Damage!\n";
                 break;
             case 2:
                 theOther.getStatusEffects().setVulnerableDuration(2);
-                mySpecialText = "\nVulnerabled the Enemy for 2 turns!\n";
+                mySpecialText = "Vulnerabled the Enemy for 2 turns!\n";
                 break;
             case 3:
                 theOther.getStatusEffects().setRegenAmount(10);
                 theOther.getStatusEffects().setRegenDuration(3);
-                mySpecialText = "\nSomehow healed the enemy 10 HP for 3 turns!\n";
+                mySpecialText = "Somehow healed the enemy 10 HP for 3 turns!\n";
                 break;
             case 4:
                 this.getStatusEffects().setRegenAmount(10);
                 this.getStatusEffects().setRegenDuration(2);
-                mySpecialText = "\nGained Regeneration for 10 HP for 2 turns!\n";
+                mySpecialText = "Gained Regeneration for 10 HP for 2 turns!\n";
                 break;
 
             case 5:
                 multiplier += 1;
-                mySpecialText = "\nDouble damage!\n";
+                mySpecialText = "Double damage!\n";
                 break;
             case 6:
                 multiplier += 0;
-                mySpecialText = "\nNormal Attack\n";
+                mySpecialText = "Normal Attack\n";
                 break;
             case 7:
                 this.getStatusEffects().setVulnerableDuration(3);
-                mySpecialText = "\nTripped and became vulnerable for 2 turns!\n";
+                mySpecialText = "Tripped and became vulnerable for 2 turns!\n";
                 break;
             case 8:
                 multiplier = 0;
-                mySpecialText = "\nDropped their sword!\n";
+                mySpecialText = "Dropped their sword!\n";
                 break;
             case 9:
                 multiplier -= 1;
-                mySpecialText = "\nAttacked with a dull blade!\n";
+                mySpecialText = "Attacked with a dull blade!\n";
                 break;
             default:
                 multiplier += 100;
-                mySpecialText = "\nSomething good happened!\n";
+                mySpecialText = "Something good happened!\n";
                 break;
         }
         damage = (int) (damage * multiplier);

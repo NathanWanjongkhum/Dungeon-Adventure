@@ -15,8 +15,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -78,10 +81,6 @@ public class BattleController implements Initializable {
     private Button myItem;
     @FXML
     private Button myRetreat;
-    @FXML
-    private Label myHeroStatus;
-    @FXML
-    private Label myMonsterStatus;
 
     private Stage myStage;
     private Battle myBattle;
@@ -89,6 +88,10 @@ public class BattleController implements Initializable {
     private Monster myMonster;
     private Tooltip myHeroTooltip;
     private Tooltip myMonsterTooltip;
+    private ImageView myHeroEffects;
+    private ImageView myMonsterEffects;
+    private Tooltip myHeroEffectTooltip;
+    private Tooltip myMonsterEffectTooltip;
 
     @Override
     public void initialize(URL theURL, ResourceBundle theResource) {
@@ -97,40 +100,40 @@ public class BattleController implements Initializable {
         myMonster = new Ogre("Og");
 
         AttackPotion potion = new AttackPotion();
+        AttackPotion potion2 = new AttackPotion();
         Bomb bomb = new Bomb();
         HealingPotion heal = new HealingPotion();
         myHero.getInventory().addItem(heal);
         myHero.getInventory().addItem(bomb);
         myHero.getInventory().addItem(potion);
         myHero.getInventory().addItem(potion);
+        myHero.getInventory().addItem(potion2);
         
         //CustomBackground code
-        // BackgroundSize size = new BackgroundSize(640, 480, true, true, true, false);
-        // final StringBuilder builder = new StringBuilder();
-        // builder.append("/team5/game/");
-        // builder.append("dungeonBackground");
-        // builder.append(".png");
-        // Image temp = new Image(getClass().getResource(builder.toString()).toString());
-        // BackgroundImage back = new BackgroundImage(temp, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, size);
-        // myScene.setBackground(new Background(back));
+        BackgroundImage back = App.getBackgroundImage("battle background");
+        myBackground.setBackground(new Background(back));
 
-        myControls.setStyle(("-fx-background-color: grey"));
-        myBackground.setStyle("-fx-background-color: black");
+        myControls.setStyle(("-fx-background-color: black"));
+        // BackgroundImage ui = App.getBackgroundImage("battle background2");
+        // myControls.setBackground(new Background(ui));
+
         myBattle = new Battle(myHero, myMonster);
         myHeroTooltip = new Tooltip(myHero.getStats());
         myMonsterTooltip = new Tooltip(myMonster.getStats());
         initDungeonCharacter();
         initImages();
+        initStatusIndication();
         setHP();
         myLog.appendText("Battles had started with " + myMonster.getName() + "\n");
     }
-
     private void initDungeonCharacter() {
         myName.setText(myHero.getName());
         myHeroBar.setStyle("-fx-accent: green");
+        // myHeroStatus.setFont(Font.font("High Tower Text", 12));
 
         myMonsterName.setText(myMonster.getName());
         myMonsterBar.setStyle("-fx-accent: green");
+        // myMonsterStatus.setFont(Font.font("High Tower Text", 12));
     }
 
     private void initImages() {
@@ -141,8 +144,23 @@ public class BattleController implements Initializable {
 
     private void initImages(final ImageView theView, final DungeonCharacter theCharacter, Tooltip theTooltip) {
         theView.setImage(theCharacter.getImage());
+        theTooltip.setStyle("-fx-font-size: 15; -fx-text-fill: white;" +
+                            "-fx-font-family: 'High Tower Text'");
         Tooltip.install(theView, theTooltip);
-        theTooltip.setShowDelay(Duration.seconds(0));
+
+    }
+    private void initStatusIndication() {
+        myHeroEffects = new ImageView();
+        myMonsterEffects = new ImageView();
+        myHeroEffectTooltip = new Tooltip();
+        myMonsterEffectTooltip = new Tooltip();
+        setTooltipTheme(myHeroEffectTooltip);
+        setTooltipTheme(myMonsterEffectTooltip);
+    }
+    private void setTooltipTheme(final Tooltip theTooltip) {
+        theTooltip.setStyle("-fx-font-size: 15; -fx-text-fill: white;" +
+                            "-fx-font-family: 'High Tower Text'");
+        theTooltip.setShowDelay(Duration.seconds(0.5));
     }
 
     private void setHP() {
@@ -242,22 +260,53 @@ public class BattleController implements Initializable {
             App.setRoot("DungeonScene");
         }
     }
+    @FXML
+    void showRules(ActionEvent event) throws IOException {
+        // myStage = new Stage();
+        // myStage.setScene(new Scene(loadFXML("")));
+        // myStage.initModality(Modality.APPLICATION_MODAL);
+        // myStage.initOwner(myItem.getScene().getWindow());
+        // myStage.showAndWait();
+    }
 
     private void displayText() {
         myLog.appendText(myBattle.actionPerformed());
-        displayEffect(myHero, myHeroTooltip, myHeroStatus);
-        displayEffect(myMonster, myMonsterTooltip, myMonsterStatus);
+        displayEffect(myHero, myHeroTooltip, myHPLevel, myHeroEffectTooltip, myHeroEffects);
+        displayEffect(myMonster, myMonsterTooltip, myMonsterHPLevel, myMonsterEffectTooltip, myMonsterEffects);
     }
 
-    private void displayEffect(final DungeonCharacter theCharacter, final Tooltip theTooltip, final Label theLabel) {
-        if (theCharacter.getStatusEffects().isRegen() || theCharacter.getStatusEffects().isVulnerable()) {
-            theTooltip.setText(theCharacter.getStats() + theCharacter.getStatusEffects().toString());
-            theLabel.setText(theCharacter.getStatusEffects().toString());
-            theLabel.setVisible(true);
+    private void displayEffect(final DungeonCharacter theCharacter, final Tooltip theTooltip, 
+                                final Label theLabel, final Tooltip theStatus, final ImageView theIcon) {
+        if (theCharacter.getStatusEffects().hasEffect()) {
+            theTooltip.setText(theCharacter.getStats() + "\n" + theCharacter.getStatusEffects().toString());
+            
+            theStatus.setText(theCharacter.getStatusEffects().toString());
+            theLabel.setTooltip(theStatus);
+            Image icon = null;
+            //Adding image to label depending on status
+            if (theCharacter.getStatusEffects().hasMultipleStatus()) {
+                 icon = getImage("bothStatus");
+            } else if (theCharacter.getStatusEffects().isVulnerable()) {
+                icon = getImage("debuff");
+            } else {
+                icon = getImage("buff");
+            }
+            theIcon.setImage(icon);
+            theLabel.setGraphic(theIcon);
         } else {
             theTooltip.setText(theCharacter.getStats());
-            theLabel.setVisible(false);
+            theLabel.setGraphic(null);
+            theLabel.setTooltip(null);
         }
+    }
+
+    private Image getImage(final String theImageName) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("/team5/game/");
+        builder.append(theImageName);
+        builder.append(".png");
+        Image temp = new Image(getClass().getResource(builder.toString()).toString());
+        return temp;
     }
 
     private void over() {

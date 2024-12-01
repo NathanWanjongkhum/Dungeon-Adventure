@@ -43,15 +43,16 @@ public class Inventory {
 
         for (int i = 0; i < myInventorySize; i++) {
             if (myItems[i] == null) {
-                myItems[i] = item;
+                myItems[i] = item; 
                 return true;
             }
-            if (myItems[i].equals(item)) {
+            if (myItems[i].getName().equals(item.getName())) {
                 if(myItems[i].isPillar()) {
 
                 } else {
                     ((Consumable)myItems[i]).setCount(((Consumable)myItems[i]).getCount() + ((Consumable)item).getCount());
                 }
+                return true;
             }
         }
 
@@ -91,12 +92,12 @@ public class Inventory {
             return null;
         }
     }
-    public Item getItem(final Item theItem) {
+    public int getItem(final Item theItem) {
         int index = 0;
         while (!myItems[index].getName().equals(theItem.getName())) {
             index++;
         }
-        return myItems[index];
+        return index;
     }
 
     /**

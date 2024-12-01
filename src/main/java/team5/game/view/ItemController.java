@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -40,12 +39,10 @@ public class ItemController implements Initializable{
     private Label myHealingCount;
 
     private Inventory myInventory;
-    private BattleController myController;
 
     @Override
     public void initialize(URL theURL, ResourceBundle theResource) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("BattleScene.fxml"));
-        myController = loader.getController();
+        myScene.setStyle(("-fx-background-color: grey"));
         myInventory = GameState.getInstance().getHero().getInventory();
         disable();
         int index = 0;
@@ -69,7 +66,7 @@ public class ItemController implements Initializable{
         myBombCount.setText("x0");
     }
         private void setText(Item theItem, final int theIndex) {
-            Consumable item = ((Consumable)myInventory.getItem(theIndex));;
+            Consumable item = ((Consumable)myInventory.getItem(theIndex));
         switch (theItem.getName()) {
             case "AttackPotion":
                 myAttackCount.setText("x" + item.getCount());

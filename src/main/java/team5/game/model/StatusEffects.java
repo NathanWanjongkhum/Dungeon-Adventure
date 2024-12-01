@@ -10,21 +10,27 @@ public class StatusEffects {
     private boolean myVulnerable;
     /** The boolean if regen is active */
     private boolean myRegen;
+    private boolean myDamageIncrease;
     /** The vulnerable duration */
     private int myVulDuration;
     /** The regen duration */
     private int myRegenDuration;
+    private int myDamageDuration;
     /** The regen healing amount */
     private int myRegenAmount;
+    private int myDamageAmount;
     /**
      * Constructor for status effect
      */
     public StatusEffects() {
         myVulnerable = false;
         myRegen = false;
+        myDamageIncrease = false;
         myVulDuration = 0;
         myRegenDuration = 0;
+        myDamageDuration = 0;
         myRegenAmount = 0;
+        myDamageAmount = 0;
     }
     /**
      * Checks if vulnerable is active
@@ -32,11 +38,7 @@ public class StatusEffects {
      * @return true if vulnerable is active, false otherwise
      */
     public boolean isVulnerable() {
-        if (myVulDuration > 0) {
-            myVulnerable = true;
-        } else {
-            myVulnerable = false;
-        }
+        myVulnerable = myVulDuration > 0;
         return myVulnerable;
     }
     /**
@@ -45,12 +47,20 @@ public class StatusEffects {
      * @return true if regen is active, false otherwise
      */
     public boolean isRegen() {
-        if (myRegenDuration > 0) {
-            myRegen = true;
-        } else {
-            myRegen = false;
-        }
+        myRegen = myRegenDuration > 0;
         return myRegen;
+    }
+    public boolean isDamageIncrease() {
+        myDamageIncrease = myDamageDuration > 0;
+        return myDamageIncrease;
+    }
+    public boolean hasEffect() {
+        return isDamageIncrease() || isRegen() || isVulnerable();
+    }
+    public boolean hasMultipleStatus() {
+        boolean debuff = myVulnerable;
+        boolean buff = myRegen || myDamageIncrease;
+        return debuff && buff;
     }
     /**
      * Gets the vulnerable duration
@@ -68,6 +78,9 @@ public class StatusEffects {
     public int getRegenDuration() {
         return myRegenDuration;
     }
+    public int getDamageIncreaseDuration() {
+        return myDamageDuration;
+    }
     /**
      * Gets the regen amount
      * 
@@ -75,6 +88,9 @@ public class StatusEffects {
      */
     public int getRegenAmount() {
         return myRegenAmount;
+    }
+    public int getDamageAmount() {
+        return myDamageAmount;
     }
     /**
      * Sets the Vulnerable duration
@@ -92,6 +108,9 @@ public class StatusEffects {
     public void setRegenDuration(final int theDuration) {
         myRegenDuration = theDuration;
     }
+    public void setDamageDuration(final int theDuration) {
+        myDamageDuration = theDuration;
+    }
     /**
      * Sets the regen amount
      * 
@@ -99,6 +118,9 @@ public class StatusEffects {
      */
     public void setRegenAmount(final int theAmount) {
         myRegenAmount = theAmount;
+    }
+    public void setDamageIncrease(final int theAmount) {
+        myDamageAmount = theAmount;
     }
     //Could just be like getStatusDescriptions instead of toString
     @Override
@@ -112,6 +134,10 @@ public class StatusEffects {
         if (isRegen()) {
             String regen = String.format("Regen for %d HP for %d turns\n", getRegenAmount(), getRegenDuration());
             builder.append(regen);
+        }
+        if (isDamageIncrease()) {
+            String damage = String.format("Increase Damage by %d for %d turns\n", getDamageAmount(), getDamageIncreaseDuration());
+            builder.append(damage);
         }
         return builder.toString();
 
