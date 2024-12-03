@@ -13,7 +13,7 @@
    <children>
       <StackPane prefHeight="150.0" prefWidth="200.0">
          <children>
-            <Text fx:id="myTitle" fill="RED" strokeType="INSIDE" strokeWidth="5.0" text="Dungeon Adventures">
+            <Text fx:id="myTitle" fill="RED" onMouseClicked="#enableCheats" strokeType="INSIDE" strokeWidth="5.0" text="Dungeon Adventures">
                <effect>
                   <DropShadow height="40.0" offsetY="3.0" radius="22.0" spread="0.93" width="50.0" />
                </effect>

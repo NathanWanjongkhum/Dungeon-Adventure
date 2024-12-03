@@ -17,12 +17,20 @@
 }
 .text-area .content
 {
-    -fx-background-color:gray;
+    -fx-background-color:black;
+    
 }
 .text-area
 {
-    /* -fx-effect: dropshadow(gaussian, black, 2, 1, 0, 0); */
+    -fx-effect: dropshadow(gaussian, white, 1, 1, 0, 0);
     -fx-text-fill: white;
+    -fx-focus-color: transparent;
+    /* -fx-focus-color: -fx-control-inner-background ;
+    -fx-faint-focus-color: -fx-control-inner-background ; */
+}
+.text-area .scroll-bar:vertical {
+    -fx-pref-width: 1;
+    -fx-opacity: 0;
 }
 .choice-box .label
 {

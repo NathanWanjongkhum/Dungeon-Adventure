@@ -179,6 +179,10 @@ public class Battle {
         if (theCharacter.getStatusEffects().isVulnerable()) {
             //If still vulnerable, then reduce the turn count
             theCharacter.getStatusEffects().setVulnerableDuration(theCharacter.getStatusEffects().getVulnerableDuration() - 1);
+            //If status is not longer active, add message to the string
+            if (!theCharacter.getStatusEffects().isVulnerable()) {
+                myText += String.format("%s is not longer vulnerable", theCharacter.getName());
+            }
         }
         if (theCharacter.getStatusEffects().isRegen()) {
             //If still has regen status, then heal and reduce the turns
@@ -186,6 +190,10 @@ public class Battle {
             theCharacter.heal(heal);
             myText += String.format("%s has healed %d HP!\n", theCharacter.getName(), heal);
             theCharacter.getStatusEffects().setRegenDuration(theCharacter.getStatusEffects().getRegenDuration() - 1);
+            //If status is not longer active, add message to the string
+            if (!theCharacter.getStatusEffects().isRegen()) {
+                myText += String.format("%s's regeneration has wore off", theCharacter.getName());
+            }
         }
         if (theCharacter.getStatusEffects().isDamageIncrease()) {
             //Updates the duration of the damage increase
@@ -195,6 +203,7 @@ public class Battle {
                 //Negative value
                 theCharacter.addMaxDamage(-theCharacter.getStatusEffects().getDamageAmount());
                 theCharacter.addMinDamage(-theCharacter.getStatusEffects().getDamageAmount());
+                myText += String.format("%s's attack buff has wore off", theCharacter.getName());
             }
         }
     }

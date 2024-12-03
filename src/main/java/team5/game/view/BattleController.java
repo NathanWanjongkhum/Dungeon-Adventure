@@ -20,7 +20,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -112,8 +116,10 @@ public class BattleController implements Initializable {
         //CustomBackground code
         BackgroundImage back = App.getBackgroundImage("battle background");
         myBackground.setBackground(new Background(back));
+        // myBackground.setStyle();
 
-        myControls.setStyle(("-fx-background-color: black"));
+        myControls.setStyle("-fx-background-color: black; -fx-effect: innershadow(gaussian, #66524d, 7, 0.9, 0, 0)");
+        // myControls.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, null)));
         // BackgroundImage ui = App.getBackgroundImage("battle background2");
         // myControls.setBackground(new Background(ui));
 
@@ -255,7 +261,7 @@ public class BattleController implements Initializable {
     @FXML
     void endBattle(ActionEvent event) throws IOException {
         if (myBattle.isOver() && myHero.getHealth() == 0) {
-            App.setRoot("LosingScene");//Still need to make 
+            App.setRoot("EndScene");//Still need to make 
         } else {
             App.setRoot("DungeonScene");
         }

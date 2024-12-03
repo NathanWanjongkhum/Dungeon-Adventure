@@ -42,7 +42,7 @@ public class ItemController implements Initializable{
 
     @Override
     public void initialize(URL theURL, ResourceBundle theResource) {
-        myScene.setStyle(("-fx-background-color: grey"));
+        myScene.setStyle(("-fx-background-color: #66524d"));
         myInventory = GameState.getInstance().getHero().getInventory();
         disable();
         int index = 0;
@@ -55,6 +55,9 @@ public class ItemController implements Initializable{
                 }
                 index++;
             }
+        }
+        if (GameState.getInstance().getHero().getStatusEffects().isDamageIncrease()) {
+            myAttackButton.setDisable(true);
         }        
     }
     private void disable() {

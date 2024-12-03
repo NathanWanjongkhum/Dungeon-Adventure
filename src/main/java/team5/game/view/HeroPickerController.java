@@ -39,13 +39,17 @@ public class HeroPickerController implements Initializable {
     @FXML
     private VBox myBack;
 
-    private String[] myCharacters = { "Archer", "Mage", "Priestess", "Warrior" };
+    private final String[] myCharacters = { "Archer", "Mage", "Priestess", "Warrior" };
+    private final String[] myCheatCharacters = {"Slime", "Noob"};
 
     @Override
     public void initialize(URL theURL, ResourceBundle theResource) {
         BackgroundImage back = App.getBackgroundImage("selection background");
         myBack.setBackground(new Background(back));
         myChoice.getItems().addAll(myCharacters);
+        if (StartController.isCheats()) {
+            myChoice.getItems().addAll(myCheatCharacters);
+        }
         myChoice.setOnAction(this::displayImage); 
     }
 

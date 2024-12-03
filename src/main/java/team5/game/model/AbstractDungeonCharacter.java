@@ -28,9 +28,17 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
         myName = theName;
         myHealth = theHealth;
         myMaxHealth = theHealth;
-        myMinDamage = theDamage - DAMAGE_DIF;
+        if (theDamage - DAMAGE_DIF < 0) {
+            myMinDamage = 0;
+        } else {
+            myMinDamage = theDamage - DAMAGE_DIF;
+        }
         myMaxDamage = theDamage + DAMAGE_DIF;
-        mySpeed = theSpeed;
+        if (theSpeed < 0) {
+            mySpeed = 0;
+        } else {
+            mySpeed = theSpeed;
+        }
         myEffects = new StatusEffects();
     }
 
@@ -85,7 +93,11 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
     }
     @Override
     public void setMinDamage(final int theDamage) {
-        myMinDamage = theDamage;   
+        if (theDamage < 0) {
+            myMinDamage = 0;
+        } else {
+            myMinDamage = theDamage;  
+        } 
     }
     @Override
     public void setMaxDamage(final int theDamage) {
@@ -93,16 +105,24 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter {
     }
     @Override
     public void addMinDamage(final int theAddedDamage) {
-        myMinDamage += theAddedDamage;   
+        if (myMinDamage + theAddedDamage < 0) {
+            myMinDamage = 0;
+        } else {
+            myMinDamage += theAddedDamage;  
+        }
     }
     @Override
     public void addMaxDamage(final int theAddedDamage) {
-        myMaxDamage =+ theAddedDamage;
+        myMaxDamage += theAddedDamage;
     }
 
     @Override
     public void setSpeed(final int theSpeed) {
-        mySpeed = theSpeed;
+        if (theSpeed < 0) {
+            mySpeed = 0;
+        } else {
+            mySpeed = theSpeed;
+        }
     }
     @Override
     public String getStats() {
