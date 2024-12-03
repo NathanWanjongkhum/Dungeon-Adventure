@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -15,7 +16,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import team5.game.App;
-import team5.game.DatabaseHandler;
 import team5.game.model.GameState;
 
 public class StartController implements Initializable{
@@ -26,7 +26,6 @@ public class StartController implements Initializable{
    private Button myNew;
 
    @FXML
-
    private Button myQuit;
 
     @FXML
@@ -34,6 +33,9 @@ public class StartController implements Initializable{
 
    @FXML
    private VBox myScene;
+   
+   @FXML
+   private Label myCheatIndicator;
 
    private static boolean myCheats;
 
@@ -64,6 +66,8 @@ public class StartController implements Initializable{
    @FXML
     void enableCheats(MouseEvent event) {
       if (!myCheats) {
+         myCheatIndicator.setText("Cheat Characters Added");
+         myCheatIndicator.setVisible(true);
          myCheats = true;
       }
     }

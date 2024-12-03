@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.StackPane?>
@@ -58,5 +59,13 @@
                </effect></Button>
          </children>
       </VBox>
+      <Label fx:id="myCheatIndicator" alignment="CENTER" text="Label" textFill="WHITE" visible="false">
+         <font>
+            <Font name="High Tower Text" size="24.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Label>
    </children>
 </VBox>
