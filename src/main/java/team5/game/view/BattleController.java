@@ -26,11 +26,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import team5.game.App;
 import team5.game.controller.Battle;
-import team5.game.model.AttackPotion;
-import team5.game.model.Bomb;
 import team5.game.model.DungeonCharacter;
 import team5.game.model.GameState;
-import team5.game.model.HealingPotion;
 import team5.game.model.Hero;
 import team5.game.model.Monster;
 
@@ -97,16 +94,17 @@ public class BattleController implements Initializable {
         // Dungeon class would get hero and monster so hp would carry over
         myHero = GameState.getInstance().getHero();
         myMonster = GameState.getInstance().getDungeon().getRoom(myHero.getX(), myHero.getY()).getMonster();
+        // myMonster = MonsterFactory.createMonster('S', "Ske");
 
-        AttackPotion potion = new AttackPotion();
-        AttackPotion potion2 = new AttackPotion();
-        Bomb bomb = new Bomb();
-        HealingPotion heal = new HealingPotion();
-        myHero.getInventory().addItem(heal);
-        myHero.getInventory().addItem(bomb);
-        myHero.getInventory().addItem(potion);
-        myHero.getInventory().addItem(potion);
-        myHero.getInventory().addItem(potion2);
+        // AttackPotion potion = new AttackPotion();
+        // AttackPotion potion2 = new AttackPotion();
+        // Bomb bomb = new Bomb();
+        // HealingPotion heal = new HealingPotion();
+        // myHero.getInventory().addItem(heal);
+        // myHero.getInventory().addItem(bomb);
+        // myHero.getInventory().addItem(potion);
+        // myHero.getInventory().addItem(potion);
+        // myHero.getInventory().addItem(potion2);
         
         //CustomBackground code
         BackgroundImage back = App.getBackgroundImage("battle background");
