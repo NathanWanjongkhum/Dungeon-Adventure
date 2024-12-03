@@ -1,13 +1,17 @@
 package team5.game.model;
 
+import java.io.Serializable;
+
 /**
  * Inventory is a class that holds and handles items.
  */
-public class Inventory {
+public class Inventory implements Serializable {
     /** The maximum size of the inventory */
     private int myInventorySize;
     /** The items in the inventory */
     private Item[] myItems;
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * Create an empty inventory
