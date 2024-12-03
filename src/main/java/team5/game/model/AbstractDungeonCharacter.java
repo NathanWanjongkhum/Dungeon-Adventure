@@ -11,11 +11,11 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
     /** Constant for Damage difference */
     private static final int DAMAGE_DIF = 5;
     /** The name of the character. */
-    private String myName;
+    private final String myName;
     /** The health of the character. */
     private int myHealth;
     /** The max health of the character */
-    private int myMaxHealth;
+    private final int myMaxHealth;
     /** The minimum damage of the character. */
     private int myMinDamage;
     /** The maximum damage of the character. */
@@ -23,7 +23,7 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
     /** The speed of the character. */
     private int mySpeed;
     /** The status effect on character */
-    private StatusEffects myEffects;
+    private final StatusEffects myEffects;
 
     /** Creates a new AbstractDungeonCharacter. */
     protected AbstractDungeonCharacter(final String theName, final int theHealth, final int theDamage,
@@ -31,9 +31,17 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
         myName = theName;
         myHealth = theHealth;
         myMaxHealth = theHealth;
-        myMinDamage = theDamage - DAMAGE_DIF;
+        if (theDamage - DAMAGE_DIF < 0) {
+            myMinDamage = 0;
+        } else {
+            myMinDamage = theDamage - DAMAGE_DIF;
+        }
         myMaxDamage = theDamage + DAMAGE_DIF;
-        mySpeed = theSpeed;
+        if (theSpeed < 0) {
+            mySpeed = 0;
+        } else {
+            mySpeed = theSpeed;
+        }
         myEffects = new StatusEffects();
     }
 
@@ -91,25 +99,38 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
     public void setHealth(final int theHealth) {
         myHealth = theHealth;
     }
-
     @Override
     public void setMinDamage(final int theDamage) {
-        if (theDamage > 0) {
-            myMinDamage = theDamage;
+        if (theDamage < 0) {
+            myMinDamage = 0;
         } else {
-            myMinDamage = 1;
-        }
-
+            myMinDamage = theDamage;  
+        } 
     }
-
     @Override
     public void setMaxDamage(final int theDamage) {
         myMaxDamage = theDamage;
     }
+    @Override
+    public void addMinDamage(final int theAddedDamage) {
+        if (myMinDamage + theAddedDamage < 0) {
+            myMinDamage = 0;
+        } else {
+            myMinDamage += theAddedDamage;  
+        }
+    }
+    @Override
+    public void addMaxDamage(final int theAddedDamage) {
+        myMaxDamage += theAddedDamage;
+    }
 
     @Override
     public void setSpeed(final int theSpeed) {
-        mySpeed = theSpeed;
+        if (theSpeed < 0) {
+            mySpeed = 0;
+        } else {
+            mySpeed = theSpeed;
+        }
     }
 
     @Override
@@ -119,8 +140,6 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
         builder.append(myName);
         String hp = String.format("\nHP: %d/%d", myHealth, myMaxHealth);
         builder.append(hp);
-        // builder.append("\nMax HP: ");
-        // builder.append(myHealth);
         String damage = String.format("\nDamage Range: %d - %d\n", myMinDamage, myMaxDamage);
         builder.append(damage);
         builder.append("Speed: ");
@@ -140,6 +159,8 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
 
     @Override
     public void heal(final int theHeal) {
+        // Random rand = new Random();
+        // int heal = rand.nextInt(theHeal + 1);
         if (getHealth() + theHeal >= getMaxHealth()) {
             setHealth(getMaxHealth());
         } else {

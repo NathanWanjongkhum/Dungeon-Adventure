@@ -80,7 +80,10 @@ public class SpecialAttack implements Serializable {
      * 
      * @param theDamage
      */
-    public void setDamage(final int theDamage) {
+    protected void setDamage(final int theDamage) {
         myDamage = theDamage;
+    }
+    protected void addDamage(final int theAddedDamage) {
+        myDamage += theAddedDamage;
     }
 }

@@ -10,9 +10,9 @@ public class Inventory implements Serializable {
     private int myInventorySize;
     /** The items in the inventory */
     private Item[] myItems;
-
+    public Inventory() {
+    }
     private static final long serialVersionUID = 1L;
-
     /**
      * Create an empty inventory
      * 
@@ -45,7 +45,15 @@ public class Inventory implements Serializable {
 
         for (int i = 0; i < myInventorySize; i++) {
             if (myItems[i] == null) {
-                myItems[i] = item;
+                myItems[i] = item; 
+                return true;
+            }
+            if (myItems[i].getName().equals(item.getName())) {
+                if(myItems[i].isPillar()) {
+
+                } else {
+                    ((Consumable)myItems[i]).setCount(((Consumable)myItems[i]).getCount() + ((Consumable)item).getCount());
+                }
                 return true;
             }
         }
@@ -86,12 +94,20 @@ public class Inventory implements Serializable {
             return null;
         }
     }
+    public int getItem(final Item theItem) {
+        int index = 0;
+        while (!myItems[index].getName().equals(theItem.getName())) {
+            index++;
+        }
+        return index;
+    }
 
     /**
      * Clone the inventory and return a new one
      * 
      * @return the cloned inventory
      */
+    @Override
     public Inventory clone() {
         final Inventory inventory = new Inventory(myInventorySize);
 
@@ -115,6 +131,9 @@ public class Inventory implements Serializable {
         }
 
         return true;
+    }
+    public boolean isEmpty() {
+        return getItem(0) == null;
     }
 
     /**

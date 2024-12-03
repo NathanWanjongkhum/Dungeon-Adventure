@@ -15,8 +15,9 @@ public abstract class AbstractConsumables implements Item, Serializable {
      * Consumables constructor
      */
     protected AbstractConsumables() {
-        myCount = 0;
+        myCount = 1;
     }
+    @Override
 
     /**
      * Consumables constructor with count
@@ -36,18 +37,25 @@ public abstract class AbstractConsumables implements Item, Serializable {
     public int getCount() {
         return myCount;
     }
-
-    /**
-     * Set the count of consumables
-     * 
-     * @param count the count
-     */
+    @Override
     public void setCount(int count) {
         myCount = count;
     }
 
     @Override
     public String toString() {
+        return getClass().getSimpleName();
+    }
+    @Override
+    public boolean isConsumable() {
+        return true;
+    }
+    @Override
+    public boolean isPillar() {
+        return false;
+    }
+    @Override
+    public String getName() {
         return getClass().getSimpleName();
     }
 }

@@ -1,30 +1,21 @@
 package team5.game.model;
 
 public class Bomb extends AbstractConsumables {
-    private static final int BOMB_DAMAGE = 10;
+    private static final int BOMB_DAMAGE = 1000;
     private static final int BOMB_RADIUS = 1;
     /** The damage of the bomb */
     private int myDamage;
     /** The radius of the bomb */
     private int myRadius;
 
-
+    /**
+     * The bomb constructor
+     */
     public Bomb() {
         super();
         myDamage = BOMB_DAMAGE;
         myRadius = BOMB_RADIUS;
     }
-    /**
-     * Bomb constructor
-     * 
-     * @param count
-     */
-    public Bomb(int count) { //Don't know if need a constructor with count as we create bomb first and should default to 0 items
-        super(count);
-        myDamage = BOMB_DAMAGE;
-        myRadius = BOMB_RADIUS;
-    }
-
     /**
      * Get the damage of the bomb
      * 
@@ -57,5 +48,11 @@ public class Bomb extends AbstractConsumables {
      */
     public void setRadius(int theRadius) {
         myRadius = theRadius;
+    }
+    @Override
+    public int useItem(DungeonCharacter theCharacter) {
+        final int damage = theCharacter.checkVulnerableDamage(theCharacter, this.getDamage());
+        theCharacter.setHealth(theCharacter.getHealth() - damage);
+        return damage;
     }
 }

@@ -64,7 +64,6 @@ public interface DungeonCharacter {
      * @param theHealth the health of the character
      */
     void setHealth(final int theHealth);
-
     /**
      * sets the minimum damage of the character.
      * 
@@ -77,6 +76,18 @@ public interface DungeonCharacter {
      * @param theDamage the max damage
      */
     void setMaxDamage(final int theDamage);
+    /**
+     * sets the minimum damage of the character.
+     * 
+     * @param theDamage the minimum damage
+     */
+    void addMinDamage(final int theAddedDamage);
+    /**
+     * sets the maximum damage of the character.
+     * 
+     * @param theDamage the max damage
+     */
+    void addMaxDamage(final int theAddedDamage);
     /**
      * Sets the speed of the character.
      * 

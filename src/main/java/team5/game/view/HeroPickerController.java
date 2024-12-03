@@ -4,17 +4,20 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.VBox;
 import team5.game.App;
 import team5.game.controller.HeroFactory;
 import team5.game.model.GameState;
 import team5.game.model.Hero;
-import javafx.event.ActionEvent;
 
 public class HeroPickerController implements Initializable {
 
@@ -33,13 +36,21 @@ public class HeroPickerController implements Initializable {
     @FXML
     private Label myStats;
 
-    private String[] myCharacters = { "Archer", "Mage", "Priestess", "Warrior" };
+    @FXML
+    private VBox myBack;
+
+    private final String[] myCharacters = { "Archer", "Mage", "Priestess", "Warrior" };
+    private final String[] myCheatCharacters = {"Slime", "Noob"};
 
     @Override
     public void initialize(URL theURL, ResourceBundle theResource) {
-
+        BackgroundImage back = App.getBackgroundImage("selection background");
+        myBack.setBackground(new Background(back));
         myChoice.getItems().addAll(myCharacters);
-        myChoice.setOnAction(this::displayImage);
+        if (StartController.isCheats()) {
+            myChoice.getItems().addAll(myCheatCharacters);
+        }
+        myChoice.setOnAction(this::displayImage); 
     }
 
     private void displayImage(ActionEvent event) {
@@ -54,12 +65,12 @@ public class HeroPickerController implements Initializable {
 
     @FXML
     void back() throws IOException {
-        App.setRoot("HeroSelection");
+        App.setRoot("NameSelection");
     }
 
     @FXML
     void next() throws IOException {
-        App.setRoot("DungeonSetting");
+        App.setRoot("BattleScene"); //DungeonSetting
     }
 
 }

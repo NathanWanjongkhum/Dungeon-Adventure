@@ -7,9 +7,11 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special, 
     /** The direction the hero is facing */
     private Direction myDirection;
     /** The inventory of the hero */
-    private Inventory myInventory;
+    private final Inventory myInventory;
     /** Special Attack of hero */
-    private SpecialAttack mySpecial;
+    private final SpecialAttack mySpecial;
+    private Consumable myConsumable;
+    private boolean myUsed;
     /** The x coordinate of the hero */
     private int myX;
     /** The y coordinate of the hero */
@@ -32,6 +34,8 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special, 
         myDirection = Direction.NORTH;
         myInventory = new Inventory(ITEM_COUNT);
         mySpecial = theSpecial;
+        myConsumable = null;
+        myUsed = false;
     }
 
     /**
@@ -115,7 +119,7 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special, 
      * @return the inventory
      */
     public Inventory getInventory() {
-        return myInventory.clone();
+        return myInventory;
     }
 
     @Override
@@ -126,6 +130,22 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special, 
     @Override
     public void resetTurns() {
         mySpecial.setTurns(0);
+    }
+    public void setConsumable(Consumable theConsumable) {
+        myConsumable = theConsumable;
+        myUsed = true;
+    }
+    public Consumable useConsumable() {
+        myUsed = false;
+        return myConsumable;
+    }
+    public boolean isConUsed() {
+        return myUsed;
+    }
+    @Override
+    public void addMinDamage(final int theAddedDamage) {
+        super.addMinDamage(theAddedDamage);
+        mySpecial.addDamage(theAddedDamage);
     }
 
 }

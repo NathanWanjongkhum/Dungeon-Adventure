@@ -1,11 +1,16 @@
 package team5.game.controller;
 
+import team5.game.model.AttackPotion;
+import team5.game.model.Consumable;
 import team5.game.model.DungeonCharacter;
+import team5.game.model.HealingPotion;
 import team5.game.model.Hero;
-import team5.game.model.Item;
 import team5.game.model.Monster;
 /**
- * A controller class for battles
+ * A controller class for battles.
+ * Heros have 3 actions while monsters only attack. 
+ * First compares the speed to determine who goes first
+ * Status effects 
  * 
  * @author Holden Tsang
  * @version
@@ -21,6 +26,8 @@ public class Battle {
     private int myCount;
     /** The action of the hero */
     private String myAction;
+    /** The consumable item */
+    private Consumable myConsumable;
     /**
      * Constructor for battle
      * 
@@ -33,6 +40,7 @@ public class Battle {
         myText = "";
         myAction = "";
         myCount = 1;
+        myConsumable = null;
     }
     /**
      * The method to perform an action in battle
@@ -88,7 +96,7 @@ public class Battle {
                 special(myHero, myMonster);
                 break;
             case "item":
-                // item(myHero);
+                item(myHero, myConsumable);
                 break;
         }
     }
@@ -127,6 +135,32 @@ public class Battle {
         
     }
     /**
+     * The Item action for battle
+     * 
+     * @param theHero the hero using item
+     * @param theConsu the consumable being used
+     */
+    private void item(Hero theHero, Consumable theConsu) {
+        if(theConsu.getName().equals("Bomb")) {
+            final int damage = theConsu.useItem(myMonster);
+            myText += String.format("%s used Bomb\nIt dealt %d to %s\n", theHero.getName(), 
+                                    damage, myMonster.getName());
+        } else {
+            theConsu.useItem(theHero);
+            myText += String.format("%s used a %s.\n", theHero.getName(), getConsumableName(theConsu.getName()));
+            if (theConsu.getName().equals("AttackPotion")) {
+                checkAttackIncrease(theHero); //Sees if buff should be applied
+                myText += String.format("%s's damage was increased by %d for %d turns\n", theHero.getName(),
+                                        ((AttackPotion)theConsu).getAttackIncrease(), 
+                                        ((AttackPotion)theConsu).getEffectTurns());
+            } else if (theConsu.getName().equals("HealingPotion")) {
+                myText += String.format("%s's health has restored %d HP\n", theHero.getName(),
+                                        ((HealingPotion)theConsu).getHealthRestore());
+            }
+        }
+        theConsu.setCount(theConsu.getCount() - 1);
+    }
+    /**
      * Adds the action performed to the text.
      * 
      * @param theAttacker the attacking character
@@ -142,33 +176,42 @@ public class Battle {
      * @param theCharacter the dungeon character whose status condition needs to be checked
      */
     private void checkStatus(final DungeonCharacter theCharacter) {
-        checkHeal(theCharacter);
         if (theCharacter.getStatusEffects().isVulnerable()) {
+            //If still vulnerable, then reduce the turn count
             theCharacter.getStatusEffects().setVulnerableDuration(theCharacter.getStatusEffects().getVulnerableDuration() - 1);
+            //If status is not longer active, add message to the string
+            if (!theCharacter.getStatusEffects().isVulnerable()) {
+                myText += String.format("%s is not longer vulnerable", theCharacter.getName());
+            }
         }
         if (theCharacter.getStatusEffects().isRegen()) {
+            //If still has regen status, then heal and reduce the turns
+            final int heal = theCharacter.getStatusEffects().getRegenAmount();
+            theCharacter.heal(heal);
+            myText += String.format("%s has healed %d HP!\n", theCharacter.getName(), heal);
             theCharacter.getStatusEffects().setRegenDuration(theCharacter.getStatusEffects().getRegenDuration() - 1);
+            //If status is not longer active, add message to the string
+            if (!theCharacter.getStatusEffects().isRegen()) {
+                myText += String.format("%s's regeneration has wore off", theCharacter.getName());
+            }
+        }
+        if (theCharacter.getStatusEffects().isDamageIncrease()) {
+            //Updates the duration of the damage increase
+            theCharacter.getStatusEffects().setDamageDuration(theCharacter.getStatusEffects().getDamageIncreaseDuration() - 1);
+            //If duration is over, then remove the damage increase
+            if(!theCharacter.getStatusEffects().isDamageIncrease()) {
+                //Negative value
+                theCharacter.addMaxDamage(-theCharacter.getStatusEffects().getDamageAmount());
+                theCharacter.addMinDamage(-theCharacter.getStatusEffects().getDamageAmount());
+                myText += String.format("%s's attack buff has wore off", theCharacter.getName());
+            }
         }
     }
-    /**
-     * Checks if the character needs to be healed.
-     * 
-     * @param theCharacter the dungeon character who is checked to be healed
-     */
-    private void checkHeal(final DungeonCharacter theCharacter) {
-        if (theCharacter.getStatusEffects().isRegen()) {
-            healed(theCharacter.getStatusEffects().getRegenAmount(), theCharacter);
-        }
-    }
-    /**
-     * Heals the selected character
-     * 
-     * @param theHeal the heal amount
-     * @param theCharacter the targeted character
-     */
-    private void healed(final int theHeal, final DungeonCharacter theCharacter) {
-        theCharacter.heal(theHeal);
-        myText += String.format("%s has healed %d HP!\n", theCharacter.getName(), theHeal);
+    private void checkAttackIncrease(DungeonCharacter theCharacter) {
+        if (theCharacter.getStatusEffects().isDamageIncrease()) {
+            theCharacter.addMaxDamage(theCharacter.getStatusEffects().getDamageAmount());
+            theCharacter.addMinDamage(theCharacter.getStatusEffects().getDamageAmount());
+        } 
     }
      /**
      * Checks if hp is below 0, in which would be set to 0 and add text if battle is over.
@@ -189,6 +232,21 @@ public class Battle {
         }
     }
     /**
+     * A method to get a cleaner name of items
+     * 
+     * @param theName the class name that implements Consumable
+     * @return a cleaner name of the class
+     */
+    private String getConsumableName(final String theName) {
+        String name = "";
+        if (theName.equals("AttackPotion")) {
+            name = "Attack Potion";
+        } else if (theName.equals("HealingPotion")) {
+            name = "Healing Potion";
+        }
+        return name;
+    }
+    /**
      * Returns true if one character's hp is 0.
      * 
      * @return true if battle is over, false otherwise
@@ -204,8 +262,13 @@ public class Battle {
     public String actionPerformed() {
         return myText;
     }
-    public void item(Hero theHero, Item theItem) {
-
+    /**
+     * Sets the consumable being selected
+     * 
+     * @param theConsumable the consumable being used
+     */
+    public void setConsumable(Consumable theConsumable) {
+        myConsumable = theConsumable;
     }
 
 }

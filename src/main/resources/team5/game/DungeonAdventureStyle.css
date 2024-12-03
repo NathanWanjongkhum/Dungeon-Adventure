@@ -1,0 +1,51 @@
+.button
+{
+    -fx-background-color: gray;
+}
+.button .text
+{
+    -fx-font-family: "High Tower Text";
+    -fx-font-size:24;
+    -fx-fill:red;
+    -fx-effect: dropshadow(gaussian, black, 2, 1, 0, 0);
+}
+.button:hover
+{
+    -fx-background-color: #5e5d5d;
+    -fx-effect: innershadow(gaussian, black, 10, 0.5, 0, 0);
+    
+}
+.text-area .content
+{
+    -fx-background-color:black;
+    
+}
+.text-area
+{
+    -fx-effect: dropshadow(gaussian, white, 1, 1, 0, 0);
+    -fx-text-fill: white;
+    -fx-focus-color: transparent;
+    /* -fx-focus-color: -fx-control-inner-background ;
+    -fx-faint-focus-color: -fx-control-inner-background ; */
+}
+.text-area .scroll-bar:vertical {
+    -fx-pref-width: 1;
+    -fx-opacity: 0;
+}
+.choice-box .label
+{
+    -fx-font-family: "High Tower Text";
+    -fx-font-size:15;
+}
+.text-field
+{
+    -fx-font-family: "High Tower Text";
+    -fx-font-size:15;
+}
+/* .label
+{
+    -fx-font-family: "High Tower Text";
+    -fx-font-size:24;
+    -fx-text-fill:red;
+    -fx-effect: dropshadow(gaussian, black, 2, 1, 0, 0);
+} */
