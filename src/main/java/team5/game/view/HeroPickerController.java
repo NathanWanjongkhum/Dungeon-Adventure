@@ -70,7 +70,7 @@ public class HeroPickerController implements Initializable {
 
     @FXML
     void next() throws IOException {
-        App.setRoot("BattleScene"); //DungeonSetting
+        App.setRoot("DungeonSetting"); 
     }
 
 }

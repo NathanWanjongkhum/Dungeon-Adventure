@@ -330,7 +330,7 @@ public class DungeonController {
         if (item instanceof PillarOfOO) {
             handlePillarOfOO();
         } else if (item instanceof Exit) {
-            loadScene("StartScreen");
+            loadScene("EndScene");
         } else {
             myHero.getInventory().addItem(item);
         }
@@ -362,7 +362,6 @@ public class DungeonController {
         if (room.getMonster() == null) {
             return;
         }
-
         loadScene("BattleScene");
     }
 

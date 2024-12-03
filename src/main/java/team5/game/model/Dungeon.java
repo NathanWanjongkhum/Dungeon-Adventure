@@ -144,7 +144,7 @@ public class Dungeon implements Serializable {
             int[] coords = deadEnds.get(i);
             Room room = getRoom(coords[0], coords[1]);
 
-            room.setItem(new PillarOfOO(1, types[i]));
+            room.setItem(new PillarOfOO(types[i]));
         }
     }
 

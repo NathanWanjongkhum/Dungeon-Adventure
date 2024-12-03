@@ -20,11 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -37,7 +33,6 @@ import team5.game.model.GameState;
 import team5.game.model.HealingPotion;
 import team5.game.model.Hero;
 import team5.game.model.Monster;
-import team5.game.model.Ogre;
 
 public class BattleController implements Initializable {
     @FXML
@@ -101,7 +96,7 @@ public class BattleController implements Initializable {
     public void initialize(URL theURL, ResourceBundle theResource) {
         // Dungeon class would get hero and monster so hp would carry over
         myHero = GameState.getInstance().getHero();
-        myMonster = new Ogre("Og");
+        myMonster = GameState.getInstance().getDungeon().getRoom(myHero.getX(), myHero.getY()).getMonster();
 
         AttackPotion potion = new AttackPotion();
         AttackPotion potion2 = new AttackPotion();

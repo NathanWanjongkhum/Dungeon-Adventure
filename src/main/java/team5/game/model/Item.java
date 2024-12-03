@@ -6,7 +6,6 @@ package team5.game.model;
  */
 public interface Item {
     public boolean isConsumable();
-    public boolean isPillar();
     public String getName();
     /**
      * Get the count of consumables

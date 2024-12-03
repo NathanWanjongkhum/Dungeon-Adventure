@@ -49,9 +49,7 @@ public class Inventory implements Serializable {
                 return true;
             }
             if (myItems[i].getName().equals(item.getName())) {
-                if(myItems[i].isPillar()) {
-
-                } else {
+                if(myItems[i].isConsumable()) {
                     ((Consumable)myItems[i]).setCount(((Consumable)myItems[i]).getCount() + ((Consumable)item).getCount());
                 }
                 return true;
