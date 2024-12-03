@@ -11,6 +11,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Test class for DungeonBuilder
+ */
 public class DungeonBuilderTest {
     /** The difficulty of the dungeon */
     private static final Difficulty DUNGEON_DIFFICULTY = Difficulty.EASY;

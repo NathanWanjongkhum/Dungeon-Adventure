@@ -1,11 +1,16 @@
 package team5.game.model;
+
+import java.io.Serializable;
+
 /**
  * The status effect class
  * 
  * @author Holden Tsang
  * @version
  */
-public class StatusEffects {
+public class StatusEffects implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     /** The boolean if vulnerable is active */
     private boolean myVulnerable;
     /** The boolean if regen is active */
@@ -32,6 +37,7 @@ public class StatusEffects {
         myRegenAmount = 0;
         myDamageAmount = 0;
     }
+
     /**
      * Checks if vulnerable is active
      * 
@@ -41,6 +47,7 @@ public class StatusEffects {
         myVulnerable = myVulDuration > 0;
         return myVulnerable;
     }
+
     /**
      * Checks if regen is active
      * 
@@ -70,6 +77,7 @@ public class StatusEffects {
     public int getVulnerableDuration() {
         return myVulDuration;
     }
+
     /**
      * Gets the regen duration
      * 
@@ -100,6 +108,7 @@ public class StatusEffects {
     public void setVulnerableDuration(final int theDuration) {
         myVulDuration = theDuration;
     }
+
     /**
      * Sets the regen duration
      * 
@@ -127,7 +136,7 @@ public class StatusEffects {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Active Status Effects:\n");
-        if(isVulnerable()) {
+        if (isVulnerable()) {
             String vul = String.format("Vulnerable for %d turns\n", getVulnerableDuration());
             builder.append(vul);
         }

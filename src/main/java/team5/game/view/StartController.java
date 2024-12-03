@@ -15,6 +15,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import team5.game.App;
+import team5.game.DatabaseHandler;
+import team5.game.model.GameState;
 
 public class StartController implements Initializable{
    @FXML
@@ -49,8 +51,10 @@ public class StartController implements Initializable{
    }
 
    @FXML
-   void loadGame(ActionEvent event) {
+   void loadGame(ActionEvent event) throws IOException {
+      GameState.loadGame();
 
+      App.setRoot("DungeonScene");
    }
 
    @FXML

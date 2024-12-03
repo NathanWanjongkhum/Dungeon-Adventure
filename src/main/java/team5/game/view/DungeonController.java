@@ -1,25 +1,29 @@
 package team5.game.view;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import team5.game.App;
-import team5.game.DatabaseHandler;
 import team5.game.model.Direction;
 import team5.game.model.Dungeon;
+import team5.game.model.Exit;
 import team5.game.model.GameState;
 import team5.game.model.Hero;
+import team5.game.model.Item;
 import team5.game.model.Monster;
+import team5.game.model.PillarOfOO;
 import team5.game.model.Room;
 
 public class DungeonController {
     /** The original size of the tiles sprite */
-    private final int ORIGINAL_TILE_SIZE = 16;
+    private static final int ORIGINAL_TILE_SIZE = 16;
 
     /** The dungeon maze */
     private static Dungeon myDungeon;
@@ -43,12 +47,7 @@ public class DungeonController {
     private GraphicsContext gc;
 
     public DungeonController() {
-        setScale(1);
-        setZoom(1);
-    }
-
-    @FXML
-    private void initialize() throws ClassNotFoundException, IOException {
+        // Set up the dungeon and hero
         myDungeon = GameState.getInstance().getDungeon();
         myHero = GameState.getInstance().getHero();
 
@@ -59,21 +58,18 @@ public class DungeonController {
         myHero.setX(0);
         myHero.setY(0);
 
-        // Initializes the monsters
-        DatabaseHandler.init();
+        // Set up the zoom and scale
+        setScale(1);
 
-        Monster[] monsters = null;
+        // For demo and debugging purposes zoom out to reveal the entire maze
+        // setZoom(1);
+        setZoom(getMaxZoom());
 
-        try {
-            monsters = (Monster[]) DatabaseHandler.deserialize();
-        } catch (FileNotFoundException e) {
-            System.err.println("Database file not found: " + e.getMessage());
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Failed to load monster database: " + e.getMessage());
-        }
+        GameState.saveGame();
+    }
 
-        DatabaseHandler.close();
-
+    @FXML
+    private void initialize() {
         // Initializes the canvas
         initializeCanvas();
         render();
@@ -135,7 +131,6 @@ public class DungeonController {
                 final double screenX = offsetX + (x - startX) * myTileSize;
                 final double screenY = offsetY + (y - startY) * myTileSize;
 
-                // Debug: Draw tile outline
                 drawTile(x, y, screenX, screenY);
             }
         }
@@ -169,6 +164,13 @@ public class DungeonController {
         gc.setFill(Color.WHITE);
         gc.fillRect(theScreenX, theScreenY, myTileSize, myTileSize);
 
+        if (room.getItem() != null) {
+            drawItem(room.getItem(), theScreenX, theScreenY);
+        }
+        if (room.getMonster() != null) {
+            drawMonster(room.getMonster(), theScreenX, theScreenY);
+        }
+
         boolean[] doors = room.getDoors();
 
         gc.setStroke(Color.BLACK);
@@ -197,6 +199,23 @@ public class DungeonController {
             gc.strokeLine(theScreenX, theScreenY,
                     theScreenX, theScreenY + myTileSize);
         }
+    }
+
+    private void drawItem(final Item theItem, final double theScreenX, final double theScreenY) {
+        switch (theItem.getClass().getName()) {
+            case "team5.game.model.Exit" -> gc.setFill(Color.BLACK);
+            case "team5.game.model.HealingPotion" -> gc.setFill(Color.LAVENDER);
+            case "team5.game.model.Bomb" -> gc.setFill(Color.GRAY);
+            case "team5.game.model.PillarOfOO" -> gc.setFill(Color.YELLOW);
+            default -> System.err.println("Unknown item: " + theItem.getClass().getName());
+        }
+
+        gc.fillOval(theScreenX, theScreenY, myTileSize, myTileSize);
+    }
+
+    private void drawMonster(final Monster theMonster, final double theScreenX, final double theScreenY) {
+        gc.setFill(Color.RED);
+        gc.fillOval(theScreenX, theScreenY, myTileSize, myTileSize);
     }
 
     /**
@@ -254,6 +273,11 @@ public class DungeonController {
         updateScreen();
     }
 
+    /**
+     * Handle key pressed events
+     * 
+     * @param theEvent the key event
+     */
     private void handleKeyPressed(final KeyEvent theEvent) {
         try {
             switch (theEvent.getCode()) {
@@ -270,12 +294,88 @@ public class DungeonController {
         }
     }
 
-    private void tryMove(final Direction theDirection) {
-        final boolean isConnected = myDungeon.isConnected(myHero.getX(), myHero.getY(), theDirection);
-
-        if (isConnected) {
-            myHero.moveTo(theDirection);
-            render();
+    /**
+     * Try to move the hero in the given direction
+     * 
+     * @param theDirection the direction to move
+     * @throws IOException if the screen can't be loaded
+     */
+    private void tryMove(final Direction theDirection) throws IOException {
+        if (!myDungeon.isConnected(myHero.getX(), myHero.getY(), theDirection)) {
+            return;
         }
+
+        myHero.moveTo(theDirection);
+
+        Room currentRoom = myDungeon.getRoom(myHero.getX(), myHero.getY());
+
+        handleRoomItem(currentRoom);
+        handleRoomMonster(currentRoom);
+
+        render();
+    }
+
+    /**
+     * Handle the item in the room
+     * 
+     * @param room the room
+     * @throws IOException if the screen can't be loaded
+     */
+    private void handleRoomItem(Room room) throws IOException {
+        Item item = room.getItem();
+        if (item == null) {
+            return;
+        }
+
+        if (item instanceof PillarOfOO) {
+            handlePillarOfOO();
+        } else if (item instanceof Exit) {
+            loadScene("StartScreen");
+        } else {
+            myHero.getInventory().addItem(item);
+        }
+
+        room.removeItem();
+    }
+
+    /**
+     * When collecting a pillar of OO, add it to the count until all pillars are
+     * collected. Then add an exit to the dungeon and zoom out to reveal the entire
+     * maze so the player can easily find it.
+     */
+    private void handlePillarOfOO() {
+        myDungeon.collectPillar();
+
+        if (myDungeon.getPillarCount() == 4) {
+            myDungeon.addExit();
+            setZoom(getMaxZoom());
+        }
+    }
+
+    /**
+     * Handle the monster in the room
+     * 
+     * @param room the room
+     * @throws IOException if the screen can't be loaded
+     */
+    private void handleRoomMonster(Room room) throws IOException {
+        if (room.getMonster() == null) {
+            return;
+        }
+
+        loadScene("BattleScene");
+    }
+
+    /**
+     * Load the given scene
+     * 
+     * @param theScene the scene to load
+     * @throws IOException if the scene can't be loaded
+     */
+    private void loadScene(final String theScene) throws IOException {
+        final FXMLLoader loader = new FXMLLoader(App.class.getResource("/team5/game/" + theScene + ".fxml"));
+        final Stage currentStage = (Stage) gameCanvas.getScene().getWindow();
+        final Scene newScene = new Scene(loader.load());
+        currentStage.setScene(newScene);
     }
 }

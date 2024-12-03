@@ -1,9 +1,17 @@
 package team5.game.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
+import team5.game.controller.MonsterFactory;
+
 /**
  * Dungeon is a class that represents a dungeon.
  */
-public class Dungeon {
+public class Dungeon implements Serializable {
     /** The dungeon */
     private Room[][] myDungeon;
     /** The width of the dungeon */
@@ -12,6 +20,12 @@ public class Dungeon {
     private int myHeight;
     /** The difficulty of the dungeon */
     private Difficulty myDifficulty;
+    /** The number of pillars collected in the dungeon */
+    private int myPillarCount;
+    /** A random number generator */
+    private Random random = new Random();
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * Dungeon constructor. Initializes a new dungeon.
@@ -20,69 +34,35 @@ public class Dungeon {
      * @param height the height of the dungeon
      */
     public Dungeon(final int theWidth, final int theHeight, final Difficulty theDifficulty) {
-        myDungeon = new Room[theWidth][theHeight];
         myWidth = theWidth;
         myHeight = theHeight;
         myDifficulty = theDifficulty;
-    }
-
-    /**
-     * Dungeon constructor. Clones another dungeon.
-     * 
-     * @param theDungeon the dungeon to copy
-     */
-    public Dungeon(final Dungeon theDungeon) {
-        myDungeon = new Room[theDungeon.getWidth()][theDungeon.getHeight()];
-        myWidth = theDungeon.getWidth();
-        myHeight = theDungeon.getHeight();
-        myDifficulty = theDungeon.getDifficulty();
+        myPillarCount = 0;
     }
 
     /**
      * Uses a DungeonBuilder to initialize the dungeon.
      */
     public final void init() {
+        if (myDungeon != null) {
+            return;
+        }
+
         myDungeon = new DungeonBuilder()
                 .setDifficulty(myDifficulty)
                 .setWidth(myWidth)
                 .setHeight(myHeight)
                 .build();
-    }
 
-    /**
-     * Get the width of the dungeon
-     * 
-     * @return the width
-     */
-    public int getWidth() {
-        return myWidth;
-    }
+        Monster[] monsters = GameState.getInstance().getMonsters();
+        if (monsters == null || monsters.length == 0) {
+            monsters = populateMonsters();
+        }
 
-    /**
-     * Get the height of the dungeon
-     * 
-     * @return the height
-     */
-    public int getHeight() {
-        return myHeight;
-    }
-
-    /**
-     * Get the difficulty of the dungeon
-     * 
-     * @return the difficulty
-     */
-    public Difficulty getDifficulty() {
-        return myDifficulty;
-    }
-
-    /**
-     * Get the dungeon
-     * 
-     * @return the dungeon
-     */
-    public Room[][] getDungeon() {
-        return myDungeon;
+        // Populate dungeon
+        placePillars();
+        placeItems();
+        placeMonsters(monsters);
     }
 
     /**
@@ -128,6 +108,144 @@ public class Dungeon {
         return currentRoomConnects && newRoomConnects;
     }
 
+    /** Places pillars in the dungeon at dead ends */
+    private void placePillars() {
+        List<int[]> deadEnds = new ArrayList<>();
+
+        for (int x = 0; x < getWidth(); x++) {
+            for (int y = 0; y < getHeight(); y++) {
+                Room room = getRoom(x, y);
+                if (room == null) {
+                    continue;
+                }
+
+                int connections = 0;
+                for (Direction direction : Direction.values()) {
+                    if (isConnected(x, y, direction)) {
+                        connections++;
+                    }
+                }
+
+                if (connections == 1) {
+                    deadEnds.add(new int[] { x, y });
+                }
+            }
+        }
+
+        if (deadEnds.size() < 4) {
+            throw new IllegalStateException("Not enough dead ends to place all pillars!");
+        }
+
+        Collections.shuffle(deadEnds, random);
+
+        PillarOfOO.PillarType[] types = PillarOfOO.PillarType.values();
+
+        for (int i = 0; i < types.length; i++) {
+            int[] coords = deadEnds.get(i);
+            Room room = getRoom(coords[0], coords[1]);
+
+            room.setItem(new PillarOfOO(1, types[i]));
+        }
+    }
+
+    /** Places items in the dungeon */
+    private void placeItems() {
+        for (int i = 0; i < getWidth(); i++) {
+            for (int j = 0; j < getHeight(); j++) {
+                if (random.nextInt(100) > 5) {
+                    continue;
+                }
+
+                Room room = getRoom(i, j);
+
+                if (room.getItem() != null) {
+                    continue;
+                }
+
+                room.setItem(getRandomItem());
+            }
+        }
+    }
+
+    /**
+     * Populate the dungeon with monsters based on the difficulty
+     * 
+     * @return the monsters
+     */
+    private Monster[] populateMonsters() {
+        if (myDungeon == null) {
+            throw new IllegalStateException("Dungeon not initialized");
+        }
+
+        int monsterCount = 0;
+
+        switch (getDifficulty()) {
+            case EASY -> monsterCount = 3;
+            case MEDIUM -> monsterCount = 5;
+            case HARD -> monsterCount = 10;
+            default -> throw new IllegalStateException("Unexpected difficulty: " + getDifficulty());
+        }
+
+        final char monsterTypes[] = new char[] { 'O', 'G', 'S' };
+        Monster monsters[] = new Monster[monsterCount];
+
+        for (int i = 0; i < monsterCount; i++) {
+            char type = monsterTypes[i % monsterTypes.length];
+            monsters[i] = MonsterFactory.createMonster(type, type + "_" + i);
+        }
+
+        return monsters;
+    }
+
+    /**
+     * Places monsters randomly throughout the dungeon
+     *
+     * @param theMonsters the monsters to place
+     */
+    private void placeMonsters(final Monster[] theMonsters) {
+        int index = 0;
+        while (index < theMonsters.length) {
+            getRandomRoom().setMonster(theMonsters[index]);
+            index++;
+        }
+    }
+
+    /**
+     * Get the width of the dungeon
+     * 
+     * @return the width
+     */
+    public int getWidth() {
+        return myWidth;
+    }
+
+    /**
+     * Get the height of the dungeon
+     * 
+     * @return the height
+     */
+    public int getHeight() {
+        return myHeight;
+    }
+
+    /**
+     * Get the difficulty of the dungeon
+     * 
+     * @return the difficulty
+     */
+    public Difficulty getDifficulty() {
+        return myDifficulty;
+    }
+
+    /**
+     * Get the dungeon
+     * 
+     * @return the dungeon
+     */
+    public Room[][] getDungeon() {
+        return myDungeon;
+    }
+
     /**
      * Get the room at the given coordinates
      * 
@@ -145,11 +263,8 @@ public class Dungeon {
      * @return the random room
      */
     public final Room getRandomRoom() {
-        int x, y;
-        do {
-            x = (int) (Math.random() * myWidth);
-            y = (int) (Math.random() * myHeight);
-        } while (!isValidLocation(myWidth, myHeight));
+        int x = random.nextInt(myWidth);
+        int y = random.nextInt(myHeight);
 
         final Room room = myDungeon[x][y];
 
@@ -162,8 +277,44 @@ public class Dungeon {
      * @return the start room
      */
     public final Room getStartRoom() {
-        // Avoids an IndexOutOfBoundsException
-        return (myDungeon != null) ? myDungeon[getWidth() / 2][getHeight() / 2] : null;
+        return myDungeon[getWidth() / 2][getHeight() / 2];
+    }
+
+    /** The number of pillars collected in the dungeon */
+    public int getPillarCount() {
+        return myPillarCount;
+    }
+
+    /** Set the number of pillars collected in the dungeon */
+    public void collectPillar() {
+        myPillarCount += 1;
+    }
+
+    public void addExit() {
+        Room room = getStartRoom();
+        if (room != null) {
+            room.setItem(new Exit());
+        }
+    }
+
+    /**
+     * Get a random item from a list of items
+     *
+     * @return the random item
+     */
+    private Item getRandomItem() {
+        int itemType = random.nextInt(2);
+
+        Item item = null;
+        // TODO: Add more items
+        switch (itemType) {
+            case 0 -> item = new HealingPotion();
+            case 1 -> item = new Bomb();
+            // case 2 -> new VisionPotion();
+            default -> throw new IllegalStateException("Unexpected itemType: " + itemType);
+        }
+
+        return item;
     }
 
     /**
@@ -192,4 +343,5 @@ public class Dungeon {
 
         return sb.toString();
     }
+
 }
