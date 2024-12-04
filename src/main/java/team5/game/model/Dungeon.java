@@ -277,7 +277,7 @@ public class Dungeon implements Serializable {
      * @return the start room
      */
     public final Room getStartRoom() {
-        return myDungeon[getWidth() / 2][getHeight() / 2];
+        return myDungeon[0][0];
     }
 
     /** The number of pillars collected in the dungeon */

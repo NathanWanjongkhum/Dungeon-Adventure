@@ -10,9 +10,12 @@ public class Inventory implements Serializable {
     private int myInventorySize;
     /** The items in the inventory */
     private Item[] myItems;
+
     public Inventory() {
     }
+
     private static final long serialVersionUID = 1L;
+
     /**
      * Create an empty inventory
      * 
@@ -38,20 +41,22 @@ public class Inventory implements Serializable {
      * @param item the item to add
      * @return true if the item was added
      */
-    public boolean addItem(final Item item) {
+    public boolean addItem(final Item theItem) {
         if (isFull()) {
             return false;
         }
 
         for (int i = 0; i < myInventorySize; i++) {
             if (myItems[i] == null) {
-                myItems[i] = item; 
+                myItems[i] = theItem;
                 return true;
             }
-            if (myItems[i].getName().equals(item.getName())) {
-                if(myItems[i].isConsumable()) {
-                    ((Consumable)myItems[i]).setCount(((Consumable)myItems[i]).getCount() + ((Consumable)item).getCount());
-                }
+
+            if (myItems[i].getName().equals(theItem.getName()) && myItems[i].isConsumable()) {
+                Consumable consumableItem = (Consumable) myItems[i];
+                int totalCount = consumableItem.getCount() + theItem.getCount();
+                consumableItem.setCount(totalCount);
+
                 return true;
             }
         }
@@ -76,7 +81,9 @@ public class Inventory implements Serializable {
      * @return the items in the inventory
      */
     public Item[] getItems() {
-        return myItems;
+        Item[] filledItems = new Item[myInventorySize];
+        System.arraycopy(myItems, 0, filledItems, 0, myInventorySize);
+        return filledItems;
     }
 
     /**
@@ -92,28 +99,13 @@ public class Inventory implements Serializable {
             return null;
         }
     }
+
     public int getItem(final Item theItem) {
         int index = 0;
         while (!myItems[index].getName().equals(theItem.getName())) {
             index++;
         }
         return index;
-    }
-
-    /**
-     * Clone the inventory and return a new one
-     * 
-     * @return the cloned inventory
-     */
-    @Override
-    public Inventory clone() {
-        final Inventory inventory = new Inventory(myInventorySize);
-
-        for (final Item item : getItems()) {
-            inventory.addItem(item);
-        }
-
-        return inventory;
     }
 
     /**
@@ -130,6 +122,7 @@ public class Inventory implements Serializable {
 
         return true;
     }
+
     public boolean isEmpty() {
         return getItem(0) == null;
     }
@@ -142,5 +135,17 @@ public class Inventory implements Serializable {
      */
     private boolean inBounds(final int index) {
         return index >= 0 && index < myInventorySize;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Inventory: ");
+        for (Item item : getItems()) {
+            String itemString = item == null ? "null" : item.getName();
+            builder.append(itemString);
+            builder.append(", ");
+        }
+        return builder.toString();
     }
 }

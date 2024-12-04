@@ -1,7 +1,7 @@
 module team5.game {
+    requires transitive javafx.graphics;
     requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.graphics;
 
     requires java.sql;
 
@@ -10,4 +10,5 @@ module team5.game {
 
     exports team5.game;
     exports team5.game.model;
+    exports team5.game.view;
 }
