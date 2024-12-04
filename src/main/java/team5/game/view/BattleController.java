@@ -23,9 +23,11 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import team5.game.App;
 import team5.game.controller.Battle;
+import team5.game.controller.MonsterFactory;
 import team5.game.model.DungeonCharacter;
 import team5.game.model.GameState;
 import team5.game.model.Hero;
@@ -33,6 +35,7 @@ import team5.game.model.Monster;
 
 public class BattleController implements Initializable {
     @FXML
+    /** The scene for background */
     private AnchorPane myBackground;
 
     @FXML
@@ -93,8 +96,8 @@ public class BattleController implements Initializable {
     public void initialize(URL theURL, ResourceBundle theResource) {
         // Dungeon class would get hero and monster so hp would carry over
         myHero = GameState.getInstance().getHero();
-        myMonster = GameState.getInstance().getDungeon().getRoom(myHero.getX(), myHero.getY()).getMonster();
-        // myMonster = MonsterFactory.createMonster('S', "Ske");
+        // myMonster = GameState.getInstance().getDungeon().getRoom(myHero.getX(), myHero.getY()).getMonster();
+        myMonster = MonsterFactory.createMonster('S', "Ske");
 
         // AttackPotion potion = new AttackPotion();
         // AttackPotion potion2 = new AttackPotion();
@@ -109,12 +112,7 @@ public class BattleController implements Initializable {
         //CustomBackground code
         BackgroundImage back = App.getBackgroundImage("battle background");
         myBackground.setBackground(new Background(back));
-        // myBackground.setStyle();
-
         myControls.setStyle("-fx-background-color: black; -fx-effect: innershadow(gaussian, #66524d, 7, 0.9, 0, 0)");
-        // myControls.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, null)));
-        // BackgroundImage ui = App.getBackgroundImage("battle background2");
-        // myControls.setBackground(new Background(ui));
 
         myBattle = new Battle(myHero, myMonster);
         myHeroTooltip = new Tooltip(myHero.getStats());
@@ -222,10 +220,11 @@ public class BattleController implements Initializable {
         return fxmlLoader.load();
      }
     @FXML
-    void item(ActionEvent event) throws IOException {
+    private void item(ActionEvent event) throws IOException {
         myStage = new Stage();
         myStage.setScene(new Scene(loadFXML("ItemBag")));
         myStage.initModality(Modality.APPLICATION_MODAL);
+        myStage.initStyle(StageStyle.UNDECORATED);
         myStage.initOwner(myItem.getScene().getWindow());
         myStage.showAndWait();
         if (GameState.getInstance().getHero().isConUsed()) {
@@ -242,25 +241,27 @@ public class BattleController implements Initializable {
         }
     }
     @FXML
-    void myHome(ActionEvent event) throws IOException {
+    private void myHome(ActionEvent event) throws IOException {
         App.setRoot("StartScreen");
     }
 
     @FXML
-    void retreat(ActionEvent event) throws IOException {
-        App.setRoot("HeroSelection");
+    private void retreat(ActionEvent event) throws IOException {
+        myHero.moveTo(myHero.getDirection().getOpposite());
+        App.setRoot("DungeonScene");
     }
 
     @FXML
-    void endBattle(ActionEvent event) throws IOException {
+    private void endBattle(ActionEvent event) throws IOException {
         if (myBattle.isOver() && myHero.getHealth() == 0) {
-            App.setRoot("EndScene");//Still need to make 
+            App.setRoot("EndScene");
         } else {
+            GameState.getInstance().getDungeon().getRoom(myHero.getX(), myHero.getY()).removeMonster();
             App.setRoot("DungeonScene");
         }
     }
     @FXML
-    void showRules(ActionEvent event) throws IOException {
+    private void showRules(ActionEvent event) throws IOException {
         // myStage = new Stage();
         // myStage.setScene(new Scene(loadFXML("")));
         // myStage.initModality(Modality.APPLICATION_MODAL);
@@ -325,5 +326,6 @@ public class BattleController implements Initializable {
         myNext.setVisible(theBoolean);
         myNext.setDisable(!theBoolean);
     }
+    //Close method
 
 }

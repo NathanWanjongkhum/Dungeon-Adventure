@@ -36,6 +36,8 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special, 
         mySpecial = theSpecial;
         myConsumable = null;
         myUsed = false;
+        myX = 0;
+        myY = 0;
     }
 
     /**
