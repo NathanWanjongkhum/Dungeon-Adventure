@@ -38,6 +38,7 @@ public class StartController implements Initializable{
    private Label myCheatIndicator;
 
    private static boolean myCheats;
+   private int myCount;
 
 
    @Override
@@ -47,29 +48,30 @@ public class StartController implements Initializable{
       myCheats = false;
     }
    @FXML
-   void exitGame(ActionEvent event) {
+   private void exitGame(ActionEvent event) {
       Stage stage = (Stage) myScene.getScene().getWindow();
       stage.close();
    }
 
    @FXML
-   void loadGame(ActionEvent event) throws IOException {
+   private void loadGame(ActionEvent event) throws IOException {
       GameState.loadGame();
 
       App.setRoot("DungeonScene");
    }
 
    @FXML
-   void switchToHeroCreation(ActionEvent event) throws IOException {
+   private void switchToHeroCreation(ActionEvent event) throws IOException {
       App.setRoot("NameSelection");
    }
    @FXML
     void enableCheats(MouseEvent event) {
-      if (!myCheats) {
+      if (!myCheats && myCount > 4) {
          myCheatIndicator.setText("Cheat Characters Added");
          myCheatIndicator.setVisible(true);
          myCheats = true;
       }
+      myCount++;
     }
     protected static boolean isCheats() {
       return myCheats;

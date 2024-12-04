@@ -39,7 +39,7 @@ public class App extends Application {
         myScene.setRoot(loadFXML(theFXML));
     }
 
-    private static Parent loadFXML(String theFXML) throws IOException {
+    public static Parent loadFXML(String theFXML) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/team5/game/" + theFXML + ".fxml"));
         return fxmlLoader.load();
     }

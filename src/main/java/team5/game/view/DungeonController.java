@@ -3,13 +3,11 @@ package team5.game.view;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import team5.game.App;
 import team5.game.model.Direction;
 import team5.game.model.Dungeon;
@@ -42,6 +40,9 @@ public class DungeonController {
     /** What the game is drawn on */
     @FXML
     private Canvas gameCanvas;
+    /** The base pane */
+    @FXML
+    private Pane myPane;
 
     /** The graphics context for drawing on the canvas */
     private GraphicsContext gc;
@@ -55,8 +56,8 @@ public class DungeonController {
         myDungeon.init();
 
         // Places the hero in the dungeon
-        myHero.setX(0);
-        myHero.setY(0);
+        myHero.setX(myHero.getX());
+        myHero.setY(myHero.getY());
 
         // Set up the zoom and scale
         setScale(1);
@@ -281,7 +282,7 @@ public class DungeonController {
     private void handleKeyPressed(final KeyEvent theEvent) {
         try {
             switch (theEvent.getCode()) {
-                case ESCAPE -> App.setRoot("DungeonSetting");
+                case ESCAPE -> escapeSettings();
                 case W, UP -> tryMove(Direction.NORTH);
                 case S, DOWN -> tryMove(Direction.SOUTH);
                 case A, LEFT -> tryMove(Direction.WEST);
@@ -292,6 +293,16 @@ public class DungeonController {
         } catch (Exception e) {
             System.err.println("Error handling key press: " + e.getMessage());
         }
+    }
+    //I think the keyevents also effected the battle scene so was thinking it would also 
+    private void escapeSettings() throws IOException {
+        App.setRoot("DungeonSetting");
+        // final Stage stage = new Stage();
+        // stage.setScene(new Scene(App.loadFXML("Settings")));
+        // stage.initStyle(StageStyle.UNDECORATED);
+        // stage.initModality(Modality.APPLICATION_MODAL);
+        // // stage.initOwner(myPane.getScene().getWindow());
+        // stage.showAndWait();
     }
 
     /**
@@ -304,9 +315,8 @@ public class DungeonController {
         if (!myDungeon.isConnected(myHero.getX(), myHero.getY(), theDirection)) {
             return;
         }
-
         myHero.moveTo(theDirection);
-
+        myHero.setDirection(theDirection);
         Room currentRoom = myDungeon.getRoom(myHero.getX(), myHero.getY());
 
         handleRoomItem(currentRoom);
@@ -330,7 +340,7 @@ public class DungeonController {
         if (item instanceof PillarOfOO) {
             handlePillarOfOO();
         } else if (item instanceof Exit) {
-            loadScene("EndScene");
+            App.setRoot("EndScene");
         } else {
             myHero.getInventory().addItem(item);
         }
@@ -362,19 +372,8 @@ public class DungeonController {
         if (room.getMonster() == null) {
             return;
         }
-        loadScene("BattleScene");
-    }
-
-    /**
-     * Load the given scene
-     * 
-     * @param theScene the scene to load
-     * @throws IOException if the scene can't be loaded
-     */
-    private void loadScene(final String theScene) throws IOException {
-        final FXMLLoader loader = new FXMLLoader(App.class.getResource("/team5/game/" + theScene + ".fxml"));
-        final Stage currentStage = (Stage) gameCanvas.getScene().getWindow();
-        final Scene newScene = new Scene(loader.load());
-        currentStage.setScene(newScene);
+        App.setRoot("BattleScene");
+        //Possibly remov monster
+        // loadScene("BattleScene");
     }
 }

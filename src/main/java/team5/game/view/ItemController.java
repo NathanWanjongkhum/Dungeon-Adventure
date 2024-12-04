@@ -42,7 +42,8 @@ public class ItemController implements Initializable{
 
     @Override
     public void initialize(URL theURL, ResourceBundle theResource) {
-        myScene.setStyle(("-fx-background-color: #66524d"));
+        myScene.setStyle(("-fx-background-color: #66524d; -fx-effect: innershadow(gaussian, black, 7, 1, 0, 0)"));
+        // myScene.setBorder(new Border());
         myInventory = GameState.getInstance().getHero().getInventory();
         disable();
         int index = 0;
@@ -113,6 +114,10 @@ public class ItemController implements Initializable{
     void useHealingPotion(ActionEvent event) {
         Consumable con = getConsumable("HealingPotion");
         GameState.getInstance().getHero().setConsumable(con);
+        close();
+    }
+    @FXML
+    void cancel(ActionEvent event) {
         close();
     }
     private void close() {

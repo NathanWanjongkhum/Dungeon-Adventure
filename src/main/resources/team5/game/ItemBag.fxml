@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="myScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@DungeonAdventureStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.ItemController">
+<VBox fx:id="myScene" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" stylesheets="@DungeonAdventureStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.ItemController">
    <children>
       <GridPane prefHeight="200.0" prefWidth="600.0">
         <columnConstraints>
@@ -24,14 +24,14 @@
          <children>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
                <children>
-                  <ImageView fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Attack%20Potion.png" />
                      </image>
                   </ImageView>
                   <Label text="Attack Potion" textFill="WHITE">
                      <font>
-                        <Font name="High Tower Text" size="24.0" />
+                        <Font name="High Tower Text" size="18.0" />
                      </font>
                   </Label>
                   <Button fx:id="myAttackButton" mnemonicParsing="false" onAction="#useAttackPotion" text="Use">
@@ -51,14 +51,14 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1">
                <children>
-                  <ImageView fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Healing%20Potion.png" />
                      </image>
                   </ImageView>
                   <Label text="Healing Potion" textFill="WHITE">
                      <font>
-                        <Font name="High Tower Text" size="24.0" />
+                        <Font name="High Tower Text" size="18.0" />
                      </font>
                   </Label>
                   <Button fx:id="myHealingButton" mnemonicParsing="false" onAction="#useHealingPotion" text="Use">
@@ -80,7 +80,7 @@
       </GridPane>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
          <children>
-            <ImageView fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Bomb.png" />
                </image>
@@ -105,5 +105,10 @@
             <Insets left="10.0" right="10.0" top="10.0" />
          </padding>
       </VBox>
+      <Button mnemonicParsing="false" onAction="#cancel" text="Cancel">
+         <VBox.margin>
+            <Insets bottom="17.0" />
+         </VBox.margin>
+      </Button>
    </children>
 </VBox>

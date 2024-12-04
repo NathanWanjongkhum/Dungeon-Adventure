@@ -71,6 +71,9 @@ public class Room implements Serializable {
     public void setMonster(final Monster theMonster) {
         myMonster = theMonster;
     }
+    public void removeMonster() {
+        myMonster = null;
+    }
 
     /**
      * Get the monster in the room
