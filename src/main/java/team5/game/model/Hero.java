@@ -1,8 +1,6 @@
 package team5.game.model;
 
-import java.io.Serializable;
-
-public abstract class Hero extends AbstractDungeonCharacter implements Special, Serializable {
+public abstract class Hero extends AbstractDungeonCharacter implements Special {
     private static final int ITEM_COUNT = 3;
     /** The direction the hero is facing */
     private Direction myDirection;
@@ -16,8 +14,6 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special, 
     private int myX;
     /** The y coordinate of the hero */
     private int myY;
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * The Hero constructor
@@ -36,6 +32,8 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special, 
         mySpecial = theSpecial;
         myConsumable = null;
         myUsed = false;
+        myX = 0;
+        myY = 0;
     }
 
     /**
@@ -131,17 +129,21 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special, 
     public void resetTurns() {
         mySpecial.setTurns(0);
     }
+
     public void setConsumable(Consumable theConsumable) {
         myConsumable = theConsumable;
         myUsed = true;
     }
+
     public Consumable useConsumable() {
         myUsed = false;
         return myConsumable;
     }
+
     public boolean isConUsed() {
         return myUsed;
     }
+
     @Override
     public void addMinDamage(final int theAddedDamage) {
         super.addMinDamage(theAddedDamage);

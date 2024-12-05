@@ -47,7 +47,7 @@ public class HeroPickerController implements Initializable {
         BackgroundImage back = App.getBackgroundImage("selection background");
         myBack.setBackground(new Background(back));
         myChoice.getItems().addAll(myCharacters);
-        if (StartController.isCheats()) {
+        if (GameState.getInstance().isCheats()) {
             myChoice.getItems().addAll(myCheatCharacters);
         }
         myChoice.setOnAction(this::displayImage); 
@@ -70,7 +70,7 @@ public class HeroPickerController implements Initializable {
 
     @FXML
     void next() throws IOException {
-        App.setRoot("BattleScene"); //DungeonSetting
+        App.setRoot("DungeonSetting"); 
     }
 
 }

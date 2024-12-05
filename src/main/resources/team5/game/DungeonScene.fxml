@@ -3,9 +3,8 @@
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" style="-fx-background-color: blue;" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.DungeonController">
+<Pane fx:id="myPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" style="-fx-background-color: blue;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.DungeonController">
    <children>
-      <Canvas height="400.0" width="600.0" fx:id="gameCanvas" />
+      <Canvas fx:id="gameCanvas" height="720.0" width="960.0" />
    </children>
 </Pane>

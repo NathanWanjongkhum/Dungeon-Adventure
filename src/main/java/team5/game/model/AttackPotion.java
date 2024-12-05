@@ -43,4 +43,9 @@ public class AttackPotion extends AbstractConsumables {
         theCharacter.getStatusEffects().setDamageDuration(myTurns + 1);
         return myAttackIncrease;
     }
+    @Override
+    public String getDescription() {
+        return String.format("Increase attack by %s for %s turns.\n" + 
+                            "This also increase special moves potency.", myAttackIncrease, myTurns);
+    }
 }

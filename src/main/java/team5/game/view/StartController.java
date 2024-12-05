@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -15,7 +16,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import team5.game.App;
-import team5.game.DatabaseHandler;
 import team5.game.model.GameState;
 
 public class StartController implements Initializable{
@@ -26,7 +26,6 @@ public class StartController implements Initializable{
    private Button myNew;
 
    @FXML
-
    private Button myQuit;
 
     @FXML
@@ -34,41 +33,44 @@ public class StartController implements Initializable{
 
    @FXML
    private VBox myScene;
+   
+   @FXML
+   private Label myCheatIndicator;
 
-   private static boolean myCheats;
+   private boolean myCheats = false;
+   private int myCount;
 
 
    @Override
     public void initialize(URL theURL, ResourceBundle theResource) {
       BackgroundImage back = App.getBackgroundImage("TitleScreen");
       myScene.setBackground(new Background(back));
-      myCheats = false;
+      GameState.getInstance().setCheats(false);
     }
    @FXML
-   void exitGame(ActionEvent event) {
-      Stage stage = (Stage) myScene.getScene().getWindow();
-      stage.close();
+   private void exitGame(ActionEvent event) {
+      App.close();
    }
 
    @FXML
-   void loadGame(ActionEvent event) throws IOException {
+   private void loadGame(ActionEvent event) throws IOException {
       GameState.loadGame();
 
       App.setRoot("DungeonScene");
    }
 
    @FXML
-   void switchToHeroCreation(ActionEvent event) throws IOException {
+   private void switchToHeroCreation(ActionEvent event) throws IOException {
       App.setRoot("NameSelection");
    }
    @FXML
     void enableCheats(MouseEvent event) {
-      if (!myCheats) {
+      if (!myCheats && myCount > 4) {
+         myCheatIndicator.setText("Cheat Characters Added");
+         myCheatIndicator.setVisible(true);
          myCheats = true;
+         GameState.getInstance().setCheats(myCheats);
       }
+      myCount++;
     }
-    protected static boolean isCheats() {
-      return myCheats;
-    }
-
 }

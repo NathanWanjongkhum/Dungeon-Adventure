@@ -32,4 +32,8 @@ public class HealingPotion extends AbstractConsumables {
         theCharacter.heal(getHealthRestore());
         return getHealthRestore();
     }
+    @Override
+    public String getDescription() {
+        return String.format("Heals %s hp when used", myHealthRestore);
+    }
 }

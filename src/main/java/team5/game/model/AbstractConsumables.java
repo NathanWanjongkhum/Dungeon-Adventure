@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Consumables is an item that can be collected and consumed by the player.
  */
-public abstract class AbstractConsumables implements Item, Serializable {
+public abstract class AbstractConsumables implements Consumable, Serializable {
     /** The count of consumables */
     private int myCount;
 
@@ -17,8 +17,6 @@ public abstract class AbstractConsumables implements Item, Serializable {
     protected AbstractConsumables() {
         myCount = 1;
     }
-    @Override
-
     /**
      * Consumables constructor with count
      * 
@@ -29,11 +27,7 @@ public abstract class AbstractConsumables implements Item, Serializable {
         myCount = theCount;
     }
 
-    /**
-     * Get the count of consumables
-     * 
-     * @return the count
-     */
+    @Override
     public int getCount() {
         return myCount;
     }
@@ -49,10 +43,6 @@ public abstract class AbstractConsumables implements Item, Serializable {
     @Override
     public boolean isConsumable() {
         return true;
-    }
-    @Override
-    public boolean isPillar() {
-        return false;
     }
     @Override
     public String getName() {
