@@ -8,8 +8,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import team5.game.App;
 import team5.game.model.Consumable;
 import team5.game.model.GameState;
 import team5.game.model.Inventory;
@@ -18,7 +20,7 @@ import team5.game.model.Item;
 public class ItemController implements Initializable{
 
     @FXML
-    private VBox myScene;
+    private BorderPane myScene;
 
     @FXML
     private Button myAttackButton;
@@ -27,10 +29,16 @@ public class ItemController implements Initializable{
     private Label myAttackCount;
 
     @FXML
+    private Label myAttackDescript;
+
+    @FXML
     private Button myBombButton;
 
     @FXML
     private Label myBombCount;
+
+    @FXML
+    private Label myBombDescript;
 
     @FXML
     private Button myHealingButton;
@@ -38,11 +46,14 @@ public class ItemController implements Initializable{
     @FXML
     private Label myHealingCount;
 
+    @FXML
+    private Label myHealingDecript;
+
     private Inventory myInventory;
 
     @Override
     public void initialize(URL theURL, ResourceBundle theResource) {
-        myScene.setStyle(("-fx-background-color: #66524d; -fx-effect: innershadow(gaussian, black, 7, 1, 0, 0)"));
+        // myScene.setStyle(("-fx-background-color: #66524d; -fx-effect: innershadow(gaussian, black, 7, 1, 0, 0)"));
         // myScene.setBorder(new Border());
         myInventory = GameState.getInstance().getHero().getInventory();
         disable();
@@ -69,31 +80,34 @@ public class ItemController implements Initializable{
         myHealingCount.setText("x0");
         myBombCount.setText("x0");
     }
-        private void setText(Item theItem, final int theIndex) {
-            Consumable item = ((Consumable)myInventory.getItem(theIndex));
-        switch (theItem.getName()) {
-            case "AttackPotion":
-                myAttackCount.setText("x" + item.getCount());
-                setButtons(item, myAttackButton);
-                break;
-            case "HealingPotion":
-                myHealingCount.setText("x" + item.getCount());
-                setButtons(item, myHealingButton);
-                break;
-            case "Bomb":
-                myBombCount.setText("x" + item.getCount());
-                setButtons(item, myBombButton);
-                break;
-            default:
-                break;
-        }
-        }
-       private void setButtons(Consumable theConsumable, Button theButton) {
-        if (theConsumable.getCount() == 0) {
-            theButton.setDisable(true);
-        } else {
-            theButton.setDisable(false);
-        }
+    private void setText(Item theItem, final int theIndex) {
+        Consumable item = ((Consumable)myInventory.getItem(theIndex));
+    switch (theItem.getName()) {
+        case "AttackPotion":
+            myAttackCount.setText("x" + item.getCount());
+            setButtons(item, myAttackButton);
+            myAttackDescript.setText(item.getDescription());
+            break;
+        case "HealingPotion":
+            myHealingCount.setText("x" + item.getCount());
+            setButtons(item, myHealingButton);
+            myHealingDecript.setText(item.getDescription());
+            break;
+        case "Bomb":
+            myBombCount.setText("x" + item.getCount());
+            setButtons(item, myBombButton);
+            myBombDescript.setText(item.getDescription());
+            break;
+        default:
+            break;
+    }
+    }
+    private void setButtons(Consumable theConsumable, Button theButton) {
+    if (theConsumable.getCount() == 0) {
+        theButton.setDisable(true);
+    } else {
+        theButton.setDisable(false);
+    }
 
     }
     @FXML
@@ -121,8 +135,7 @@ public class ItemController implements Initializable{
         close();
     }
     private void close() {
-        Stage stage = (Stage) myScene.getScene().getWindow();
-        stage.close();
+        App.closePopUp();
     }
     private Consumable getConsumable(String theItem) {
         Consumable consumable = null;

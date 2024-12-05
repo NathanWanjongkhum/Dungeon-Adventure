@@ -55,4 +55,8 @@ public class Bomb extends AbstractConsumables {
         theCharacter.setHealth(theCharacter.getHealth() - damage);
         return damage;
     }
+    @Override
+    public String getDescription() {
+        return String.format("When uses, deals %s damage to the enemy", myDamage);
+    }
 }

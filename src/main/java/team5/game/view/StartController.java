@@ -37,7 +37,7 @@ public class StartController implements Initializable{
    @FXML
    private Label myCheatIndicator;
 
-   private static boolean myCheats;
+   private boolean myCheats = false;
    private int myCount;
 
 
@@ -45,12 +45,11 @@ public class StartController implements Initializable{
     public void initialize(URL theURL, ResourceBundle theResource) {
       BackgroundImage back = App.getBackgroundImage("TitleScreen");
       myScene.setBackground(new Background(back));
-      myCheats = false;
+      GameState.getInstance().setCheats(false);
     }
    @FXML
    private void exitGame(ActionEvent event) {
-      Stage stage = (Stage) myScene.getScene().getWindow();
-      stage.close();
+      App.close();
    }
 
    @FXML
@@ -70,11 +69,8 @@ public class StartController implements Initializable{
          myCheatIndicator.setText("Cheat Characters Added");
          myCheatIndicator.setVisible(true);
          myCheats = true;
+         GameState.getInstance().setCheats(myCheats);
       }
       myCount++;
     }
-    protected static boolean isCheats() {
-      return myCheats;
-    }
-
 }

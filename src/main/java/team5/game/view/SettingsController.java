@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import team5.game.App;
+import team5.game.model.GameState;
 
 public class SettingsController {
     @FXML
@@ -19,19 +20,22 @@ public class SettingsController {
 
     @FXML
     void quit(ActionEvent event) {
-        Stage stage = (Stage) myScene.getScene().getWindow();
-        stage.close();
+        close();
+        App.close();
     }
 
     @FXML
     void resumeGame(ActionEvent event) {
-        Stage stage = (Stage) myScene.getScene().getWindow();
-        stage.close();
+        close();
     }
 
     @FXML
     void saveGame(ActionEvent event) {
-
+        GameState.saveGame();
+        //Indivator of game saved
+    }
+    private void close() {
+        App.closePopUp();
     }
 
 }

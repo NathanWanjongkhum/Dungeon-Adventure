@@ -47,13 +47,14 @@ public class HeroPickerController implements Initializable {
         BackgroundImage back = App.getBackgroundImage("selection background");
         myBack.setBackground(new Background(back));
         myChoice.getItems().addAll(myCharacters);
-        if (StartController.isCheats()) {
+        if (GameState.getInstance().isCheats()) {
             myChoice.getItems().addAll(myCheatCharacters);
         }
         myChoice.setOnAction(this::displayImage); 
     }
 
     private void displayImage(ActionEvent event) {
+        System.out.println(GameState.getInstance().isCheats());
         String choice = myChoice.getValue();
         Hero hero = HeroFactory.createHero(choice);
         myImage.setImage(hero.getImage());

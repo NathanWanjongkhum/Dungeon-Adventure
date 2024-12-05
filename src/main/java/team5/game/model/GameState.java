@@ -16,6 +16,8 @@ public class GameState implements Serializable {
     private Hero myHero;
     /** The hero's name */
     private String myName;
+    /**Indicator for cheats */
+    private boolean myCheats;
 
     private static final long serialVersionUID = 1L;
 
@@ -149,5 +151,11 @@ public class GameState implements Serializable {
      */
     public void setMonsters(Monster[] theMonsters) {
         instance.myMonsters = theMonsters;
+    }
+    public boolean isCheats() {
+        return myCheats;
+    }
+    public void setCheats(final boolean theCheats) {
+        myCheats = theCheats;
     }
 }

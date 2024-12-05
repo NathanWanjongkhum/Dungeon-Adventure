@@ -3,9 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.InnerShadow?>
@@ -18,112 +15,97 @@
 <?import javafx.scene.shape.Ellipse?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="myScene" minHeight="480.0" minWidth="640.0" stylesheets="@DungeonAdventureStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.BattleController">
+<AnchorPane fx:id="myScene" minHeight="720.0" minWidth="960.0" stylesheets="@DungeonAdventureStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.BattleController">
   <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <VBox alignment="TOP_CENTER" prefWidth="640.0" BorderPane.alignment="CENTER">
+            <VBox alignment="TOP_CENTER" prefWidth="720.0" BorderPane.alignment="CENTER">
                <children>
-                <MenuBar prefHeight="26.0" VBox.vgrow="NEVER">
-                  <menus>
-                    <Menu mnemonicParsing="false" text="Home">
-                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#myHome" text="Return to Start Screen" />
-                              <MenuItem mnemonicParsing="false" text="Save Game" />
-                      </items>
-                    </Menu>
-                        <Menu mnemonicParsing="false" text="Help">
-                          <items>
-                            <MenuItem mnemonicParsing="false" onAction="#showRules" text="Rules" />
-                          </items>
-                        </Menu>
-                  </menus>
-                </MenuBar>
-                  <AnchorPane fx:id="myBackground">
+                  <AnchorPane fx:id="myBackground" prefHeight="465.0" prefWidth="960.0">
                      <children>
                         <VBox alignment="TOP_CENTER" prefHeight="350.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <StackPane prefHeight="170.0" prefWidth="200.0">
                                  <children>
-                                    <Ellipse fill="#4b4b4b" radiusX="75.0" radiusY="20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5">
+                                    <Ellipse fill="#4b4b4b" radiusX="112.5" radiusY="30.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5">
                                        <StackPane.margin>
-                                          <Insets top="130.0" />
+                                          <Insets top="195.0" />
                                        </StackPane.margin>
                                     </Ellipse>
-                                    <ImageView fx:id="myHeroImage" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="myHeroImage" fitHeight="225.0" fitWidth="225.0" pickOnBounds="true" preserveRatio="true">
                                        <StackPane.margin>
-                                          <Insets right="8.0" />
+                                          <Insets right="12.0" />
                                        </StackPane.margin>
                                     </ImageView>
                                  </children>
                               </StackPane>
                               <Label fx:id="myName" text="Hero Name" textFill="WHITE">
                                  <VBox.margin>
-                                    <Insets top="5.0" />
+                                    <Insets top="7.5" />
                                  </VBox.margin>
                                  <font>
-                                    <Font name="High Tower Text" size="24.0" />
+                                    <Font name="High Tower Text" size="36.0" />
                                  </font>
                               </Label>
-                              <ProgressBar fx:id="myHeroBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="200.0" progress="1.0">
+                              <ProgressBar fx:id="myHeroBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.5" prefWidth="300.0" progress="1.0">
                                  <VBox.margin>
-                                    <Insets top="5.0" />
+                                    <Insets top="7.5" />
                                  </VBox.margin>
                               </ProgressBar>
                               <Label fx:id="myHPLevel" text="100/100" textAlignment="CENTER" textFill="WHITE">
                                  <font>
-                                    <Font name="High Tower Text" size="24.0" />
+                                    <Font name="High Tower Text" size="36.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets top="5.0" />
+                                    <Insets top="7.5" />
                                  </VBox.margin></Label>
                            </children>
                            <padding>
-                              <Insets left="10.0" right="10.0" top="10.0" />
+                              <Insets left="15.0" right="15.0" top="15.0" />
                            </padding>
                         </VBox>
                         <VBox alignment="TOP_CENTER" layoutX="440.0" prefHeight="300.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <StackPane prefHeight="170.0" prefWidth="200.0">
                                  <children>
-                                    <Ellipse fill="#4b4b4b" radiusX="75.0" radiusY="20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5">
+                                    <Ellipse fill="#4b4b4b" radiusX="112.5" radiusY="30.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5">
                                        <StackPane.margin>
-                                          <Insets top="130.0" />
+                                          <Insets top="195.0" />
                                        </StackPane.margin>
                                     </Ellipse>
-                                    <ImageView fx:id="myMonsterImage" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="myMonsterImage" fitHeight="225.0" fitWidth="225.0" pickOnBounds="true" preserveRatio="true">
                                        <StackPane.margin>
-                                          <Insets left="8.0" />
+                                          <Insets left="12.0" />
                                        </StackPane.margin>
                                     </ImageView>
                                  </children>
                               </StackPane>
                               <Label fx:id="myMonsterName" text="MonsterName" textFill="WHITE">
                                  <VBox.margin>
-                                    <Insets top="5.0" />
+                                    <Insets top="7.5" />
                                  </VBox.margin>
                                  <font>
-                                    <Font name="High Tower Text" size="24.0" />
+                                    <Font name="High Tower Text" size="36.0" />
                                  </font>
                               </Label>
-                              <ProgressBar fx:id="myMonsterBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="200.0" progress="1.0">
+                              <ProgressBar fx:id="myMonsterBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.5" prefWidth="300.0" progress="1.0">
                                  <VBox.margin>
-                                    <Insets top="5.0" />
+                                    <Insets top="7.5" />
                                  </VBox.margin>
                               </ProgressBar>
                               <Label fx:id="myMonsterHPLevel" text="200/200" textAlignment="CENTER" textFill="WHITE">
                                  <font>
-                                    <Font name="High Tower Text" size="24.0" />
+                                    <Font name="High Tower Text" size="36.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets top="5.0" />
+                                    <Insets top="7.5" />
                                  </VBox.margin></Label>
                            </children>
                            <padding>
-                              <Insets left="10.0" right="10.0" top="10.0" />
+                              <Insets left="15.0" right="15.0" top="15.0" />
                            </padding>
                         </VBox>
-                        <Button fx:id="myNext" alignment="CENTER" disable="true" layoutX="220.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#endBattle" prefHeight="50.0" prefWidth="200.0" text="Next" visible="false" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0" AnchorPane.topAnchor="125.0">
+                        <Button fx:id="myNext" alignment="CENTER" disable="true" layoutX="220.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#endBattle" prefHeight="50.0" prefWidth="200.0" text="Next" visible="false" AnchorPane.bottomAnchor="112.5" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="330.0" AnchorPane.topAnchor="187.5">
                            <effect>
                               <InnerShadow height="10.0" radius="4.5" width="10.0" />
                            </effect></Button>
@@ -133,24 +115,24 @@
             </VBox>
          </center>
          <bottom>
-            <AnchorPane prefHeight="170.0" prefWidth="640.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="255.0" prefWidth="720.0" BorderPane.alignment="CENTER">
                <children>
                   <HBox fx:id="myControls" alignment="CENTER" layoutX="7.0" layoutY="34.0" maxHeight="170.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <AnchorPane prefHeight="170.0" prefWidth="640.0">
+                        <AnchorPane prefHeight="280.0" prefWidth="720.0">
                            <children>
-                              <TextArea fx:id="myLog" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="130.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                              <TextArea fx:id="myLog" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="195.0" prefWidth="300.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
                                  <font>
-                                    <Font name="High Tower Text" size="15.0" />
+                                    <Font name="High Tower Text" size="22.5" />
                                  </font>
                               </TextArea>
                            </children>
                         </AnchorPane>
                         <AnchorPane>
                            <children>
-                              <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+                              <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <Button fx:id="myAttack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#attack" prefHeight="35.0" prefWidth="125.0" text="Attack" textAlignment="CENTER" textFill="RED" wrapText="true">
+                                    <Button fx:id="myAttack" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#attack" prefHeight="52.5" prefWidth="187.5" text="Attack" textAlignment="CENTER" textFill="RED" wrapText="true">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
@@ -160,7 +142,7 @@
                                        <effect>
                                           <InnerShadow radius="7.25" width="10.0" />
                                        </effect></Button>
-                                    <Button fx:id="mySpecial" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#useSpecialAttack" prefHeight="35.0" prefWidth="125.0" text="Special" textAlignment="CENTER" textFill="RED" wrapText="true">
+                                    <Button fx:id="mySpecial" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#useSpecialAttack" prefHeight="52.5" prefWidth="187.5" text="Special" textAlignment="CENTER" textFill="RED" wrapText="true">
                                        <VBox.margin>
                                           <Insets top="5.0" />
                                        </VBox.margin>
@@ -174,7 +156,7 @@
                                           <InnerShadow />
                                        </effect>
                                     </Button>
-                                    <Button fx:id="myItem" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#item" prefHeight="35.0" prefWidth="125.0" text="Item" textFill="RED">
+                                    <Button fx:id="myItem" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#item" prefHeight="52.5" prefWidth="187.5" text="Item" textFill="RED">
                                        <VBox.margin>
                                           <Insets top="5.0" />
                                        </VBox.margin>
@@ -188,7 +170,7 @@
                                           <InnerShadow />
                                        </effect>
                                     </Button>
-                                    <Button fx:id="myRetreat" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#retreat" prefHeight="35.0" prefWidth="125.0" text="Retreat" textFill="RED">
+                                    <Button fx:id="myRetreat" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#retreat" prefHeight="52.5" prefWidth="187.5" text="Retreat" textFill="RED">
                                        <VBox.margin>
                                           <Insets top="5.0" />
                                        </VBox.margin>

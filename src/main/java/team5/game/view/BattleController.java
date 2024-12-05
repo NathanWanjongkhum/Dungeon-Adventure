@@ -21,6 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -28,8 +29,11 @@ import javafx.util.Duration;
 import team5.game.App;
 import team5.game.controller.Battle;
 import team5.game.controller.MonsterFactory;
+import team5.game.model.AttackPotion;
+import team5.game.model.Bomb;
 import team5.game.model.DungeonCharacter;
 import team5.game.model.GameState;
+import team5.game.model.HealingPotion;
 import team5.game.model.Hero;
 import team5.game.model.Monster;
 
@@ -99,15 +103,15 @@ public class BattleController implements Initializable {
         // myMonster = GameState.getInstance().getDungeon().getRoom(myHero.getX(), myHero.getY()).getMonster();
         myMonster = MonsterFactory.createMonster('S', "Ske");
 
-        // AttackPotion potion = new AttackPotion();
-        // AttackPotion potion2 = new AttackPotion();
-        // Bomb bomb = new Bomb();
-        // HealingPotion heal = new HealingPotion();
-        // myHero.getInventory().addItem(heal);
-        // myHero.getInventory().addItem(bomb);
-        // myHero.getInventory().addItem(potion);
-        // myHero.getInventory().addItem(potion);
-        // myHero.getInventory().addItem(potion2);
+        AttackPotion potion = new AttackPotion();
+        AttackPotion potion2 = new AttackPotion();
+        Bomb bomb = new Bomb();
+        HealingPotion heal = new HealingPotion();
+        myHero.getInventory().addItem(heal);
+        myHero.getInventory().addItem(bomb);
+        myHero.getInventory().addItem(potion);
+        myHero.getInventory().addItem(potion);
+        myHero.getInventory().addItem(potion2);
         
         //CustomBackground code
         BackgroundImage back = App.getBackgroundImage("battle background");
@@ -221,12 +225,7 @@ public class BattleController implements Initializable {
      }
     @FXML
     private void item(ActionEvent event) throws IOException {
-        myStage = new Stage();
-        myStage.setScene(new Scene(loadFXML("ItemBag")));
-        myStage.initModality(Modality.APPLICATION_MODAL);
-        myStage.initStyle(StageStyle.UNDECORATED);
-        myStage.initOwner(myItem.getScene().getWindow());
-        myStage.showAndWait();
+        App.createPopUpScene("ItemBag");
         if (GameState.getInstance().getHero().isConUsed()) {
             useItem();
         }
@@ -240,11 +239,6 @@ public class BattleController implements Initializable {
             over();
         }
     }
-    @FXML
-    private void myHome(ActionEvent event) throws IOException {
-        App.setRoot("StartScreen");
-    }
-
     @FXML
     private void retreat(ActionEvent event) throws IOException {
         myHero.moveTo(myHero.getDirection().getOpposite());
@@ -260,15 +254,6 @@ public class BattleController implements Initializable {
             App.setRoot("DungeonScene");
         }
     }
-    @FXML
-    private void showRules(ActionEvent event) throws IOException {
-        // myStage = new Stage();
-        // myStage.setScene(new Scene(loadFXML("")));
-        // myStage.initModality(Modality.APPLICATION_MODAL);
-        // myStage.initOwner(myItem.getScene().getWindow());
-        // myStage.showAndWait();
-    }
-
     private void displayText() {
         myLog.appendText(myBattle.actionPerformed());
         displayEffect(myHero, myHeroTooltip, myHPLevel, myHeroEffectTooltip, myHeroEffects);

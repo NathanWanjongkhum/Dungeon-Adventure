@@ -3,11 +3,15 @@ package team5.game.view;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import team5.game.App;
 import team5.game.model.Direction;
 import team5.game.model.Dungeon;
@@ -296,13 +300,8 @@ public class DungeonController {
     }
     //I think the keyevents also effected the battle scene so was thinking it would also 
     private void escapeSettings() throws IOException {
-        App.setRoot("DungeonSetting");
-        // final Stage stage = new Stage();
-        // stage.setScene(new Scene(App.loadFXML("Settings")));
-        // stage.initStyle(StageStyle.UNDECORATED);
-        // stage.initModality(Modality.APPLICATION_MODAL);
-        // // stage.initOwner(myPane.getScene().getWindow());
-        // stage.showAndWait();
+        
+        App.createPopUpScene("Settings");
     }
 
     /**
