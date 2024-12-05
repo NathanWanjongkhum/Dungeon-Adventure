@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class DungeonTest {
@@ -21,26 +21,33 @@ public class DungeonTest {
     /** The dungeon */
     private static Dungeon myDungeon;
 
-    @BeforeAll
-    public static void setUp() {
+    @BeforeEach
+    public void setUp() {
         myDungeon = new Dungeon(DUNGEON_WIDTH, DUNGEON_HEIGHT, DUNGEON_DIFFICULTY);
         myDungeon.init();
+    }
+
+    /**
+     * Test for Dungeon constructor. Throws an exception if the dungeon parameters
+     * are invalid.
+     */
+    @Test
+    public void testFailedBuild() {
+        Dungeon dungeon = new Dungeon(0, 0, Difficulty.EASY);
+        Assertions.assertThrows(IllegalStateException.class, dungeon::init);
     }
 
     /** Test for Dungeon constructor. Confirms all parameters are set. */
     @Test
     public void testParameterConstructor() {
-        final Dungeon dungeon = new Dungeon(DUNGEON_WIDTH, DUNGEON_HEIGHT, DUNGEON_DIFFICULTY);
-
-        assertEquals(DUNGEON_WIDTH, dungeon.getWidth());
-        assertEquals(DUNGEON_HEIGHT, dungeon.getHeight());
-        assertEquals(DUNGEON_DIFFICULTY, dungeon.getDifficulty());
+        assertEquals(DUNGEON_WIDTH, myDungeon.getWidth());
+        assertEquals(DUNGEON_HEIGHT, myDungeon.getHeight());
+        assertEquals(DUNGEON_DIFFICULTY, myDungeon.getDifficulty());
     }
 
     /** Test for Dungeon init method. */
     @Test
     public void testInit() {
-
         for (int x = 0; x < DUNGEON_WIDTH; x++) {
             for (int y = 0; y < DUNGEON_HEIGHT; y++) {
                 // Check if room exists
@@ -207,19 +214,6 @@ public class DungeonTest {
         assertSame(firstStartRoom, secondStartRoom);
     }
 
-    /** Test for Dungeon getRandomRoom method. Confirms room exists. */
-    // @Test
-    // public void testGetRandomRoom() {
-    // Set<Room> randomRooms = new HashSet<>();
-
-    // for (int i = 0; i < 100; i++) {
-    // Room randomRoom = myDungeon.getRandomRoom();
-    // randomRooms.add(randomRoom);
-    // }
-
-    // assertTrue(randomRooms.size() > 1);
-    // }
-
     /**
      * Test for Dungeon getPillarCount method. Confirms pillar count is incremented
      * by 1
@@ -236,13 +230,13 @@ public class DungeonTest {
     /**
      * Test for Dungeon addExit method. Confirms exit is added to start room
      */
-    // @Test
-    // public void testAddExit() {
-    // myDungeon.addExit();
-    // final Room startRoom = myDungeon.getStartRoom();
+    @Test
+    public void testAddExit() {
+        myDungeon.addExit();
+        final Room startRoom = myDungeon.getStartRoom();
 
-    // assertTrue(startRoom.getItem() instanceof Exit);
-    // }
+        assertTrue(startRoom.getItem() instanceof Exit);
+    }
 
     /**
      * Test for Dungeon toString method. Confirms that is a string of the correct
@@ -259,5 +253,18 @@ public class DungeonTest {
         }
 
         assertEquals(DUNGEON_HEIGHT, rows.length);
+    }
+
+    /**
+     * Test for Dungeon toString method. Sets a room to "X" when it is null.
+     */
+    @Test
+    public void testToStringNullRooms() {
+        myDungeon.getDungeon()[0][0] = null;
+
+        final String theString = myDungeon.toString();
+        char theChar = theString.charAt(0);
+
+        assertEquals('X', theChar);
     }
 }

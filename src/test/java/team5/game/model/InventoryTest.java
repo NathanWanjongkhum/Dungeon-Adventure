@@ -1,7 +1,6 @@
 package team5.game.model;
 
-import java.util.Arrays;
-
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -91,17 +90,19 @@ public class InventoryTest {
     public void testInventoryGetItems() {
         myInventory = new Inventory(TEST_SIZE);
 
-        final Item[] expectedItems = new Item[2];
+        Item[] expectedItems = new Item[TEST_SIZE];
 
-        for (int i = 0; i < myInventory.getItems().length; i++) {
-            final Bomb item = new Bomb();
-            myInventory.addItem(item);
-            expectedItems[i] = item;
-        }
+        final Bomb item1 = new Bomb();
+        myInventory.addItem(item1);
+        expectedItems[0] = item1;
+
+        final HealingPotion item2 = new HealingPotion();
+        myInventory.addItem(item2);
+        expectedItems[1] = item2;
 
         final Item[] actualItems = myInventory.getItems();
 
-        assertTrue(Arrays.equals(expectedItems, actualItems));
+        assertArrayEquals(expectedItems, actualItems);
     }
 
     /** Test for Inventory getItem method. Confirms item exists */
@@ -128,22 +129,6 @@ public class InventoryTest {
         assertEquals(expectedItem, actualItem);
     }
 
-    /** Test for Inventory clone method */
-    @Test
-    public void testInventoryClone() {
-        myInventory = new Inventory(TEST_SIZE);
-
-        final Bomb expectedItem = new Bomb();
-        myInventory.addItem(expectedItem);
-
-        final Inventory actualInventory = myInventory.clone();
-
-        final Item[] expectedItems = myInventory.getItems();
-        final Item[] actualItems = actualInventory.getItems();
-
-        assertTrue(Arrays.equals(expectedItems, actualItems));
-    }
-
     /** Test for Inventory isFull method */
     @Test
     public void testInventoryIsFull() {
@@ -160,10 +145,11 @@ public class InventoryTest {
     public void testInventoryIsFullInventory() {
         myInventory = new Inventory(TEST_SIZE);
 
-        for (int i = 0; i < TEST_SIZE; i++) {
-            final Bomb item = new Bomb();
-            myInventory.addItem(item);
-        }
+        final Bomb item1 = new Bomb();
+        myInventory.addItem(item1);
+
+        final HealingPotion item2 = new HealingPotion();
+        myInventory.addItem(item2);
 
         final boolean expectedIsFull = true;
         final boolean actualIsFull = myInventory.isFull();

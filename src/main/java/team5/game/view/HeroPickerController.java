@@ -54,7 +54,6 @@ public class HeroPickerController implements Initializable {
     }
 
     private void displayImage(ActionEvent event) {
-        System.out.println(GameState.getInstance().isCheats());
         String choice = myChoice.getValue();
         Hero hero = HeroFactory.createHero(choice);
         myImage.setImage(hero.getImage());

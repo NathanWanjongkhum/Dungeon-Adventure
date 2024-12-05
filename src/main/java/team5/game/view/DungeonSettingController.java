@@ -5,17 +5,15 @@ import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import team5.game.App;
 import team5.game.model.Difficulty;
 import team5.game.model.Dungeon;
 import team5.game.model.GameState;
 
-/**a
+/**
+ * a
  * The controller for the dungeon settings screen.
  */
 public class DungeonSettingController {
