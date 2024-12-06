@@ -26,6 +26,7 @@ public class App extends Application {
     private static Scene myScene;
     private static Stage myStage;
     private static Stage myPopUp;
+    private static Scene myPopUpScene;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -44,10 +45,9 @@ public class App extends Application {
     public static void setRoot(String theFXML) throws IOException {
         myScene.setRoot(loadFXML(theFXML));
     }
-    // public static Stage getStage() {
-    //     return myStage;
-    // }
-
+    public static void setPopUpRoot(String theFXML) throws IOException {
+        myPopUpScene.setRoot(loadFXML(theFXML));
+    }
     private static Parent loadFXML(String theFXML) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/team5/game/" + theFXML + ".fxml"));
         return fxmlLoader.load();
@@ -66,12 +66,12 @@ public class App extends Application {
         myPopUp = new Stage();
         myPopUp.setWidth(POPUP_WIDTH);
         myPopUp.setHeight(POPUP_HEIGHT);
-        Scene scene = new Scene(loadFXML(theFXML));
-        myPopUp.setScene(scene);
+        myPopUpScene = new Scene(loadFXML(theFXML));
+        myPopUp.setScene(myPopUpScene);
         myPopUp.initModality(Modality.APPLICATION_MODAL);
         myPopUp.initStyle(StageStyle.UNDECORATED);
         myPopUp.initStyle(StageStyle.TRANSPARENT);
-        scene.setFill(Color.TRANSPARENT);
+        myPopUpScene.setFill(Color.TRANSPARENT);
         myPopUp.setX(myStage.getX() + myStage.getWidth() / 2 - POPUP_WIDTH / 2);
         //A bit scuff to line up with battle scene
         myPopUp.setY(myStage.getY() + myStage.getHeight() / 2 + 13 - POPUP_HEIGHT / 2);

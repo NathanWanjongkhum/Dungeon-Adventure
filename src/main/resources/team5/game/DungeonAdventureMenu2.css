@@ -1,0 +1,53 @@
+.root
+{
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+    /* -fx-border-color: silver;
+    -fx-border-width: 5;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10 10 10 10; */
+
+}
+VBox
+{
+    -fx-background-color: rgba(0, 0, 0, 1);
+}
+ScrollPane
+{
+    -fx-background-color: rgba(255, 0, 0, 0);
+}
+.scroll-bar {
+    -fx-focus-color: transparent;
+}
+#myMenu
+  {
+    -fx-background-color: rgba(0, 0, 0, 1);
+    -fx-border-color: linear-gradient(from 0% 0% to 100% 100%, #ffffff, #c3c3c3);
+    -fx-border-width: 3;
+    -fx-effect: dropshadow(gaussian, white, 10, 0, 0, 0);
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10 10 10 10;
+  }
+.button
+{
+    -fx-background-color: gray;
+}
+.button .text
+{
+    -fx-font-family: "High Tower Text";
+    -fx-font-size:24;
+    -fx-fill:red;
+    -fx-effect: dropshadow(gaussian, black, 2, 1, 0, 0);
+}
+.button:hover
+{
+    -fx-background-color: #5e5d5d;
+    -fx-effect: innershadow(gaussian, black, 10, 0.5, 0, 0);
+    
+}
+/* .label
+{
+    -fx-font-family: "High Tower Text";
+    -fx-font-size:24;
+    -fx-text-fill:red;
+    -fx-effect: dropshadow(gaussian, black, 2, 1, 0, 0);
+} */

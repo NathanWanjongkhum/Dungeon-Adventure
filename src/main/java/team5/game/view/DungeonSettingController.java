@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import team5.game.App;
 import team5.game.model.Difficulty;
 import team5.game.model.Dungeon;
@@ -20,6 +21,9 @@ public class DungeonSettingController {
     /** The choices of difficulty options */
     final static ObservableList<Difficulty> myDifficultyList = FXCollections.observableArrayList(Difficulty.values());
 
+    /** The root pane */
+    @FXML
+    private BorderPane myBack;
     /** A text field for the width of the dungeon */
     @FXML
     private TextField myWidth;
@@ -33,6 +37,7 @@ public class DungeonSettingController {
     /** Initialize the controller */
     @FXML
     private void initialize() {
+        myBack.setStyle(("-fx-background-color: black"));
         myDifficulty.setItems(myDifficultyList);
         myDifficulty.setValue(Difficulty.MEDIUM);
     }
