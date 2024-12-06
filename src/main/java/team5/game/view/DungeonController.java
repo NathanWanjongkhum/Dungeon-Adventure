@@ -3,15 +3,10 @@ package team5.game.view;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import team5.game.App;
 import team5.game.model.Direction;
 import team5.game.model.Dungeon;
@@ -45,11 +40,12 @@ public class DungeonController {
     @FXML
     private Canvas gameCanvas;
     /** The base pane */
-    @FXML
-    private Pane myPane;
 
     /** The graphics context for drawing on the canvas */
     private GraphicsContext gc;
+    /** Determine if keyboard inputs should be counted */
+    //This is a band aid fix
+    private boolean myEnable;
 
     public DungeonController() {
         // Set up the dungeon and hero
@@ -71,6 +67,7 @@ public class DungeonController {
         setZoom(getMaxZoom());
 
         GameState.saveGame();
+        myEnable = true;
     }
 
     @FXML
@@ -300,8 +297,9 @@ public class DungeonController {
     }
     //I think the keyevents also effected the battle scene so was thinking it would also 
     private void escapeSettings() throws IOException {
-        
-        App.createPopUpScene("Settings");
+        if (myEnable) {
+            App.createPopUpScene("Settings");
+        }
     }
 
     /**
@@ -340,6 +338,7 @@ public class DungeonController {
             handlePillarOfOO();
         } else if (item instanceof Exit) {
             App.setRoot("EndScene");
+            myEnable = false;
         } else {
             myHero.getInventory().addItem(item);
         }
@@ -372,7 +371,11 @@ public class DungeonController {
             return;
         }
         App.setRoot("BattleScene");
+        myEnable = false;
         //Possibly remov monster
         // loadScene("BattleScene");
+    }
+    private void heroGUISetup() {
+
     }
 }

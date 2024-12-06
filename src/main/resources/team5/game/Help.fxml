@@ -20,197 +20,6 @@
       <VBox fx:id="myMenu" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" BorderPane.alignment="CENTER">
          <children>
             <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="440.0" prefWidth="630.0">
-               <content>
-                  <VBox alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="500.0" prefWidth="640.0">
-                     <children>
-                        <Label text="Maze Help" textFill="WHITE">
-                           <font>
-                              <Font name="High Tower Text" size="36.0" />
-                           </font>
-                        </Label>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <Circle radius="10.0" stroke="WHITE" strokeType="INSIDE" />
-                              <Label text="Exit" textFill="WHITE">
-                                 <font>
-                                    <Font name="High Tower Text" size="15.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                           </children>
-                           <effect>
-                              <DropShadow>
-                                 <color>
-                                    <Color red="1.0" green="1.0" blue="1.0" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <Circle fill="LAVENDER" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-                              <Label text="Healing Potion" textFill="WHITE">
-                                 <font>
-                                    <Font name="High Tower Text" size="15.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                           </children>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                           <effect>
-                              <DropShadow>
-                                 <color>
-                                    <Color red="1.0" green="1.0" blue="1.0" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <Circle fill="GREY" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-                              <Label text="Bomb" textFill="WHITE">
-                                 <font>
-                                    <Font name="High Tower Text" size="15.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                           </children>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                           <effect>
-                              <DropShadow>
-                                 <color>
-                                    <Color red="1.0" green="1.0" blue="1.0" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <Circle fill="YELLOW" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-                              <Label text="Pillar of OO" textFill="WHITE">
-                                 <font>
-                                    <Font name="High Tower Text" size="15.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                           </children>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                           <effect>
-                              <DropShadow>
-                                 <color>
-                                    <Color red="1.0" green="1.0" blue="1.0" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <Circle fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-                              <Label text="Monster" textFill="WHITE">
-                                 <font>
-                                    <Font name="High Tower Text" size="15.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                           </children>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                           <effect>
-                              <DropShadow>
-                                 <color>
-                                    <Color red="1.0" green="1.0" blue="1.0" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                        </HBox>
-                        <Label text="Battle Help" textFill="WHITE">
-                           <font>
-                              <Font name="High Tower Text" size="36.0" />
-                           </font>
-                        </Label>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                                 <image>
-                                    <Image url="@goblin.png" />
-                                 </image>
-                              </ImageView>
-                              <Label fx:id="myGoblinDesciption" text="Label" textFill="WHITE">
-                                 <font>
-                                    <Font name="High Tower Text" size="15.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                                 <image>
-                                    <Image url="@skeleton.png" />
-                                 </image>
-                              </ImageView>
-                              <Label fx:id="mySkeletonDesciption" text="Label" textFill="WHITE">
-                                 <font>
-                                    <Font name="High Tower Text" size="15.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                                 <image>
-                                    <Image url="@ogre.png" />
-                                 </image>
-                              </ImageView>
-                              <Label fx:id="myOgreDescription" text="Label" textFill="WHITE">
-                                 <font>
-                                    <Font name="High Tower Text" size="15.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </HBox>
-                     </children>
-                     <effect>
-                        <DropShadow />
-                     </effect>
-                  </VBox>
-               </content>
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -223,4 +32,232 @@
          </children>
       </VBox>
    </center>
+   <top>
+      <VBox alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="500.0" prefWidth="640.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Maze Help" textFill="WHITE">
+               <font>
+                  <Font name="High Tower Text" size="36.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Label>
+            <Label text="The objective of Dungeon Adventures is to collect all the Pillars of OO and make it to the exit." textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="High Tower Text" size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="50.0" />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Circle radius="10.0" stroke="WHITE" strokeType="INSIDE" />
+                  <Label text="Exit" textFill="WHITE">
+                     <font>
+                        <Font name="High Tower Text" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="LAVENDER" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label text="Healing Potion" textFill="WHITE">
+                     <font>
+                        <Font name="High Tower Text" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="GREY" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label text="Bomb" textFill="WHITE">
+                     <font>
+                        <Font name="High Tower Text" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="YELLOW" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label text="Pillar of OO" textFill="WHITE">
+                     <font>
+                        <Font name="High Tower Text" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label text="Monster" textFill="WHITE">
+                     <font>
+                        <Font name="High Tower Text" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="GREEN" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label text="Player" textFill="WHITE">
+                     <font>
+                        <Font name="High Tower Text" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <Label text="Battle Help" textFill="WHITE">
+               <font>
+                  <Font name="High Tower Text" size="36.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@goblin.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="myGoblinDesciption" text="Label" textFill="WHITE">
+                     <font>
+                        <Font name="High Tower Text" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@skeleton.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="mySkeletonDesciption" text="Label" textFill="WHITE">
+                     <font>
+                        <Font name="High Tower Text" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@ogre.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="myOgreDescription" text="Label" textFill="WHITE">
+                     <font>
+                        <Font name="High Tower Text" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </VBox>
+   </top>
 </BorderPane>

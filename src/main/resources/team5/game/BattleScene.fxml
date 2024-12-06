@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Ellipse?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="myScene" minHeight="720.0" minWidth="960.0" stylesheets="@DungeonAdventureStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.BattleController">
+<AnchorPane minHeight="720.0" minWidth="960.0" stylesheets="@DungeonAdventureStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.BattleController">
   <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>

@@ -97,7 +97,11 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
 
     @Override
     public void setHealth(final int theHealth) {
-        myHealth = theHealth;
+        if (theHealth < 0) {
+            myHealth = 0;
+        } else {
+            myHealth = theHealth;
+        }
     }
     @Override
     public void setMinDamage(final int theDamage) {
@@ -136,8 +140,9 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
     @Override
     public String getStats() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Name: ");
-        builder.append(myName);
+        // builder.append("Name: ");
+        // builder.append(myName);
+        builder.append(getClass().getSimpleName());
         String hp = String.format("\nHP: %d/%d", myHealth, myMaxHealth);
         builder.append(hp);
         String damage = String.format("\nDamage Range: %d - %d\n", myMinDamage, myMaxDamage);

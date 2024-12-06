@@ -16,13 +16,15 @@ public class PillarOfOO implements Item, Serializable {
      * The type of the pillar
      */
     private int myCount;
+    private final PillarType myPillar;
     private static final long serialVersionUID = 1L;
 
     /**
      * PillarOfOO constructor
      */
-    public PillarOfOO(final PillarType pillarType) {
+    public PillarOfOO(final PillarType thePillarType) {
         myCount = 1;
+        myPillar = thePillarType;
     }
 
     @Override
@@ -43,5 +45,8 @@ public class PillarOfOO implements Item, Serializable {
     @Override
     public boolean isConsumable() {
         return false;
+    }
+    public PillarType getPillar() {
+        return myPillar;
     }
 }

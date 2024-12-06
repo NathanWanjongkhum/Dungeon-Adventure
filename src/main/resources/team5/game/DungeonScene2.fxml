@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.DungeonController">
+   <center>
+      <Canvas fx:id="gameCanvas" height="720.0" width="960.0" />
+   </center>
+   <left>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="myHeroName" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="200.0" text="Name" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="High Tower Text" size="18.0" />
+               </font>
+            </Label>
+            <ProgressBar fx:id="myHeroHPBar" prefWidth="200.0" progress="0.0" />
+            <Label fx:id="myHeroHP" text="HP" textFill="WHITE" />
+            <Separator prefWidth="200.0" />
+            <Label text="Items" textFill="WHITE" />
+            <Label text="Pillar Of OO" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+         <BorderPane.margin>
+            <Insets left="10.0" top="10.0" />
+         </BorderPane.margin>
+      </VBox>
+   </left>
+</BorderPane>

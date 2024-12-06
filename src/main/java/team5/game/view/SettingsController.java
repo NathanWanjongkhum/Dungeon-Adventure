@@ -10,35 +10,64 @@ import team5.game.model.GameState;
 
 public class SettingsController {
     @FXML
+    /** The menu container */
     private VBox myScene;
     
     @FXML
-    void getHelp(ActionEvent event) throws IOException {
+    /**
+     * The help action button
+     * 
+     * @param theEvent the button press
+     * @throws IOException when the fxml file is not found
+     */
+    private void getHelp(final ActionEvent theEvent) throws IOException {
            App.setPopUpRoot("Help");
     }
     @FXML
-    void home(ActionEvent event) throws IOException {
+    /**
+     * The home button action
+     * 
+     * @param theEvent the button press
+     * @throws IOException when the fxml file is not found
+     */
+    private void home(final ActionEvent theEvent) throws IOException {
         App.setRoot("StartScreen");
         close();
     }
 
     @FXML
-    void quit(ActionEvent event) {
+    /**
+     * Closes the popup and parent scene
+     * 
+     * @param theEvent the button press
+     */
+    private void quit(final ActionEvent theEvent) {
         close();
         App.close();
     }
 
     @FXML
-    void resumeGame(ActionEvent event) {
+    /**
+     * Closes the popup action
+     * 
+     * @param theEvent the button press
+     */
+    private void resumeGame(final ActionEvent theEvent) {
         close();
     }
 
     @FXML
-    void saveGame(ActionEvent event) {
+    /**
+     * Saves the game then closes the popup
+     * 
+     * @param theEvent the button press
+     */
+    private void saveGame(final ActionEvent theEvent) {
         GameState.saveGame();
         //Indivator of game saved
         close();
     }
+    /**Closes the popup */
     private void close() {
         App.closePopUp();
     }

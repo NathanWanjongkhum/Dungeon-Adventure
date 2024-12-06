@@ -33,7 +33,7 @@
                   <Insets top="90.0" />
                </VBox.margin>
             </StackPane>
-            <Label fx:id="myName" text="Select A Character" textFill="WHITE">
+            <Label text="Select A Character" textFill="WHITE">
                <VBox.margin>
                   <Insets top="15.0" />
                </VBox.margin>

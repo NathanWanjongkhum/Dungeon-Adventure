@@ -18,32 +18,40 @@ import team5.game.App;
 import team5.game.controller.HeroFactory;
 import team5.game.model.GameState;
 import team5.game.model.Hero;
-
+/**
+ * The GUI Controller for HeroPickerController
+ * 
+ * @author Holden Tsang
+ * @version December 5 2024
+ */
 public class HeroPickerController implements Initializable {
 
     @FXML
-    private Label myName;
-
-    @FXML
+    /** ChoiceBox that contains the hero choices */
     private ChoiceBox<String> myChoice;
 
     @FXML
+    /** The ImageView for Hero */
     private ImageView myImage;
 
     @FXML
+    /** Button to go next scene*/
     private Button myNext;
 
     @FXML
+    /** The stats of the hero */
     private Label myStats;
 
     @FXML
+    /** The back container of the scene */
     private VBox myBack;
-
+    /** The Characters for normal gameplay */
     private final String[] myCharacters = { "Archer", "Mage", "Priestess", "Warrior" };
+    /** The Character for cheat gameplay */
     private final String[] myCheatCharacters = {"Slime", "Noob"};
 
     @Override
-    public void initialize(URL theURL, ResourceBundle theResource) {
+    public void initialize(final URL theURL, final ResourceBundle theResource) {
         BackgroundImage back = App.getBackgroundImage("selection background");
         myBack.setBackground(new Background(back));
         myChoice.getItems().addAll(myCharacters);
@@ -52,8 +60,13 @@ public class HeroPickerController implements Initializable {
         }
         myChoice.setOnAction(this::displayImage); 
     }
-
-    private void displayImage(ActionEvent event) {
+    /**
+     * Displays the Image of the hero and stats and 
+     * sets the hero to gamestate singleton.
+     * 
+     * @param theEvent the choice selection.
+     */
+    private void displayImage(final ActionEvent theEvent) {
         String choice = myChoice.getValue();
         Hero hero = HeroFactory.createHero(choice);
         myImage.setImage(hero.getImage());
@@ -64,12 +77,22 @@ public class HeroPickerController implements Initializable {
     }
 
     @FXML
-    void back() throws IOException {
+    /**
+     * The back button action.
+     * 
+     * @throws IOException when fxml is not found.
+     */
+    private void back() throws IOException {
         App.setRoot("NameSelection");
     }
 
     @FXML
-    void next() throws IOException {
+    /**
+     * The next button action
+     * 
+     * @throws IOException when fxml is not found.
+     */
+    private void next() throws IOException {
         App.setRoot("DungeonSetting"); 
     }
 

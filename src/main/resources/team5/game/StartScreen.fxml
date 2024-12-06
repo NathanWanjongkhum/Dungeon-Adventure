@@ -29,7 +29,7 @@
       </StackPane>
       <VBox alignment="CENTER" prefHeight="300.0" prefWidth="150.0">
          <children>
-            <Button fx:id="myNew" alignment="TOP_CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToHeroCreation" prefHeight="45.0" prefWidth="187.5" text="New Game" textAlignment="CENTER" textFill="#5e5d5d">
+            <Button alignment="TOP_CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToHeroCreation" prefHeight="45.0" prefWidth="187.5" text="New Game" textAlignment="CENTER" textFill="#5e5d5d">
                <VBox.margin>
                   <Insets bottom="22.5" top="-45.0" />
                </VBox.margin>
@@ -40,7 +40,7 @@
                   <InnerShadow height="10.0" radius="4.5" width="10.0" />
                </effect>
             </Button>
-            <Button fx:id="myLoad" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#loadGame" prefHeight="45.0" prefWidth="187.5" text="Load Game" textFill="RED">
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#loadGame" prefHeight="45.0" prefWidth="187.5" text="Load Game" textFill="RED">
                <VBox.margin>
                   <Insets bottom="22.5" />
                </VBox.margin>
@@ -51,7 +51,7 @@
                   <InnerShadow height="10.0" radius="4.5" width="10.0" />
                </effect>
             </Button>
-            <Button fx:id="myQuit" mnemonicParsing="false" onAction="#exitGame" prefHeight="45.0" prefWidth="187.5" text="Quit" textFill="RED">
+            <Button mnemonicParsing="false" onAction="#exitGame" prefHeight="45.0" prefWidth="187.5" text="Quit" textFill="RED">
                <padding>
                   <Insets top="-1.0" />
                </padding>

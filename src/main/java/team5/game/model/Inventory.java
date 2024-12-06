@@ -10,12 +10,13 @@ public class Inventory implements Serializable {
     private int myInventorySize;
     /** The items in the inventory */
     private Item[] myItems;
-
-    public Inventory() {
-    }
-
+    /** The serial number */
     private static final long serialVersionUID = 1L;
-
+    /** Empty Inventory constructor */
+    public Inventory() {
+        myInventorySize = 0;
+        myItems = new Item[0];
+    }
     /**
      * Create an empty inventory
      * 
@@ -136,6 +137,13 @@ public class Inventory implements Serializable {
     private boolean inBounds(final int index) {
         return index >= 0 && index < myInventorySize;
     }
+    // private Inventory copy() {
+    //     final Inventory inventory = new Inventory(myInventorySize);
+    //     for (final Item item: getItems()) {
+    //         inventory.addItem(item);
+    //     }
+    //     return inventory;
+    // }
 
     @Override
     public String toString() {
