@@ -1,5 +1,6 @@
 package team5.game.view;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -48,8 +49,8 @@ public class HelpController implements Initializable {
      * 
      * @param theEvent the button press
      */
-    private void exit(final ActionEvent theEvent) {
-        App.closePopUp();
+    private void exit(final ActionEvent theEvent) throws IOException {
+        App.setPopUpRoot("Settings");
     }
 
 }

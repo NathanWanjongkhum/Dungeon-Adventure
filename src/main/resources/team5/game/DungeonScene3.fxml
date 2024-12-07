@@ -144,7 +144,7 @@
                               </VBox>
                            </right>
                         </BorderPane>
-                        <Label alignment="CENTER" onMouseClicked="#openItemBag" prefHeight="25.0" prefWidth="115.0" style="-fx-background-color: grey;" text="Open Item Bag" textAlignment="CENTER" textFill="WHITE">
+                        <Label alignment="CENTER" onMouseClicked="#openItemBag" prefHeight="25.0" prefWidth="115.0" style="-fx-background-color: #535353;" text="Open Item Bag" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="High Tower Text" size="15.0" />
                            </font>

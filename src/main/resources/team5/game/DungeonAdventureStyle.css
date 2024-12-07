@@ -2,6 +2,8 @@
 .button
 {
     -fx-background-color: gray;
+    -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
+
 }
 .button .text
 {

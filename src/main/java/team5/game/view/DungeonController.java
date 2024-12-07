@@ -106,10 +106,11 @@ public class DungeonController {
         // Set up the zoom and scale
         setScale(1);
         // For demo and debugging purposes zoom out to reveal the entire maze
-        if (GameState.getInstance().isCheats()) {
+        if (GameState.getInstance().isCheats() || myDungeon.getPillarCount() == 4) {
             setZoom(getMaxZoom());
         } else {
-            setZoom(1);
+            // setZoom(1);
+            setZoom(myDungeon.getPillarCount() + 1);
         }
 
 
@@ -407,7 +408,10 @@ public class DungeonController {
         if (myDungeon.getPillarCount() == 4) {
             myDungeon.addExit();
             setZoom(getMaxZoom());
+        } else {
+            setZoom(myDungeon.getPillarCount() + 1);
         }
+        
     }
 
     /**
@@ -423,8 +427,6 @@ public class DungeonController {
         App.setRoot("BattleScene");
         GameState.getInstance().setBattling(true);
         myEnable = false;
-        //Possibly remov monster
-        // loadScene("BattleScene");
     }
     private void heroGUISetup() {
         myHeroName.setText(myHero.getName());
@@ -433,9 +435,6 @@ public class DungeonController {
     }
     private void setHP() {
         final double hp = (double) myHero.getHealth() / myHero.getMaxHealth();
-        System.out.println(myHero.getHealth());
-        System.out.println(myHero.getMaxHealth());
-        System.out.println(hp);
         final String character = "HP " + myHero.getHealth() + "/" + myHero.getMaxHealth();
         myHPLabel.setText(character);
         myHeroBar.setProgress(hp);
