@@ -16,8 +16,10 @@ public class GameState implements Serializable {
     private Hero myHero;
     /** The hero's name */
     private String myName;
-    /**Indicator for cheats */
+    /** Indicator for cheats */
     private boolean myCheats;
+    /** Indicator for battles */
+    private boolean myBattling;
 
     private static final long serialVersionUID = 1L;
 
@@ -157,5 +159,11 @@ public class GameState implements Serializable {
     }
     public void setCheats(final boolean theCheats) {
         myCheats = theCheats;
+    }
+    public boolean isBattling() {
+        return myBattling;
+    }
+    public void setBattling(final boolean theBattling) {
+        myBattling = theBattling;
     }
 }

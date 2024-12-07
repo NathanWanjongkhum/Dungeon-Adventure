@@ -10,8 +10,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import team5.game.App;
+import team5.game.model.AttackPotion;
+import team5.game.model.Bomb;
 import team5.game.model.Consumable;
 import team5.game.model.GameState;
+import team5.game.model.HealingPotion;
 import team5.game.model.Inventory;
 import team5.game.model.Item;
 /**
@@ -62,12 +65,13 @@ public class ItemController implements Initializable{
     private Label myHealingDescript;
     /** The inventory of items */
     private Inventory myInventory;
+    private boolean myBattling;
 
     @Override
     public void initialize(URL theURL, ResourceBundle theResource) {
         myInventory = GameState.getInstance().getHero().getInventory();
         disable();
-        // System.out.println(myInventory.toString());
+        setDescriptions();
         int index = 0;
         if (!myInventory.isEmpty()) {
             for (Item c: myInventory.getItems()) {
@@ -79,7 +83,14 @@ public class ItemController implements Initializable{
         }
         if (GameState.getInstance().getHero().getStatusEffects().isDamageIncrease()) {
             myAttackButton.setDisable(true);
-        }        
+        }
+        myBattling = GameState.getInstance().isBattling();
+        System.out.println(myBattling);
+        if (!myBattling) {
+            myAttackButton.setDisable(true);
+            myBombButton.setDisable(true);
+        }
+                
     }
     /** Disables all buttons */
     private void disable() {
@@ -98,17 +109,14 @@ public class ItemController implements Initializable{
             case "AttackPotion":
                 myAttackCount.setText("x" + item.getCount());
                 setButtons(item, myAttackButton);
-                myAttackDescript.setText(item.getDescription());
                 break;
             case "HealingPotion":
                 myHealingCount.setText("x" + item.getCount());
                 setButtons(item, myHealingButton);
-                myHealingDescript.setText(item.getDescription());
                 break;
             case "Bomb":
                 myBombCount.setText("x" + item.getCount());
                 setButtons(item, myBombButton);
-                myBombDescript.setText(item.getDescription());
                 break;
             default:
                 break;
@@ -116,12 +124,19 @@ public class ItemController implements Initializable{
     }
     /** Enables the button if there is a more than 0 consumable */
     private void setButtons(Consumable theConsumable, Button theButton) {
-    if (theConsumable.getCount() < 0) {
-        theButton.setDisable(true);
-    } else {
-        theButton.setDisable(false);
+        if (theConsumable.getCount() < 1) {
+            theButton.setDisable(true);
+        } else {
+            theButton.setDisable(false);
+        }
     }
-
+    private void setDescriptions() {
+        AttackPotion attack = new AttackPotion();
+        HealingPotion heal = new HealingPotion();
+        Bomb bomb = new Bomb();
+        myAttackDescript.setText(attack.getDescription());
+        myHealingDescript.setText(heal.getDescription());
+        myBombDescript.setText(bomb.getDescription());
     }
     @FXML
     /**

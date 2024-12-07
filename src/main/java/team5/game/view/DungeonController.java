@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import team5.game.App;
@@ -94,7 +95,7 @@ public class DungeonController {
         myHero = GameState.getInstance().getHero();
 
         myInventory = myHero.getInventory();
-
+        GameState.getInstance().setBattling(false);
         // Initializes the dungeon
         myDungeon.init();
 
@@ -420,6 +421,7 @@ public class DungeonController {
             return;
         }
         App.setRoot("BattleScene");
+        GameState.getInstance().setBattling(true);
         myEnable = false;
         //Possibly remov monster
         // loadScene("BattleScene");
@@ -430,7 +432,10 @@ public class DungeonController {
         setItems();
     }
     private void setHP() {
-        final double hp = myHero.getHealth() / myHero.getMaxHealth();
+        final double hp = (double) myHero.getHealth() / myHero.getMaxHealth();
+        System.out.println(myHero.getHealth());
+        System.out.println(myHero.getMaxHealth());
+        System.out.println(hp);
         final String character = "HP " + myHero.getHealth() + "/" + myHero.getMaxHealth();
         myHPLabel.setText(character);
         myHeroBar.setProgress(hp);
@@ -501,4 +506,35 @@ public class DungeonController {
         myHealingPotion.setText("x0");
         myBomb.setText("x0");
     }
+    @FXML
+    void openItemBag(MouseEvent event) throws IOException {
+        App.createPopUpScene("ItemBag");
+        if (GameState.getInstance().getHero().isConUsed()) {
+            final Consumable consumable = GameState.getInstance().getHero().useConsumable();
+            consumable.useItem(myHero);
+            consumable.setCount(consumable.getCount() - 1);
+            heroGUISetup();
+        }
+
+    }
+    // private void useItem(final Consumable theConsumable) {
+    //     if (theConsumable.getName().equals("Bomb")) {
+    //         final int x = GameState.getInstance().getHero().getX();
+    //         final int y = GameState.getInstance().getHero().getY();
+    //         final int radius = ((Bomb) theConsumable).getRadius();
+    //         Monster monster = null;
+    //         for (int row = x - radius; row < x + 1; row++) {
+    //             for (int col = y - radius; col < y + radius; col++) {
+    //                 monster = GameState.getInstance().getDungeon().getRoom(row, col).getMonster();
+    //                 if (monster != null) {
+    //                     monster.setHealth(monster.getHealth() - ((Bomb) theConsumable).getDamage());
+    //                 }
+    //             }
+    //         }
+    //     } else if (theConsumable.getName().equals("HealingPotion")) {
+    //         myHero.heal(100);
+
+    //     }
+        
+    // }
 }

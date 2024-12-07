@@ -303,6 +303,7 @@ public class BattleController implements Initializable {
     private void retreat(final ActionEvent theEvent) throws IOException {
         myHero.moveTo(myHero.getDirection().getOpposite());
         App.setRoot("DungeonScene3");
+        GameState.getInstance().setBattling(false);
     }
 
     @FXML
@@ -319,6 +320,7 @@ public class BattleController implements Initializable {
             GameState.getInstance().getDungeon().getRoom(myHero.getX(), myHero.getY()).removeMonster();
             App.setRoot("DungeonScene3");
         }
+        GameState.getInstance().setBattling(false);
     }
     /**
      * Adds text to the end of battle and updates status when necessary

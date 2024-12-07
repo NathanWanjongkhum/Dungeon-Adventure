@@ -51,12 +51,13 @@ public class Bomb extends AbstractConsumables {
     }
     @Override
     public int useItem(DungeonCharacter theCharacter) {
-        final int damage = theCharacter.checkVulnerableDamage(theCharacter, this.getDamage());
+        int damage = myDamage;
+        damage = theCharacter.checkVulnerableDamage(theCharacter, damage);
         theCharacter.setHealth(theCharacter.getHealth() - damage);
         return damage;
     }
     @Override
     public String getDescription() {
-        return String.format("When uses, deals %s damage to the enemy", myDamage);
+        return String.format("When uses, deals %s damage to the enemy.", myDamage);
     }
 }
