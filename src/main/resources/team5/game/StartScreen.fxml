@@ -2,32 +2,71 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.StartController">
+<VBox fx:id="myScene" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" stylesheets="@DungeonAdventureStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.StartController">
    <children>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dungeon Adventure">
-         <font>
-            <Font name="Britannic Bold" size="48.0" />
-         </font>
-      </Text>
-      <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
+      <StackPane prefHeight="225.0" prefWidth="300.0">
          <children>
-            <Button alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToHeroCreation" prefHeight="25.0" prefWidth="90.0" text="New Game">
+            <Text fx:id="myTitle" fill="RED" onMouseClicked="#enableCheats" strokeType="INSIDE" strokeWidth="5.0" text="Dungeon Adventures">
+               <effect>
+                  <DropShadow height="40.0" offsetY="3.0" radius="22.0" spread="0.93" width="50.0" />
+               </effect>
+               <font>
+                  <Font name="Juice ITC" size="108.0" />
+               </font>
+            </Text>
+         </children>
+         <VBox.margin>
+            <Insets top="30.0" />
+         </VBox.margin>
+      </StackPane>
+      <VBox alignment="CENTER" prefHeight="300.0" prefWidth="150.0">
+         <children>
+            <Button alignment="TOP_CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToHeroCreation" prefHeight="45.0" prefWidth="187.5" text="New Game" textAlignment="CENTER" textFill="#5e5d5d">
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="22.5" top="-45.0" />
                </VBox.margin>
+               <padding>
+                  <Insets top="-1.0" />
+               </padding>
+               <effect>
+                  <InnerShadow height="10.0" radius="4.5" width="10.0" />
+               </effect>
             </Button>
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#loadGame" prefHeight="25.0" prefWidth="90.0" text="Load Game">
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#loadGame" prefHeight="45.0" prefWidth="187.5" text="Load Game" textFill="RED">
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="22.5" />
                </VBox.margin>
+               <padding>
+                  <Insets top="-1.0" />
+               </padding>
+               <effect>
+                  <InnerShadow height="10.0" radius="4.5" width="10.0" />
+               </effect>
             </Button>
-            <Button mnemonicParsing="false" onAction="#exitGame" prefHeight="25.0" prefWidth="90.0" text="Quit" />
+            <Button mnemonicParsing="false" onAction="#exitGame" prefHeight="45.0" prefWidth="187.5" text="Quit" textFill="RED">
+               <padding>
+                  <Insets top="-1.0" />
+               </padding>
+               <effect>
+                  <InnerShadow height="10.0" radius="4.5" width="10.0" />
+               </effect></Button>
          </children>
       </VBox>
+      <Label fx:id="myCheatIndicator" alignment="CENTER" text="Label" textFill="WHITE" visible="false">
+         <font>
+            <Font name="High Tower Text" size="24.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Label>
    </children>
 </VBox>

@@ -3,19 +3,23 @@ package team5.game.view;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
+import javafx.scene.text.Text;
 import team5.game.App;
+import team5.game.model.Consumable;
 import team5.game.model.Direction;
 import team5.game.model.Dungeon;
 import team5.game.model.Exit;
 import team5.game.model.GameState;
 import team5.game.model.Hero;
+import team5.game.model.Inventory;
 import team5.game.model.Item;
 import team5.game.model.Monster;
 import team5.game.model.PillarOfOO;
@@ -23,7 +27,7 @@ import team5.game.model.Room;
 
 public class DungeonController {
     /** The original size of the tiles sprite */
-    private static final int ORIGINAL_TILE_SIZE = 16;
+    private static final int ORIGINAL_TILE_SIZE = 32;
 
     /** The dungeon maze */
     private static Dungeon myDungeon;
@@ -42,30 +46,84 @@ public class DungeonController {
     /** What the game is drawn on */
     @FXML
     private Canvas gameCanvas;
+    /** The base pane */
 
     /** The graphics context for drawing on the canvas */
     private GraphicsContext gc;
+    /** Determine if keyboard inputs should be counted */
+    //This is a band aid fix
+    private boolean myEnable;
+    @FXML
+    private Label myAttackPotion;
+
+    @FXML
+    private Label myBomb;
+
+    @FXML
+    private Label myHPLabel;
+
+    @FXML
+    private Label myHealingPotion;
+
+    @FXML
+    private ProgressBar myHeroBar;
+
+    @FXML
+    private Label myHeroName;
+
+    @FXML
+    private TextArea myPickUp;
+
+    @FXML
+    private Text myAbstraction;
+
+    @FXML
+    private Text myEncapsulation;
+
+    @FXML
+    private Text myInheritance;
+
+    @FXML
+    private Text myPolymorphism;
+
+
+    private Inventory myInventory;
 
     public DungeonController() {
         // Set up the dungeon and hero
         myDungeon = GameState.getInstance().getDungeon();
         myHero = GameState.getInstance().getHero();
 
+        myInventory = myHero.getInventory();
+        GameState.getInstance().setBattling(false);
         // Initializes the dungeon
         myDungeon.init();
 
         // Places the hero in the dungeon
-        myHero.setX(0);
-        myHero.setY(0);
+        myHero.setX(myHero.getX());
+        myHero.setY(myHero.getY());
 
         // Set up the zoom and scale
         setScale(1);
-        setZoom(1);
+        // For demo and debugging purposes zoom out to reveal the entire maze
+        if (GameState.getInstance().isCheats() || myDungeon.getPillarCount() == 4) {
+            setZoom(getMaxZoom());
+        } else {
+            // setZoom(1);
+            setZoom(myDungeon.getPillarCount() + 1);
+        }
+
+
+        GameState.saveGame();
+        myEnable = true;
     }
 
     @FXML
     private void initialize() {
         // Initializes the canvas
+        disablePillars();
+        setNoItems();
+        heroGUISetup();
         initializeCanvas();
         render();
     }
@@ -197,11 +255,12 @@ public class DungeonController {
     }
 
     private void drawItem(final Item theItem, final double theScreenX, final double theScreenY) {
-        switch (theItem.getClass().getName()) {
-            case "team5.game.model.Exit" -> gc.setFill(Color.BLACK);
-            case "team5.game.model.HealingPotion" -> gc.setFill(Color.LAVENDER);
-            case "team5.game.model.Bomb" -> gc.setFill(Color.GRAY);
-            case "team5.game.model.PillarOfOO" -> gc.setFill(Color.YELLOW);
+        switch (theItem.getName()) {
+            case "Exit" -> gc.setFill(Color.BLACK);
+            case "HealingPotion" -> gc.setFill(Color.LAVENDER);
+            case "Bomb" -> gc.setFill(Color.GRAY);
+            case "PillarOfOO" -> gc.setFill(Color.YELLOW);
+            case "AttackPotion" -> gc.setFill(Color.CYAN);
             default -> System.err.println("Unknown item: " + theItem.getClass().getName());
         }
 
@@ -276,7 +335,7 @@ public class DungeonController {
     private void handleKeyPressed(final KeyEvent theEvent) {
         try {
             switch (theEvent.getCode()) {
-                case ESCAPE -> App.setRoot("DungeonSetting");
+                case ESCAPE -> escapeSettings();
                 case W, UP -> tryMove(Direction.NORTH);
                 case S, DOWN -> tryMove(Direction.SOUTH);
                 case A, LEFT -> tryMove(Direction.WEST);
@@ -286,6 +345,12 @@ public class DungeonController {
             }
         } catch (Exception e) {
             System.err.println("Error handling key press: " + e.getMessage());
+        }
+    }
+    //I think the keyevents also effected the battle scene so was thinking it would also 
+    private void escapeSettings() throws IOException {
+        if (myEnable) {
+            App.createPopUpScene("Settings");
         }
     }
 
@@ -299,9 +364,8 @@ public class DungeonController {
         if (!myDungeon.isConnected(myHero.getX(), myHero.getY(), theDirection)) {
             return;
         }
-
         myHero.moveTo(theDirection);
-
+        myHero.setDirection(theDirection);
         Room currentRoom = myDungeon.getRoom(myHero.getX(), myHero.getY());
 
         handleRoomItem(currentRoom);
@@ -323,13 +387,14 @@ public class DungeonController {
         }
 
         if (item instanceof PillarOfOO) {
-            handlePillarOfOO();
+            handlePillarOfOO(item);
         } else if (item instanceof Exit) {
-            loadScene("StartScreen");
+            App.setRoot("EndScene");
+            myEnable = false;
         } else {
             myHero.getInventory().addItem(item);
         }
-
+        setItems();
         room.removeItem();
     }
 
@@ -338,13 +403,18 @@ public class DungeonController {
      * collected. Then add an exit to the dungeon and zoom out to reveal the entire
      * maze so the player can easily find it.
      */
-    private void handlePillarOfOO() {
+    private void handlePillarOfOO(final Item theItem) {
         myDungeon.collectPillar();
-
+        myHero.getInventory().addItem(theItem);
         if (myDungeon.getPillarCount() == 4) {
             myDungeon.addExit();
             setZoom(getMaxZoom());
+        } else if (GameState.getInstance().isCheats()) {
+            setZoom(getMaxZoom());
+        } else {
+            setZoom(myDungeon.getPillarCount() + 1);
         }
+        
     }
 
     /**
@@ -357,20 +427,116 @@ public class DungeonController {
         if (room.getMonster() == null) {
             return;
         }
-
-        loadScene("BattleScene");
+        App.setRoot("BattleScene");
+        GameState.getInstance().setBattling(true);
+        myEnable = false;
     }
-
-    /**
-     * Load the given scene
-     * 
-     * @param theScene the scene to load
-     * @throws IOException if the scene can't be loaded
-     */
-    private void loadScene(final String theScene) throws IOException {
-        final FXMLLoader loader = new FXMLLoader(App.class.getResource("/team5/game/" + theScene + ".fxml"));
-        final Stage currentStage = (Stage) gameCanvas.getScene().getWindow();
-        final Scene newScene = new Scene(loader.load());
-        currentStage.setScene(newScene);
+    private void heroGUISetup() {
+        myHeroName.setText(myHero.getName());
+        setHP();
+        setItems();
     }
+    private void setHP() {
+        final double hp = (double) myHero.getHealth() / myHero.getMaxHealth();
+        final String character = "HP " + myHero.getHealth() + "/" + myHero.getMaxHealth();
+        myHPLabel.setText(character);
+        myHeroBar.setProgress(hp);
+        if (hp < 0.25) {
+            myHeroBar.setStyle("-fx-accent: red;");
+        } else if (hp < 0.5) {
+            myHeroBar.setStyle("-fx-accent: yellow;");
+        } else {
+            myHeroBar.setStyle("-fx-accent: green");
+        }
+    }
+    private void setItems() {
+        int index = 0;
+        if (!myInventory.isEmpty()) {
+            for (Item c: myInventory.getItems()) {
+                if (c != null && c.isPillar()) {
+                    setPillar(index);
+                } else if (c != null && c.isConsumable()) {
+                    setConsumable(index);
+                }
+                index++;
+            }
+        }
+    }
+    private void setPillar(final int theIndex) {
+        PillarOfOO item = ((PillarOfOO)myInventory.getItem(theIndex));
+        switch(item.getPillar().name()) {
+            case "ABSTRACTION":
+                myAbstraction.setVisible(true);
+                break;
+            case "ENCAPSULATION": 
+                myEncapsulation.setVisible(true);
+                break;
+            case "INHERITANCE": 
+                myInheritance.setVisible(true);
+                break;
+            case "POLYMORPHISM":
+                myPolymorphism.setVisible(true);
+                break;
+            default:
+                break;
+        }
+    }
+    private void setConsumable(final int theIndex) {
+        Consumable item = ((Consumable)myInventory.getItem(theIndex));
+        switch(item.getName()) {
+            case "AttackPotion":
+                myAttackPotion.setText("x" + item.getCount());
+                break;
+            case "HealingPotion":
+                myHealingPotion.setText("x" + item.getCount());
+                break;
+            case "Bomb":
+                myBomb.setText("x" + item.getCount());
+                break;
+            default:
+                break;
+        }
+    }
+    private void disablePillars() {
+        myAbstraction.setVisible(false);
+        myEncapsulation.setVisible(false);
+        myInheritance.setVisible(false);
+        myPolymorphism.setVisible(false);
+    }
+    private void setNoItems() {
+        myAttackPotion.setText("x0");
+        myHealingPotion.setText("x0");
+        myBomb.setText("x0");
+    }
+    @FXML
+    void openItemBag(MouseEvent event) throws IOException {
+        App.createPopUpScene("ItemBag");
+        if (GameState.getInstance().getHero().isConUsed()) {
+            final Consumable consumable = GameState.getInstance().getHero().useConsumable();
+            consumable.useItem(myHero);
+            consumable.setCount(consumable.getCount() - 1);
+            heroGUISetup();
+        }
+
+    }
+    // private void useItem(final Consumable theConsumable) {
+    //     if (theConsumable.getName().equals("Bomb")) {
+    //         final int x = GameState.getInstance().getHero().getX();
+    //         final int y = GameState.getInstance().getHero().getY();
+    //         final int radius = ((Bomb) theConsumable).getRadius();
+    //         Monster monster = null;
+    //         for (int row = x - radius; row < x + 1; row++) {
+    //             for (int col = y - radius; col < y + radius; col++) {
+    //                 monster = GameState.getInstance().getDungeon().getRoom(row, col).getMonster();
+    //                 if (monster != null) {
+    //                     monster.setHealth(monster.getHealth() - ((Bomb) theConsumable).getDamage());
+    //                 }
+    //             }
+    //         }
+    //     } else if (theConsumable.getName().equals("HealingPotion")) {
+    //         myHero.heal(100);
+
+    //     }
+        
+    // }
 }

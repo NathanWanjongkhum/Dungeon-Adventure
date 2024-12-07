@@ -1,17 +1,26 @@
 package team5.game.model;
 
+import java.io.Serializable;
+
 /**
  * Room is a class that represents a room in the dungeon.
  */
-public class Room {
+public class Room implements Serializable {
     /** The number of directions in a room */
     private static final int NUM_DIRECTIONS = Direction.values().length;
     /** If there is a door on some face of the room */
     private boolean[] myDoors;
     /** The item in the room */
     private Item myItem;
-    /** The monster in the room */
+    /**
+     * The monster in the room.
+     * 
+     * If time allows refactor this to be a reference to the monster in a seperate
+     * manager class as it is currently stored twice.
+     */
     private Monster myMonster;
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * Room constructor
@@ -62,6 +71,9 @@ public class Room {
     public void setMonster(final Monster theMonster) {
         myMonster = theMonster;
     }
+    public void removeMonster() {
+        myMonster = null;
+    }
 
     /**
      * Get the monster in the room
@@ -92,10 +104,7 @@ public class Room {
         final StringBuilder sb = new StringBuilder("R[");
 
         for (int i = 0; i < NUM_DIRECTIONS; i++) {
-            if (myDoors[i]) {
-                // Door or wall
-                sb.append(myDoors[i] ? "D" : "W");
-            }
+            sb.append(myDoors[i] ? "D" : "W");
         }
 
         sb.append("]");

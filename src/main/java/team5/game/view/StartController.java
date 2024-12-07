@@ -1,27 +1,97 @@
 package team5.game.view;
 
-import javafx.fxml.FXML;
-import team5.game.App;
-
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
-
-public class StartController {
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import team5.game.App;
+import team5.game.model.GameState;
+/**
+ * The GUI Controller for StartScreenController
+ * 
+ * @author 
+ * @version December 5 2024
+ */
+public class StartController implements Initializable{
+   @FXML
+   /** The title text of the game */
+   private Text myTitle;
 
    @FXML
-   void exitGame(ActionEvent event) {
+   /** The backmost container of the scene */
+   private VBox myScene;
+   
+   @FXML
+   /** Label to indicate cheats enabled */
+   private Label myCheatIndicator;
+   /** The boolean to determine cheats */
+   private boolean myCheats;
+   /** The amount of clicks that occured */
+   private int myCount;
 
+
+   @Override
+    public void initialize(final URL theURL, final ResourceBundle theResource) {
+      myCheats = false;
+      BackgroundImage back = App.getBackgroundImage("TitleScreen");
+      myScene.setBackground(new Background(back));
+      GameState.getInstance().setCheats(false);
+    }
+   @FXML
+   /**
+    * Exits the game button
+    *
+    * @param theEvent the button press
+    */
+   private void exitGame(final ActionEvent theEvent) {
+      App.close();
    }
 
    @FXML
-   void loadGame(ActionEvent event) {
+   /**
+    * Loads the lastest save in the database
+    *
+    * @param theEvent the button press
+    * @throws IOException when fxml is not found
+    */
+   private void loadGame(final ActionEvent theEvent) throws IOException {
+      GameState.loadGame();
 
+      App.setRoot("DungeonScene3");
    }
 
    @FXML
-   void switchToHeroCreation(ActionEvent event) throws IOException {
+   /**
+    * Changes the scene to name selection 
+    *
+    * @param theEvent the button press
+    * @throws IOException when the fxml is not found
+    */
+   private void switchToHeroCreation(final ActionEvent theEvent) throws IOException {
       App.setRoot("NameSelection");
    }
-
+   @FXML
+   /**
+    * The cheats enabler 
+    *
+    * @param theEvent the mouse clicks
+    */
+   private void enableCheats(final MouseEvent theEvent) {
+   if (!myCheats && myCount > 4) {
+      myCheatIndicator.setText("Cheat Characters Added");
+      myCheatIndicator.setVisible(true);
+      myCheats = true;
+      GameState.getInstance().setCheats(myCheats);
+   }
+   myCount++;
+   }
 }

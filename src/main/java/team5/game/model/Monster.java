@@ -1,16 +1,12 @@
 package team5.game.model;
 
-import java.io.Serializable;
-
 /**
  * The Monster Class
  * 
  * @author
  * @version
  */
-public class Monster extends AbstractDungeonCharacter implements Serializable {
-    /** The serialVersionUID */
-    private static final long serialVersionUID = 1L;
+public class Monster extends AbstractDungeonCharacter {
 
     /**
      * The constructor for Monsters

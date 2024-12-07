@@ -1,9 +1,11 @@
 package team5.game.controller;
 
+import team5.game.model.Admin;
 import team5.game.model.Archer;
 import team5.game.model.GameState;
 import team5.game.model.Hero;
 import team5.game.model.Mage;
+import team5.game.model.Noob;
 import team5.game.model.Priestess;
 import team5.game.model.Warrior;
 
@@ -28,6 +30,8 @@ public class HeroFactory {
             case "Archer" -> hero = new Archer(name);
             case "Mage" -> hero = new Mage(name);
             case "Priestess" -> hero = new Priestess(name);
+            case "Slime" -> hero = new Admin(name);
+            case "Noob" -> hero = new Noob(name);
             default -> hero = new Warrior(name);
         }
 

@@ -1,13 +1,15 @@
 package team5.game.model;
 
 public abstract class Hero extends AbstractDungeonCharacter implements Special {
-    private static final int ITEM_COUNT = 3;
+    private static final int ITEM_COUNT = 7;
     /** The direction the hero is facing */
     private Direction myDirection;
     /** The inventory of the hero */
-    private Inventory myInventory;
+    private final Inventory myInventory;
     /** Special Attack of hero */
-    private SpecialAttack mySpecial;
+    private final SpecialAttack mySpecial;
+    private Consumable myConsumable;
+    private boolean myUsed;
     /** The x coordinate of the hero */
     private int myX;
     /** The y coordinate of the hero */
@@ -22,12 +24,16 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special {
      * @param theSpeed   the speed of the hero
      * @param theSpecial the special attack of the hero
      */
-    protected Hero(final String theName, final int theHealth, final int theDamage, final int theSpeed,
+    public Hero(final String theName, final int theHealth, final int theDamage, final int theSpeed,
             final SpecialAttack theSpecial) {
         super(theName, theHealth, theDamage, theSpeed);
         myDirection = Direction.NORTH;
         myInventory = new Inventory(ITEM_COUNT);
         mySpecial = theSpecial;
+        myConsumable = null;
+        myUsed = false;
+        myX = 0;
+        myY = 0;
     }
 
     /**
@@ -111,7 +117,7 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special {
      * @return the inventory
      */
     public Inventory getInventory() {
-        return myInventory.clone();
+        return myInventory;
     }
 
     @Override
@@ -122,6 +128,26 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special {
     @Override
     public void resetTurns() {
         mySpecial.setTurns(0);
+    }
+
+    public void setConsumable(Consumable theConsumable) {
+        myConsumable = theConsumable;
+        myUsed = true;
+    }
+
+    public Consumable useConsumable() {
+        myUsed = false;
+        return myConsumable;
+    }
+
+    public boolean isConUsed() {
+        return myUsed;
+    }
+
+    @Override
+    public void addMinDamage(final int theAddedDamage) {
+        super.addMinDamage(theAddedDamage);
+        mySpecial.addDamage(theAddedDamage);
     }
 
 }

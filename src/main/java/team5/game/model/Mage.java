@@ -21,8 +21,6 @@ public class Mage extends Hero {
      */
     @Override
     public int useSpecialAttack(final DungeonCharacter theOther) {
-        if (this.getSpecialAttack().getTurns() < 0) {
-        }
         int damage = 0;
         if(this.getSpecialAttack().getTurns() == 0) {
             damage = this.getSpecialAttack().getDamage();
@@ -30,7 +28,7 @@ public class Mage extends Hero {
             theOther.setHealth(theOther.getHealth() - damage);
             this.getSpecialAttack().setTurns(this.getSpecialAttack().getTurns() - 1);
         } else {
-            this.getStatusEffects().setVulnerableDuration(this.getSpecialAttack().getTurns());
+            this.getStatusEffects().setVulnerableDuration(this.getSpecialAttack().getTurns() + 1);
         }
         return damage;
     }
@@ -38,7 +36,8 @@ public class Mage extends Hero {
     public String getStats() {
         StringBuilder builder = new StringBuilder();
         builder.append(super.getStats());
-        builder.append("Special Move: Takes double damage for 2 turns, then does massive damage to enemies!\n");
+        builder.append("Special Move: Takes double damage for 3 turns, then does massive damage to enemies " +
+                        "on the third attack!\n");
         return builder.toString();
     }
     @Override
@@ -47,6 +46,6 @@ public class Mage extends Hero {
     }
     @Override
     public String specialAttackText() {
-        return "\nUnleashed their magic!\n";
+        return "Unleashed their magic!\n";
     }
 }

@@ -7,17 +7,8 @@ public class HealingPotion extends AbstractConsumables {
     /**
      * Default constructor for healing potion
      */
-    protected HealingPotion() {
+    public HealingPotion() {
         super();
-        myHealthRestore = HEALTH_RESTORE;
-    }
-    /**
-     * Overloaded constructor for healing potion
-     * 
-     * @param theCount the amount of healing potions
-     */
-    protected HealingPotion(int theCount) {
-        super(theCount);
         myHealthRestore = HEALTH_RESTORE;
     }
     /**
@@ -35,5 +26,14 @@ public class HealingPotion extends AbstractConsumables {
      */
     public void setHealthRestore(int theHealthRestore) {
         myHealthRestore = theHealthRestore;
+    }
+    @Override
+    public int useItem(DungeonCharacter theCharacter) {
+        theCharacter.heal(getHealthRestore());
+        return getHealthRestore();
+    }
+    @Override
+    public String getDescription() {
+        return String.format("Heals %s hp when used", myHealthRestore);
     }
 }
