@@ -255,11 +255,12 @@ public class DungeonController {
     }
 
     private void drawItem(final Item theItem, final double theScreenX, final double theScreenY) {
-        switch (theItem.getClass().getName()) {
-            case "team5.game.model.Exit" -> gc.setFill(Color.BLACK);
-            case "team5.game.model.HealingPotion" -> gc.setFill(Color.LAVENDER);
-            case "team5.game.model.Bomb" -> gc.setFill(Color.GRAY);
-            case "team5.game.model.PillarOfOO" -> gc.setFill(Color.YELLOW);
+        switch (theItem.getName()) {
+            case "Exit" -> gc.setFill(Color.BLACK);
+            case "HealingPotion" -> gc.setFill(Color.LAVENDER);
+            case "Bomb" -> gc.setFill(Color.GRAY);
+            case "PillarOfOO" -> gc.setFill(Color.YELLOW);
+            case "AttackPotion" -> gc.setFill(Color.CYAN);
             default -> System.err.println("Unknown item: " + theItem.getClass().getName());
         }
 
@@ -407,6 +408,8 @@ public class DungeonController {
         myHero.getInventory().addItem(theItem);
         if (myDungeon.getPillarCount() == 4) {
             myDungeon.addExit();
+            setZoom(getMaxZoom());
+        } else if (GameState.getInstance().isCheats()) {
             setZoom(getMaxZoom());
         } else {
             setZoom(myDungeon.getPillarCount() + 1);

@@ -303,14 +303,13 @@ public class Dungeon implements Serializable {
      * @return the random item
      */
     private Item getRandomItem() {
-        int itemType = random.nextInt(2);
-
+        int itemType = random.nextInt(3);
         Item item = null;
         // TODO: Add more items
         switch (itemType) {
             case 0 -> item = new HealingPotion();
             case 1 -> item = new Bomb();
-            // case 2 -> new VisionPotion();
+            case 2 -> item = new AttackPotion();
             default -> throw new IllegalStateException("Unexpected itemType: " + itemType);
         }
 
