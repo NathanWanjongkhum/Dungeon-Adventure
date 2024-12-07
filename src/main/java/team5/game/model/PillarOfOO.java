@@ -46,6 +46,10 @@ public class PillarOfOO implements Item, Serializable {
     public boolean isConsumable() {
         return false;
     }
+    @Override
+    public boolean isPillar() {
+        return true;
+    }
     public PillarType getPillar() {
         return myPillar;
     }

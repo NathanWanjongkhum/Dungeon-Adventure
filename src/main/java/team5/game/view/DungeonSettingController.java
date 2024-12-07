@@ -6,7 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import team5.game.App;
 import team5.game.model.Difficulty;
@@ -26,18 +25,19 @@ public class DungeonSettingController {
     private BorderPane myBack;
     /** A text field for the width of the dungeon */
     @FXML
-    private TextField myWidth;
-    /** A text field for the height of the dungeon */
-    @FXML
-    private TextField myHeight;
+    private ChoiceBox<String> mySize;
     /** The difficulty choice box */
     @FXML
     private ChoiceBox<Difficulty> myDifficulty;
+
+    private final String[] mySizes = {"SMALL", "MEDIUM", "LARGE"};
 
     /** Initialize the controller */
     @FXML
     private void initialize() {
         myBack.setStyle(("-fx-background-color: black"));
+        mySize.getItems().addAll(mySizes);
+        mySize.setValue("SMALL");
         myDifficulty.setItems(myDifficultyList);
         myDifficulty.setValue(Difficulty.MEDIUM);
     }
@@ -49,24 +49,25 @@ public class DungeonSettingController {
      */
     @FXML
     private void start() throws IOException {
-        final int width = Integer.parseInt(myWidth.getText());
-        final int height = Integer.parseInt(myHeight.getText());
+        // final int width = Integer.parseInt(myWidth.getText());
+        // final int height = Integer.parseInt(myHeight.getText());
         final Difficulty difficulty = myDifficulty.getValue();
 
-        if (width <= 0 || height <= 0 || difficulty == null) {
-            throw new IllegalArgumentException("Invalid parameters");
-        }
+        // if (width <= 0 || height <= 0 || difficulty == null) {
+        //     throw new IllegalArgumentException("Invalid parameters");
+        // }
 
-        if (width < 10 || height < 10) {
-            // Needs enough space for the pillars to be safley placed
-            throw new IllegalArgumentException("Dungeon size too small");
-        }
+        // if (width < 10 || height < 10) {
+        //     // Needs enough space for the pillars to be safley placed
+        //     throw new IllegalArgumentException("Dungeon size too small");
+        // }
 
         // Sets the dungeon
-        final Dungeon myDungeon = new Dungeon(width, height, difficulty);
+        final int size = getDungeonSize(mySize.getValue());
+        final Dungeon myDungeon = new Dungeon(size, size, difficulty);
         GameState.getInstance().setDungeon(myDungeon);
 
-        App.setRoot("DungeonScene");
+        App.setRoot("DungeonScene3");
     }
 
     /**
@@ -77,5 +78,22 @@ public class DungeonSettingController {
     @FXML
     private void back() throws IOException {
         App.setRoot("HeroSelection");
+    }
+    private int getDungeonSize(final String theSize) {
+        int size = 0;
+        switch(theSize) {
+            case "SMALL":
+                size = 10;
+                break;
+            case "MEDIUM":
+                size = 15;
+                break;
+            case "LARGE":
+                size = 20;
+                break;
+            default:
+                break;
+        }
+        return size;
     }
 }

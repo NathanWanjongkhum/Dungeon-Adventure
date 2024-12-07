@@ -67,13 +67,12 @@ public class ItemController implements Initializable{
     public void initialize(URL theURL, ResourceBundle theResource) {
         myInventory = GameState.getInstance().getHero().getInventory();
         disable();
+        // System.out.println(myInventory.toString());
         int index = 0;
         if (!myInventory.isEmpty()) {
             for (Item c: myInventory.getItems()) {
-                if (c != null) {
-                    if (c.isConsumable()) {
-                        setText(c, index);
-                    }
+                if (c != null && c.isConsumable()) {
+                    setText(c, index);                 
                 }
                 index++;
             }

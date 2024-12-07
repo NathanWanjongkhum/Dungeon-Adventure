@@ -27,6 +27,10 @@ public class Exit implements Item, Serializable {
         return false;
     }
     @Override
+    public boolean isPillar() {
+        return false;
+    }
+    @Override
     public String toString() {
         return "E";
     }

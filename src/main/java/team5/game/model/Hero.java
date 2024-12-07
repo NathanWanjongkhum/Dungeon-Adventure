@@ -1,7 +1,7 @@
 package team5.game.model;
 
 public abstract class Hero extends AbstractDungeonCharacter implements Special {
-    private static final int ITEM_COUNT = 3;
+    private static final int ITEM_COUNT = 7;
     /** The direction the hero is facing */
     private Direction myDirection;
     /** The inventory of the hero */

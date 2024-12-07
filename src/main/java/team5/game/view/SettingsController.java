@@ -7,7 +7,12 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import team5.game.App;
 import team5.game.model.GameState;
-
+/**
+ * The GUI Controller for SettingsController
+ * 
+ * @author Holden Tsang
+ * @version December 5 2024
+ */
 public class SettingsController {
     @FXML
     /** The menu container */

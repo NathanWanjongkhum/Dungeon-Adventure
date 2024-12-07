@@ -237,6 +237,7 @@ public class Battle {
      * @param theName the class name that implements Consumable
      * @return a cleaner name of the class
      */
+    //Kind of unnecessary
     private String getConsumableName(final String theName) {
         String name = "";
         if (theName.equals("AttackPotion")) {

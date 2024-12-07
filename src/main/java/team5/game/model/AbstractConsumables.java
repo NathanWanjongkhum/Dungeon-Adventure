@@ -45,6 +45,10 @@ public abstract class AbstractConsumables implements Consumable, Serializable {
         return true;
     }
     @Override
+    public boolean isPillar() {
+        return false;
+    }
+    @Override
     public String getName() {
         return getClass().getSimpleName();
     }

@@ -66,7 +66,7 @@ public class StartController implements Initializable{
    private void loadGame(final ActionEvent theEvent) throws IOException {
       GameState.loadGame();
 
-      App.setRoot("DungeonScene");
+      App.setRoot("DungeonScene3");
    }
 
    @FXML

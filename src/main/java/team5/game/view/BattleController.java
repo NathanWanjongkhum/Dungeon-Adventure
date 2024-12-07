@@ -242,11 +242,7 @@ public class BattleController implements Initializable {
      */
     private void attackAction() throws IOException {
         myBattle.battle("attack");
-        setHP();
-        displayText();
-        if (myBattle.isOver()) {
-            over();
-        }
+        battleCondition();
     }
 
     @FXML
@@ -272,11 +268,7 @@ public class BattleController implements Initializable {
             setBattleButtons(true);
         }
         myBattle.battle("special");
-        setHP();
-        displayText();
-        if (myBattle.isOver()) {
-            over();
-        }
+        battleCondition();
     }
     @FXML
     /**
@@ -299,11 +291,7 @@ public class BattleController implements Initializable {
     private void useItem() throws IOException {
         myBattle.setConsumable(GameState.getInstance().getHero().useConsumable());
         myBattle.battle("item");
-        setHP();
-        displayText();
-        if (myBattle.isOver()) {
-            over();
-        }
+        battleCondition();
     }
     @FXML
     /**
@@ -314,7 +302,7 @@ public class BattleController implements Initializable {
      */
     private void retreat(final ActionEvent theEvent) throws IOException {
         myHero.moveTo(myHero.getDirection().getOpposite());
-        App.setRoot("DungeonScene");
+        App.setRoot("DungeonScene3");
     }
 
     @FXML
@@ -329,7 +317,7 @@ public class BattleController implements Initializable {
             App.setRoot("EndScene");
         } else {
             GameState.getInstance().getDungeon().getRoom(myHero.getX(), myHero.getY()).removeMonster();
-            App.setRoot("DungeonScene");
+            App.setRoot("DungeonScene3");
         }
     }
     /**
@@ -341,6 +329,18 @@ public class BattleController implements Initializable {
         myLog.appendText(myBattle.actionPerformed());
         displayEffect(myHero, myHeroTooltip, myHPLevel, myHeroEffectTooltip, myHeroEffects);
         displayEffect(myMonster, myMonsterTooltip, myMonsterHPLevel, myMonsterEffectTooltip, myMonsterEffects);
+    }
+    /**
+     * The battle updates after action
+     * 
+     * @throws IOException when image is not found
+     */
+    private void battleCondition() throws IOException {
+        setHP();
+        displayText();
+        if (myBattle.isOver()) {
+            over();
+        }
     }
     /**
      * Updates effects and displays if necessary.
