@@ -22,7 +22,7 @@
             <Canvas fx:id="gameCanvas" height="720.0" width="720.0" BorderPane.alignment="CENTER" />
          </center>
          <left>
-            <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="620.0" prefWidth="200.0" style="-fx-border-color: linear-gradient(from 0% 0% to 100% 100%, #ffffff, #c3c3c3); -fx-border-width: 3; -fx-border-radius: 10; -fx-background-radius: 10 10 10 10; -fx-background-color: black;" BorderPane.alignment="CENTER">
+            <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="640.0" prefWidth="200.0" style="-fx-border-color: linear-gradient(from 0% 0% to 100% 100%, #ffffff, #c3c3c3); -fx-border-width: 3; -fx-border-radius: 10; -fx-background-radius: 10 10 10 10; -fx-background-color: black;" BorderPane.alignment="CENTER">
                <center>
                   <VBox alignment="CENTER" maxWidth="-Infinity" prefHeight="620.0" prefWidth="250.0" spacing="10.0" BorderPane.alignment="TOP_CENTER">
                      <children>
@@ -31,10 +31,23 @@
                               <Font name="High Tower Text" size="48.0" />
                            </font>
                         </Label>
+                        <Label fx:id="myHeroType" text="Hero" textFill="WHITE">
+                           <font>
+                              <Font name="High Tower Text" size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="-10.0" />
+                           </VBox.margin>
+                        </Label>
                         <ProgressBar fx:id="myHeroBar" prefHeight="20.0" prefWidth="180.0" progress="0.0" />
                         <Label fx:id="myHPLabel" text="Hp" textFill="WHITE">
                            <font>
                               <Font name="High Tower Text" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" onMouseClicked="#openHeroStats" prefHeight="25.0" prefWidth="115.0" style="-fx-background-color: #535353;" text="See Hero Stats" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="High Tower Text" size="15.0" />
                            </font>
                         </Label>
                         <Separator prefWidth="200.0" />

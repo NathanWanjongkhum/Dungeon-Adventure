@@ -15,6 +15,7 @@ import team5.game.model.Bomb;
 import team5.game.model.Consumable;
 import team5.game.model.GameState;
 import team5.game.model.HealingPotion;
+import team5.game.model.Hero;
 import team5.game.model.Inventory;
 import team5.game.model.Item;
 /**
@@ -23,10 +24,7 @@ import team5.game.model.Item;
  * @author Holden Tsang
  * @version December 5 2024
  */
-public class ItemController implements Initializable{
-
-    @FXML
-    private BorderPane myScene;
+public class ItemController {
 
     @FXML
     /** The attack potion use button */
@@ -67,8 +65,8 @@ public class ItemController implements Initializable{
     private Inventory myInventory;
     private boolean myBattling;
 
-    @Override
-    public void initialize(URL theURL, ResourceBundle theResource) {
+    @FXML
+    private void initialize() {
         myInventory = GameState.getInstance().getHero().getInventory();
         disable();
         setDescriptions();
@@ -113,6 +111,10 @@ public class ItemController implements Initializable{
             case "HealingPotion":
                 myHealingCount.setText("x" + item.getCount());
                 setButtons(item, myHealingButton);
+                final Hero hero = GameState.getInstance().getHero();
+                if (hero.getHealth() == hero.getMaxHealth()) {
+                    myHealingButton.setDisable(true);
+                }
                 break;
             case "Bomb":
                 myBombCount.setText("x" + item.getCount());

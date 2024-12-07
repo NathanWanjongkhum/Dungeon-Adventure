@@ -1,16 +1,12 @@
 package team5.game.view;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import team5.game.App;
 import team5.game.model.GameState;
 /**
@@ -19,10 +15,7 @@ import team5.game.model.GameState;
  * @author Holden Tsang
  * @version December 5 2024
  */
-public class NameSelectorController implements Initializable{
-    @FXML
-    /** The backmost containter */
-    private BorderPane myBack;
+public class NameSelectorController {
 
     @FXML
     /** The text field to input name */
@@ -38,10 +31,6 @@ public class NameSelectorController implements Initializable{
     /** The string of the name inputted */
     private String myConfirmedName;
 
-    @Override
-    public void initialize(final URL theURL, final ResourceBundle theResource) {
-        myBack.setStyle(("-fx-background-color: black"));
-    }
     @FXML
     /**
      * The confirm button action

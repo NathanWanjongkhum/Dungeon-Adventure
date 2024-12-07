@@ -1,12 +1,9 @@
 package team5.game.view;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -21,7 +18,7 @@ import team5.game.model.GameState;
  * @author 
  * @version December 5 2024
  */
-public class StartController implements Initializable{
+public class StartController {
    @FXML
    /** The title text of the game */
    private Text myTitle;
@@ -39,12 +36,13 @@ public class StartController implements Initializable{
    private int myCount;
 
 
-   @Override
-    public void initialize(final URL theURL, final ResourceBundle theResource) {
+   @FXML
+    private void initialize() {
       myCheats = false;
       BackgroundImage back = App.getBackgroundImage("TitleScreen");
       myScene.setBackground(new Background(back));
       GameState.getInstance().setCheats(false);
+      myCount = 0;
     }
    @FXML
    /**
@@ -86,12 +84,12 @@ public class StartController implements Initializable{
     * @param theEvent the mouse clicks
     */
    private void enableCheats(final MouseEvent theEvent) {
-   if (!myCheats && myCount > 4) {
-      myCheatIndicator.setText("Cheat Characters Added");
-      myCheatIndicator.setVisible(true);
-      myCheats = true;
-      GameState.getInstance().setCheats(myCheats);
-   }
-   myCount++;
+      myCount++;
+      if (!myCheats && myCount > 4) {
+         myCheatIndicator.setText("Cheat Characters Added");
+         myCheatIndicator.setVisible(true);
+         myCheats = true;
+         GameState.getInstance().setCheats(myCheats);
+      }
    }
 }

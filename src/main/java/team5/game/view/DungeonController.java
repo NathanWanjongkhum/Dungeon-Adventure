@@ -7,7 +7,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -72,7 +71,7 @@ public class DungeonController {
     private Label myHeroName;
 
     @FXML
-    private TextArea myPickUp;
+    private Label myHeroType;
 
     @FXML
     private Text myAbstraction;
@@ -431,8 +430,11 @@ public class DungeonController {
         GameState.getInstance().setBattling(true);
         myEnable = false;
     }
+
+
     private void heroGUISetup() {
         myHeroName.setText(myHero.getName());
+        myHeroType.setText(myHero.getClass().getSimpleName());
         setHP();
         setItems();
     }
@@ -518,6 +520,10 @@ public class DungeonController {
             heroGUISetup();
         }
 
+    }
+    @FXML
+    void openHeroStats(MouseEvent event) throws IOException {
+        App.createPopUpScene("HeroViewer");
     }
     // private void useItem(final Consumable theConsumable) {
     //     if (theConsumable.getName().equals("Bomb")) {

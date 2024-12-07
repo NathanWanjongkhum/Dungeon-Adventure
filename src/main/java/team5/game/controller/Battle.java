@@ -253,7 +253,27 @@ public class Battle {
      * @return true if battle is over, false otherwise
      */
     public boolean isOver() {
-        return !myHero.isAlive() || !myMonster.isAlive();
+        boolean over = !myHero.isAlive() || !myMonster.isAlive();
+        if (over) {
+            resetEffects(myHero);
+            //Kind of unnecessary as new monsters are created each battle
+            resetEffects(myMonster);
+        }
+        return over;
+    }
+    private void resetEffects(final DungeonCharacter theCharacter) {
+        if (theCharacter.getStatusEffects().isDamageIncrease()) {
+            theCharacter.getStatusEffects().setDamageDuration(0);
+            theCharacter.addMaxDamage(-theCharacter.getStatusEffects().getDamageAmount());
+            theCharacter.addMinDamage(-theCharacter.getStatusEffects().getDamageAmount());
+        }
+        if (theCharacter.getStatusEffects().isRegen()) {
+            theCharacter.getStatusEffects().setRegenDuration(0);
+        }
+        if (theCharacter.getStatusEffects().isVulnerable()) {
+            theCharacter.getStatusEffects().setVulnerableDuration(0);
+        }
+
     }
     /**
      * returns the action text of all actions that occured during the turn
