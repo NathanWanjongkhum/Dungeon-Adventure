@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
@@ -56,7 +57,10 @@
          <bottom>
             <ButtonBar BorderPane.alignment="CENTER">
               <buttons>
-                <Button alignment="CENTER" mnemonicParsing="false" onAction="#back" text="Back" ButtonBar.buttonData="LEFT" />
+                <Button alignment="CENTER" mnemonicParsing="false" onAction="#back" text="Back" ButtonBar.buttonData="LEFT">
+                     <effect>
+                        <InnerShadow />
+                     </effect></Button>
                   <Button fx:id="myNext" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#next" text="Next" ButtonBar.buttonData="RIGHT" />
               </buttons>
                <BorderPane.margin>

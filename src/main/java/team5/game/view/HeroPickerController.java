@@ -1,12 +1,9 @@
 package team5.game.view;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -24,7 +21,7 @@ import team5.game.model.Hero;
  * @author Holden Tsang
  * @version December 5 2024
  */
-public class HeroPickerController implements Initializable {
+public class HeroPickerController {
 
     @FXML
     /** ChoiceBox that contains the hero choices */
@@ -45,13 +42,14 @@ public class HeroPickerController implements Initializable {
     @FXML
     /** The back container of the scene */
     private VBox myBack;
+    
     /** The Characters for normal gameplay */
     private final String[] myCharacters = { "Archer", "Mage", "Priestess", "Warrior" };
     /** The Character for cheat gameplay */
     private final String[] myCheatCharacters = {"Slime", "Noob"};
 
-    @Override
-    public void initialize(final URL theURL, final ResourceBundle theResource) {
+    @FXML
+    private void initialize() {
         BackgroundImage back = App.getBackgroundImage("selection background");
         myBack.setBackground(new Background(back));
         myChoice.getItems().addAll(myCharacters);

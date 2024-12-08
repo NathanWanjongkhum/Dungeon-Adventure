@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.layout.VBox;
 import team5.game.App;
 import team5.game.model.GameState;
 /**
@@ -14,9 +13,6 @@ import team5.game.model.GameState;
  * @version December 5 2024
  */
 public class SettingsController {
-    @FXML
-    /** The menu container */
-    private VBox myScene;
     
     @FXML
     /**
