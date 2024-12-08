@@ -64,7 +64,7 @@ public class StartController {
    private void loadGame(final ActionEvent theEvent) throws IOException {
       GameState.loadGame();
 
-      App.setRoot("DungeonScene3");
+      App.setRoot("DungeonScene");
    }
 
    @FXML

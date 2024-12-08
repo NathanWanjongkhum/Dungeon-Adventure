@@ -66,7 +66,7 @@ public class CustomDungeonSettingController {
         final Dungeon myDungeon = new Dungeon(width, height, difficulty);
         GameState.getInstance().setDungeon(myDungeon);
 
-        App.setRoot("DungeonScene3");
+        App.setRoot("DungeonScene");
     }
 
     /**

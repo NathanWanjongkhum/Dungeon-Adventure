@@ -1,10 +1,218 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<Pane fx:id="myPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" style="-fx-background-color: blue;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.DungeonController">
+<Pane fx:id="myPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.DungeonController">
    <children>
-      <Canvas fx:id="gameCanvas" height="720.0" width="960.0" />
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="720.0" prefWidth="960.0">
+         <center>
+            <Canvas fx:id="gameCanvas" height="720.0" width="720.0" BorderPane.alignment="CENTER" />
+         </center>
+         <left>
+            <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="640.0" prefWidth="200.0" style="-fx-border-color: linear-gradient(from 0% 0% to 100% 100%, #ffffff, #c3c3c3); -fx-border-width: 3; -fx-border-radius: 10; -fx-background-radius: 10 10 10 10; -fx-background-color: black;" BorderPane.alignment="CENTER">
+               <center>
+                  <VBox alignment="CENTER" maxWidth="-Infinity" prefHeight="620.0" prefWidth="250.0" spacing="10.0" BorderPane.alignment="TOP_CENTER">
+                     <children>
+                        <Label fx:id="myHeroName" text="Name" textFill="WHITE">
+                           <font>
+                              <Font name="High Tower Text" size="36.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="myHeroType" text="Hero" textFill="WHITE">
+                           <font>
+                              <Font name="High Tower Text" size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="-10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <ProgressBar fx:id="myHeroBar" prefHeight="20.0" prefWidth="180.0" progress="0.0" />
+                        <Label fx:id="myHPLabel" text="Hp" textFill="WHITE">
+                           <font>
+                              <Font name="High Tower Text" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" onMouseClicked="#openHeroStats" prefHeight="25.0" prefWidth="115.0" style="-fx-background-color: #535353;" text="See Hero Stats" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="High Tower Text" size="15.0" />
+                           </font>
+                        </Label>
+                        <Separator prefWidth="200.0" />
+                        <Label text="Items" textFill="WHITE">
+                           <font>
+                              <Font name="High Tower Text" size="24.0" />
+                           </font>
+                        </Label>
+                        <BorderPane>
+                           <center>
+                              <VBox alignment="TOP_CENTER" prefHeight="150.0" prefWidth="100.0" spacing="26.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Bomb">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="High Tower Text" size="15.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Attack Potion" textAlignment="CENTER">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="High Tower Text" size="15.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Healing Potion">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="High Tower Text" size="15.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <BorderPane.margin>
+                                    <Insets left="-13.0" />
+                                 </BorderPane.margin>
+                                 <padding>
+                                    <Insets top="10.0" />
+                                 </padding>
+                              </VBox>
+                           </center>
+                           <left>
+                              <VBox maxWidth="-Infinity" prefHeight="150.0" prefWidth="50.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <ImageView fitHeight="50.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Bomb.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="50.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Attack%20Potion.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets top="14.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="50.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Healing%20Potion.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets top="14.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                 </children>
+                              </VBox>
+                           </left>
+                           <right>
+                              <VBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="50.0" spacing="25.0" BorderPane.alignment="CENTER_RIGHT">
+                                 <children>
+                                    <Label fx:id="myBomb" alignment="CENTER" text="Count" textFill="WHITE">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="High Tower Text" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="myAttackPotion" text="Count" textFill="WHITE">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="High Tower Text" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="myHealingPotion" text="Count" textFill="WHITE">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="High Tower Text" size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <padding>
+                                    <Insets top="6.0" />
+                                 </padding>
+                              </VBox>
+                           </right>
+                        </BorderPane>
+                        <Label alignment="CENTER" onMouseClicked="#openItemBag" prefHeight="25.0" prefWidth="115.0" style="-fx-background-color: #535353;" text="Open Item Bag" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="High Tower Text" size="15.0" />
+                           </font>
+                        </Label>
+                        <Separator prefWidth="200.0" />
+                        <Label text="Pillars" textFill="WHITE">
+                           <font>
+                              <Font name="High Tower Text" size="24.0" />
+                           </font>
+                        </Label>
+                        <VBox alignment="TOP_CENTER" spacing="10.0">
+                           <children>
+                              <Text fx:id="myAbstraction" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Abstraction">
+                                 <font>
+                                    <Font name="High Tower Text" size="15.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="myEncapsulation" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Encapsulation">
+                                 <font>
+                                    <Font name="High Tower Text" size="15.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="myInheritance" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Inheritance">
+                                 <font>
+                                    <Font name="High Tower Text" size="15.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="myPolymorphism" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Polymorphism">
+                                 <font>
+                                    <Font name="High Tower Text" size="15.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets left="5.0" right="5.0" />
+                     </padding>
+                     <BorderPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </BorderPane.margin>
+                  </VBox>
+               </center>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <BorderPane.margin>
+                  <Insets left="10.0" />
+               </BorderPane.margin>
+            </BorderPane>
+         </left>
+      </BorderPane>
    </children>
 </Pane>

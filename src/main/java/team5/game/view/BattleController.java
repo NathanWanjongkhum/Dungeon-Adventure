@@ -299,7 +299,7 @@ public class BattleController {
      */
     private void retreat(final ActionEvent theEvent) throws IOException {
         myHero.moveTo(myHero.getDirection().getOpposite());
-        App.setRoot("DungeonScene3");
+        App.setRoot("DungeonScene");
         GameState.getInstance().setBattling(false);
     }
 
