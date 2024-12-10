@@ -76,7 +76,7 @@ public class App extends Application {
         myPopUpScene.setFill(Color.TRANSPARENT);
         myPopUp.setX(myStage.getX() + myStage.getWidth() / 2 - POPUP_WIDTH / 2);
         //A bit scuff to line up with battle scene
-        myPopUp.setY(myStage.getY() + myStage.getHeight() / 2 + 13 - POPUP_HEIGHT / 2);
+        myPopUp.setY(myStage.getY() + myStage.getHeight() / 2 + 12 - POPUP_HEIGHT / 2);
         myPopUp.initOwner(myStage);
         myPopUp.showAndWait();
     }
