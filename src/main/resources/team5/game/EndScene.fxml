@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@DungeonAdventureStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.EndController">
+<BorderPane fx:id="myBack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" stylesheets="@DungeonAdventureStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.EndController">
    <center>
       <Label fx:id="myMessage" alignment="CENTER" text="Label" textFill="RED" BorderPane.alignment="CENTER">
          <font>
@@ -17,7 +17,7 @@
             <DropShadow height="50.0" radius="24.5" spread="0.93" width="50.0" />
          </effect>
          <BorderPane.margin>
-            <Insets top="-100.0" />
+            <Insets top="-300.0" />
          </BorderPane.margin></Label>
    </center>
    <bottom>

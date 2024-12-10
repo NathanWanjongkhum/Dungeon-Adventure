@@ -33,9 +33,9 @@ public class HelpController {
 
     @FXML
     private void initialize() {
-        Monster goblin = MonsterFactory.createMonster('G', "temp");
-        Monster skeleton = MonsterFactory.createMonster('S', "temp");
-        Monster ogre = MonsterFactory.createMonster('O', "temp");
+        Monster goblin = MonsterFactory.createMonster('G', "Random Goblin Name");
+        Monster skeleton = MonsterFactory.createMonster('S', "Random Skeleton Name");
+        Monster ogre = MonsterFactory.createMonster('O', "Random Ogre Name");
         myGoblinDesciption.setText(goblin.getStats());
         mySkeletonDesciption.setText(skeleton.getStats());
         myOgreDescription.setText(ogre.getStats());

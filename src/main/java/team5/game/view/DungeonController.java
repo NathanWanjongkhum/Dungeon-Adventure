@@ -15,11 +15,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import team5.game.App;
+import team5.game.model.AttackPotion;
+import team5.game.model.Bomb;
 import team5.game.model.Consumable;
 import team5.game.model.Direction;
 import team5.game.model.Dungeon;
 import team5.game.model.Exit;
 import team5.game.model.GameState;
+import team5.game.model.HealingPotion;
 import team5.game.model.Hero;
 import team5.game.model.Inventory;
 import team5.game.model.Item;
@@ -30,6 +33,8 @@ import team5.game.model.Room;
 public class DungeonController {
     /** The original size of the tiles sprite */
     private static final int ORIGINAL_TILE_SIZE = 32;
+    /** Amount of items for cheat */
+    private static final int ITEM_AMOUNT = 5;
 
     /** The dungeon maze */
     private static Dungeon myDungeon;
@@ -127,6 +132,9 @@ public class DungeonController {
         // Initializes the canvas
         BackgroundImage back = App.getBackgroundImage("maze background");
         myPane.setBackground(new Background(back));
+        if(GameState.getInstance().isCheats() && myInventory.isEmpty()) {
+            giveItems();
+        }
         disablePillars();
         setNoItems();
         heroGUISetup();
@@ -538,6 +546,18 @@ public class DungeonController {
     @FXML
     void openHeroStats(MouseEvent event) throws IOException {
         App.createPopUpScene("HeroViewer");
+    }
+    private void giveItems() {
+        final AttackPotion potion = new AttackPotion();
+        final Bomb bomb = new Bomb();
+        final HealingPotion healing = new HealingPotion();
+        for (int i = 0; i < ITEM_AMOUNT; i++) {
+            myHero.getInventory().addItem(potion);
+            System.out.println(potion.getCount());
+            myHero.getInventory().addItem(bomb);
+            myHero.getInventory().addItem(healing);
+            System.out.println(myHero.getInventory().toString());
+        }
     }
     // private void useItem(final Consumable theConsumable) {
     //     if (theConsumable.getName().equals("Bomb")) {

@@ -15,8 +15,9 @@ ScrollPane
 {
     -fx-background-color: rgba(255, 0, 0, 0);
 }
-.scroll-bar {
+ScrollPane .scroll-bar:vertical {
     -fx-focus-color: transparent;
+    -fx-opacity: 0;
 }
 #myMenu
   {

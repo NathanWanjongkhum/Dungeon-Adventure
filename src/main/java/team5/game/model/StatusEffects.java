@@ -132,8 +132,7 @@ public class StatusEffects implements Serializable {
         myDamageAmount = theAmount;
     }
     //Could just be like getStatusDescriptions instead of toString
-    @Override
-    public String toString() {
+    public String getEffects() {
         StringBuilder builder = new StringBuilder();
         builder.append("Active Status Effects:\n");
         if (isVulnerable()) {

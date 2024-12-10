@@ -140,8 +140,9 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
     @Override
     public String getStats() {
         StringBuilder builder = new StringBuilder();
-        // builder.append("Name: ");
-        // builder.append(myName);
+        builder.append("Name: ");
+        builder.append(myName);
+        builder.append("\nClass: ");
         builder.append(getClass().getSimpleName());
         String hp = String.format("\nHP: %d/%d", myHealth, myMaxHealth);
         builder.append(hp);
@@ -149,10 +150,8 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
         builder.append(damage);
         builder.append("Speed: ");
         builder.append(mySpeed);
-        builder.append("\n");
         return builder.toString();
     }
-
     @Override
     public int attack(final DungeonCharacter theOther) {
         Random rand = new Random();

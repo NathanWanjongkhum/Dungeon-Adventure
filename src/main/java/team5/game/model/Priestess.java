@@ -33,7 +33,7 @@ public class Priestess extends Hero {
     public String getStats() {
         StringBuilder builder = new StringBuilder();
         builder.append(super.getStats());
-        builder.append("Special Move: Charges for 1 turn and heals 5 HP " + 
+        builder.append("\nSpecial Move: Charges for 1 turn and heals 5 HP " + 
                         "then heals an additional 5 HP for 2 turns.\n");
         return builder.toString();
     }

@@ -249,6 +249,9 @@
                                  <font>
                                     <Font name="High Tower Text" size="15.0" />
                                  </font>
+                                 <HBox.margin>
+                                    <Insets top="25.0" />
+                                 </HBox.margin>
                               </Label>
                            </children>
                            <VBox.margin>
@@ -269,6 +272,9 @@
                                  <font>
                                     <Font name="High Tower Text" size="15.0" />
                                  </font>
+                                 <HBox.margin>
+                                    <Insets top="25.0" />
+                                 </HBox.margin>
                               </Label>
                            </children>
                            <VBox.margin>
@@ -289,6 +295,9 @@
                                  <font>
                                     <Font name="High Tower Text" size="15.0" />
                                  </font>
+                                 <HBox.margin>
+                                    <Insets top="25.0" />
+                                 </HBox.margin>
                               </Label>
                            </children>
                            <VBox.margin>

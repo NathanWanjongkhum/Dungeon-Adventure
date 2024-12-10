@@ -315,7 +315,7 @@ public class BattleController {
             App.setRoot("EndScene");
         } else {
             GameState.getInstance().getDungeon().getRoom(myHero.getX(), myHero.getY()).removeMonster();
-            App.setRoot("DungeonScene3");
+            App.setRoot("DungeonScene");
         }
         GameState.getInstance().setBattling(false);
     }
@@ -354,9 +354,9 @@ public class BattleController {
     private void displayEffect(final DungeonCharacter theCharacter, final Tooltip theTooltip, 
                                 final Label theLabel, final Tooltip theStatus, final ImageView theIcon) throws IOException {
         if (theCharacter.getStatusEffects().hasEffect()) {
-            theTooltip.setText(theCharacter.getStats() + "\n" + theCharacter.getStatusEffects().toString());
+            theTooltip.setText(theCharacter.getStats() + "\n" + theCharacter.getStatusEffects().getEffects());
             
-            theStatus.setText(theCharacter.getStatusEffects().toString());
+            theStatus.setText(theCharacter.getStatusEffects().getEffects());
             theLabel.setTooltip(theStatus);
             Image icon = null;
             //Adding image to label depending on status

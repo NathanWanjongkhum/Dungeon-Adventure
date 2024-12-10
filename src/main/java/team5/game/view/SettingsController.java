@@ -68,6 +68,11 @@ public class SettingsController {
         //Indivator of game saved
         close();
     }
+    @FXML
+    void heroSelect(final ActionEvent theEvent) throws IOException {
+        App.setRoot("HeroSelection");
+        close();
+    }
     /**Closes the popup */
     private void close() {
         App.closePopUp();

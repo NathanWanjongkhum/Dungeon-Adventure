@@ -16,6 +16,11 @@ public class Bomb extends AbstractConsumables {
         myDamage = BOMB_DAMAGE;
         myRadius = BOMB_RADIUS;
     }
+    private Bomb(final Bomb theOther) {
+        super(theOther);
+        myDamage = theOther.getDamage();
+        myRadius = theOther.getRadius();
+    }
     /**
      * Get the damage of the bomb
      * 
@@ -58,5 +63,9 @@ public class Bomb extends AbstractConsumables {
     @Override
     public String getDescription() {
         return String.format("When uses, deals %s damage to the enemy.", myDamage);
+    }
+    @Override
+    public Bomb copy() {
+        return new Bomb(this);
     }
 }

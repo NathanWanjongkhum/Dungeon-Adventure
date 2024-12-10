@@ -77,7 +77,7 @@ public class Warrior extends Hero {
     public String getStats() {
         StringBuilder builder = new StringBuilder();
         builder.append(super.getStats());
-        builder.append("Special Move: Does average damage, but has " + 
+        builder.append("\nSpecial Move: Does average damage, but has " + 
                         "a chance to do something special (or not)!\n");
         return builder.toString();
     }

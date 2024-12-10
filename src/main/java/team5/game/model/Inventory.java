@@ -48,15 +48,16 @@ public class Inventory implements Serializable {
         }
 
         for (int i = 0; i < myInventorySize; i++) {
+            //Need to clone the item
             if (myItems[i] == null) {
-                myItems[i] = theItem;
+                myItems[i] = theItem.copy();
                 return true;
             }
-
             if (myItems[i].getName().equals(theItem.getName()) && myItems[i].isConsumable()) {
-                Consumable consumableItem = (Consumable) myItems[i];
-                int totalCount = consumableItem.getCount() + theItem.getCount();
-                consumableItem.setCount(totalCount);
+                // Consumable consumableItem = (Consumable) myItems[i];
+                // int totalCount = consumableItem.getCount() + theItem.getCount();
+                // consumableItem.setCount(totalCount);
+                myItems[i].setCount(myItems[i].getCount() + theItem.getCount());
 
                 return true;
             }
