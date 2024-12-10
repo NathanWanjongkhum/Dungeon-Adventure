@@ -103,26 +103,30 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
             myHealth = theHealth;
         }
     }
+
     @Override
     public void setMinDamage(final int theDamage) {
         if (theDamage < 0) {
             myMinDamage = 0;
         } else {
-            myMinDamage = theDamage;  
-        } 
+            myMinDamage = theDamage;
+        }
     }
+
     @Override
     public void setMaxDamage(final int theDamage) {
         myMaxDamage = theDamage;
     }
+
     @Override
     public void addMinDamage(final int theAddedDamage) {
         if (myMinDamage + theAddedDamage < 0) {
             myMinDamage = 0;
         } else {
-            myMinDamage += theAddedDamage;  
+            myMinDamage += theAddedDamage;
         }
     }
+
     @Override
     public void addMaxDamage(final int theAddedDamage) {
         myMaxDamage += theAddedDamage;

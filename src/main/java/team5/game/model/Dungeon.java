@@ -119,7 +119,7 @@ public class Dungeon implements Serializable {
         for (int x = 0; x < getWidth(); x++) {
             for (int y = 0; y < getHeight(); y++) {
                 Room room = getRoom(x, y);
-                if (room == null) {
+                if (room == null || room == getStartRoom()) {
                     continue;
                 }
 
@@ -156,11 +156,11 @@ public class Dungeon implements Serializable {
     private void placeItems() {
         for (int i = 0; i < getWidth(); i++) {
             for (int j = 0; j < getHeight(); j++) {
-                if (random.nextInt(100) > 5) {
+                Room room = getRoom(i, j);
+
+                if (random.nextInt(100) > 5 || room == null || room == getStartRoom()) {
                     continue;
                 }
-
-                Room room = getRoom(i, j);
 
                 if (room.getItem() != null) {
                     continue;
@@ -218,7 +218,14 @@ public class Dungeon implements Serializable {
     private void placeMonsters(final Monster[] theMonsters) {
         int index = 0;
         while (index < theMonsters.length) {
-            getRandomRoom().setMonster(theMonsters[index]);
+            Room room = getRandomRoom();
+
+            if (room == getStartRoom()) {
+                continue;
+            }
+
+            room.setMonster(theMonsters[index]);
+
             index++;
         }
     }
