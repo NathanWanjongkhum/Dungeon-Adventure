@@ -1,12 +1,9 @@
 package team5.game.view;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import team5.game.App;
@@ -18,7 +15,7 @@ import team5.game.model.Monster;
  * @author Holden Tsang
  * @version December 5 2024
  */
-public class HelpController implements Initializable {
+public class HelpController {
 
     @FXML
     /** The menu container */
@@ -34,11 +31,11 @@ public class HelpController implements Initializable {
     /** The skeleton description */
     private Label mySkeletonDesciption;
 
-    @Override
-    public void initialize(final URL theURL, final ResourceBundle theResource) {
-        Monster goblin = MonsterFactory.createMonster('G', "temp");
-        Monster skeleton = MonsterFactory.createMonster('S', "temp");
-        Monster ogre = MonsterFactory.createMonster('O', "temp");
+    @FXML
+    private void initialize() {
+        Monster goblin = MonsterFactory.createMonster('G', "Random Goblin Name");
+        Monster skeleton = MonsterFactory.createMonster('S', "Random Skeleton Name");
+        Monster ogre = MonsterFactory.createMonster('O', "Random Ogre Name");
         myGoblinDesciption.setText(goblin.getStats());
         mySkeletonDesciption.setText(skeleton.getStats());
         myOgreDescription.setText(ogre.getStats());

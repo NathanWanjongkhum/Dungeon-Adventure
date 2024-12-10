@@ -7,17 +7,22 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import team5.game.App;
+import team5.game.model.AttackPotion;
+import team5.game.model.Bomb;
 import team5.game.model.Consumable;
 import team5.game.model.Direction;
 import team5.game.model.Dungeon;
 import team5.game.model.Exit;
 import team5.game.model.GameState;
+import team5.game.model.HealingPotion;
 import team5.game.model.Hero;
 import team5.game.model.Inventory;
 import team5.game.model.Item;
@@ -28,6 +33,8 @@ import team5.game.model.Room;
 public class DungeonController {
     /** The original size of the tiles sprite */
     private static final int ORIGINAL_TILE_SIZE = 32;
+    /** Amount of items for cheat */
+    private static final int ITEM_AMOUNT = 5;
 
     /** The dungeon maze */
     private static Dungeon myDungeon;
@@ -72,7 +79,7 @@ public class DungeonController {
     private Label myHeroName;
 
     @FXML
-    private TextArea myPickUp;
+    private Label myHeroType;
 
     @FXML
     private Text myAbstraction;
@@ -86,6 +93,8 @@ public class DungeonController {
     @FXML
     private Text myPolymorphism;
 
+    @FXML
+    private Pane myPane;
 
     private Inventory myInventory;
 
@@ -121,6 +130,11 @@ public class DungeonController {
     @FXML
     private void initialize() {
         // Initializes the canvas
+        BackgroundImage back = App.getBackgroundImage("maze background");
+        myPane.setBackground(new Background(back));
+        if(GameState.getInstance().isCheats() && myInventory.isEmpty()) {
+            giveItems();
+        }
         disablePillars();
         setNoItems();
         heroGUISetup();
@@ -160,8 +174,8 @@ public class DungeonController {
         gc.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
 
         // Debug border
-        gc.setStroke(Color.BLACK);
-        gc.strokeRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
+        // gc.setStroke(Color.BLACK);
+        // gc.strokeRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
 
         // Get hero's position (currently center of dungeon)
         final int heroWorldX = myHero.getX();
@@ -214,7 +228,7 @@ public class DungeonController {
         }
 
         // Draw floor
-        gc.setFill(Color.WHITE);
+        gc.setFill(Color.LIGHTGRAY);
         gc.fillRect(theScreenX, theScreenY, myTileSize, myTileSize);
 
         if (room.getItem() != null) {
@@ -255,21 +269,26 @@ public class DungeonController {
     }
 
     private void drawItem(final Item theItem, final double theScreenX, final double theScreenY) {
+        //Adding an outline
+        gc.setFill(Color.BLACK);
+        gc.fillOval(theScreenX, theScreenY, myTileSize, myTileSize);
         switch (theItem.getName()) {
-            case "Exit" -> gc.setFill(Color.BLACK);
-            case "HealingPotion" -> gc.setFill(Color.LAVENDER);
-            case "Bomb" -> gc.setFill(Color.GRAY);
+            case "Exit" -> gc.setFill(Color.PURPLE);
+            case "HealingPotion" -> gc.setFill(Color.PINK);
+            case "Bomb" -> gc.setFill(Color.BLACK);
             case "PillarOfOO" -> gc.setFill(Color.YELLOW);
             case "AttackPotion" -> gc.setFill(Color.CYAN);
             default -> System.err.println("Unknown item: " + theItem.getClass().getName());
         }
-
-        gc.fillOval(theScreenX, theScreenY, myTileSize, myTileSize);
+        //
+        gc.fillOval(theScreenX + 1, theScreenY + 1, myTileSize - 2, myTileSize - 2);
     }
 
     private void drawMonster(final Monster theMonster, final double theScreenX, final double theScreenY) {
-        gc.setFill(Color.RED);
+        gc.setFill(Color.BLACK);
         gc.fillOval(theScreenX, theScreenY, myTileSize, myTileSize);
+        gc.setFill(Color.RED);
+        gc.fillOval(theScreenX + 1, theScreenY + 1, myTileSize - 2, myTileSize - 2);
     }
 
     /**
@@ -291,8 +310,10 @@ public class DungeonController {
      * @param theHeroScreenY where the hero is on the screen vertically
      */
     private void drawHero(final double theHeroScreenX, final double theHeroScreenY) {
-        gc.setFill(Color.GREEN);
+        gc.setFill(Color.BLACK);
         gc.fillOval(theHeroScreenX, theHeroScreenY, myTileSize, myTileSize);
+        gc.setFill(Color.GREEN);
+        gc.fillOval(theHeroScreenX + 1, theHeroScreenY + 1, myTileSize - 2, myTileSize - 2);
     }
 
     /**
@@ -431,8 +452,11 @@ public class DungeonController {
         GameState.getInstance().setBattling(true);
         myEnable = false;
     }
+
+
     private void heroGUISetup() {
         myHeroName.setText(myHero.getName());
+        myHeroType.setText(myHero.getClass().getSimpleName());
         setHP();
         setItems();
     }
@@ -518,6 +542,22 @@ public class DungeonController {
             heroGUISetup();
         }
 
+    }
+    @FXML
+    void openHeroStats(MouseEvent event) throws IOException {
+        App.createPopUpScene("HeroViewer");
+    }
+    private void giveItems() {
+        final AttackPotion potion = new AttackPotion();
+        final Bomb bomb = new Bomb();
+        final HealingPotion healing = new HealingPotion();
+        for (int i = 0; i < ITEM_AMOUNT; i++) {
+            myHero.getInventory().addItem(potion);
+            System.out.println(potion.getCount());
+            myHero.getInventory().addItem(bomb);
+            myHero.getInventory().addItem(healing);
+            System.out.println(myHero.getInventory().toString());
+        }
     }
     // private void useItem(final Consumable theConsumable) {
     //     if (theConsumable.getName().equals("Bomb")) {

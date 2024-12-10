@@ -12,6 +12,10 @@ import team5.game.controller.MonsterFactory;
  * Dungeon is a class that represents a dungeon.
  */
 public class Dungeon implements Serializable {
+    private static final String[] OGRE_NAMES = {"Og", "Shrek", "Negark", "Dokog", "Murog"};
+    private static final String[] GOBLIN_NAMES = {"Gob", "Boblin", "Gober", "Goberd", "Goblug"};
+    private static final String[] SKELETON_NAMES = {"Bones", "Skele", "Skull", "Rattle", "Skele-Tom"};
+
     /** The dungeon */
     private Room[][] myDungeon;
     /** The width of the dungeon */
@@ -180,18 +184,27 @@ public class Dungeon implements Serializable {
         int monsterCount = 0;
 
         switch (getDifficulty()) {
-            case EASY -> monsterCount = 3;
-            case MEDIUM -> monsterCount = 5;
-            case HARD -> monsterCount = 10;
+            case EASY -> monsterCount = 5;
+            case MEDIUM -> monsterCount = 10;
+            case HARD -> monsterCount = 15;
             default -> throw new IllegalStateException("Unexpected difficulty: " + getDifficulty());
         }
 
         final char monsterTypes[] = new char[] { 'O', 'G', 'S' };
+        
         Monster monsters[] = new Monster[monsterCount];
-
+        //Creating monster
         for (int i = 0; i < monsterCount; i++) {
             char type = monsterTypes[i % monsterTypes.length];
-            monsters[i] = MonsterFactory.createMonster(type, type + "_" + i);
+            String name = "";
+            switch (type) {
+                case 'O' -> name = OGRE_NAMES[random.nextInt(5)];
+                case 'S' -> name = SKELETON_NAMES[random.nextInt(5)];
+                case 'G' -> name = GOBLIN_NAMES[random.nextInt(5)];
+                default -> throw new IllegalStateException("Unexpected monster" + type);
+            }
+            
+            monsters[i] = MonsterFactory.createMonster(type, name);
         }
 
         return monsters;

@@ -13,7 +13,7 @@ public class Noob extends Hero{
     public String getStats() {
         StringBuilder builder = new StringBuilder();
         builder.append(super.getStats());
-        builder.append("Special Move: Does nothing\n");
+        builder.append("\nSpecial Move: Does nothing\n");
         return builder.toString();
     }
     @Override

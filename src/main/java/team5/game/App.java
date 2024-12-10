@@ -22,6 +22,8 @@ import javafx.stage.StageStyle;
 public class App extends Application {
     private static final int POPUP_WIDTH = 960;
     private static final int POPUP_HEIGHT = 720;
+    private static final int WIDTH = 960;
+    private static final int HEIGHT = 720;
     /** The primary scene */
     private static Scene myScene;
     private static Stage myStage;
@@ -30,7 +32,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        myScene = new Scene(loadFXML("StartScreen"), 960, 720);
+        myScene = new Scene(loadFXML("StartScreen"), WIDTH, HEIGHT);
         stage.setScene(myScene);
         stage.centerOnScreen();
         // Makes it so that resizing the scene won't break visuals

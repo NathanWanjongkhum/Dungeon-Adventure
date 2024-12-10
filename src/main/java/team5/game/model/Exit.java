@@ -10,6 +10,9 @@ public class Exit implements Item, Serializable {
     public Exit() {
         myCount = 1;
     }
+    public Exit(final Exit theOther) {
+        this.myCount = theOther.getCount();
+    }
     @Override
     public int getCount() {
         return myCount;
@@ -33,5 +36,9 @@ public class Exit implements Item, Serializable {
     @Override
     public String toString() {
         return "E";
+    }
+    @Override
+    public Exit copy() {
+        return new Exit(this);
     }
 }

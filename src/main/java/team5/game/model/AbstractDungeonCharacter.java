@@ -146,16 +146,16 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
         StringBuilder builder = new StringBuilder();
         builder.append("Name: ");
         builder.append(myName);
+        builder.append("\nClass: ");
+        builder.append(getClass().getSimpleName());
         String hp = String.format("\nHP: %d/%d", myHealth, myMaxHealth);
         builder.append(hp);
         String damage = String.format("\nDamage Range: %d - %d\n", myMinDamage, myMaxDamage);
         builder.append(damage);
         builder.append("Speed: ");
         builder.append(mySpeed);
-        builder.append("\n");
         return builder.toString();
     }
-
     @Override
     public int attack(final DungeonCharacter theOther) {
         Random rand = new Random();

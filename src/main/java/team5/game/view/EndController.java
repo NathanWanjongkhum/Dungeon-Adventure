@@ -1,28 +1,33 @@
 package team5.game.view;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BorderPane;
 import team5.game.App;
 import team5.game.model.GameState;
 /**
  * The GUI Controller for EndScene
  * 
  * @author Holden Tsang
- * @version December 5 2024
+ * @version December 10 2024
  */
-public class EndController implements  Initializable{
+public class EndController {
+    @FXML
+    private BorderPane myBack;
+
     @FXML
     /** Label to indicate win or lose */
     private Label myMessage;
 
-    @Override
-    public void initialize(final URL theURL, final ResourceBundle theResource) {
+    @FXML
+    private void initialize() {
+        BackgroundImage back = App.getBackgroundImage("maze background");
+        myBack.setBackground(new Background(back));
         if (GameState.getInstance().getHero().getHealth() == 0) {
             myMessage.setText("Defeat");
         } else {

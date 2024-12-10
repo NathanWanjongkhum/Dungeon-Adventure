@@ -36,7 +36,7 @@ public class Mage extends Hero {
     public String getStats() {
         StringBuilder builder = new StringBuilder();
         builder.append(super.getStats());
-        builder.append("Special Move: Takes double damage for 3 turns, then does massive damage to enemies " +
+        builder.append("\nSpecial Move: Takes double damage for 3 turns, then does massive damage to enemies " +
                         "on the third attack!\n");
         return builder.toString();
     }

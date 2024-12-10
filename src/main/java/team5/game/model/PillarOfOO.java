@@ -26,6 +26,10 @@ public class PillarOfOO implements Item, Serializable {
         myCount = 1;
         myPillar = thePillarType;
     }
+    private PillarOfOO(final PillarOfOO theOther) {
+        this.myCount = theOther.getCount();
+        this.myPillar = theOther.getPillar();
+    }
 
     @Override
     public String getName() {
@@ -52,5 +56,9 @@ public class PillarOfOO implements Item, Serializable {
     }
     public PillarType getPillar() {
         return myPillar;
+    }
+    @Override
+    public PillarOfOO copy() {
+        return new PillarOfOO(this);
     }
 }

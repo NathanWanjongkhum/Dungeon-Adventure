@@ -9,7 +9,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" stylesheets="@DungeonAdventureMenu.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team5.game.view.SettingsController">
    <center>
-      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="350.0" prefWidth="250.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="375.0" prefWidth="250.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Menu" textFill="WHITE">
                <font>
@@ -35,6 +35,11 @@
                </VBox.margin>
             </Button>
             <Button alignment="CENTER" mnemonicParsing="false" onAction="#home" prefHeight="30.0" prefWidth="170.0" text="Home" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#heroSelect" prefHeight="30.0" prefWidth="170.0" text="Hero Select" textAlignment="CENTER">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>

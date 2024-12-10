@@ -32,7 +32,7 @@ public class Archer extends Hero {
     public String getStats() {
         StringBuilder builder = new StringBuilder();
         builder.append(super.getStats());
-        builder.append("Special Move: Does low damage, but makes " + 
+        builder.append("\nSpecial Move: Does low damage, but makes " + 
                         "enemies take double damage on the next attack\n");
         return builder.toString();
     }

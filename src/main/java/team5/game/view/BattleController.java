@@ -1,12 +1,9 @@
 package team5.game.view;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -31,7 +28,7 @@ import team5.game.model.Monster;
  * @author Holden Tsang
  * @version December 5 2024
  */
-public class BattleController implements Initializable {
+public class BattleController {
     @FXML
     /** The scene for background */
     private AnchorPane myBackground;
@@ -115,9 +112,9 @@ public class BattleController implements Initializable {
     /** Tooltip for status effects on monster */
     private Tooltip myMonsterEffectTooltip;
 
-    @Override
+    @FXML
     /** Initialize the scene */
-    public void initialize(URL theURL, ResourceBundle theResource) {
+    private void initialize() {
         // Dungeon class would get hero and monster so hp would carry over
         myHero = GameState.getInstance().getHero();
         myMonster = GameState.getInstance().getDungeon().getRoom(myHero.getX(), myHero.getY()).getMonster();
@@ -302,7 +299,7 @@ public class BattleController implements Initializable {
      */
     private void retreat(final ActionEvent theEvent) throws IOException {
         myHero.moveTo(myHero.getDirection().getOpposite());
-        App.setRoot("DungeonScene3");
+        App.setRoot("DungeonScene");
         GameState.getInstance().setBattling(false);
     }
 
@@ -318,7 +315,7 @@ public class BattleController implements Initializable {
             App.setRoot("EndScene");
         } else {
             GameState.getInstance().getDungeon().getRoom(myHero.getX(), myHero.getY()).removeMonster();
-            App.setRoot("DungeonScene3");
+            App.setRoot("DungeonScene");
         }
         GameState.getInstance().setBattling(false);
     }
@@ -357,9 +354,9 @@ public class BattleController implements Initializable {
     private void displayEffect(final DungeonCharacter theCharacter, final Tooltip theTooltip, 
                                 final Label theLabel, final Tooltip theStatus, final ImageView theIcon) throws IOException {
         if (theCharacter.getStatusEffects().hasEffect()) {
-            theTooltip.setText(theCharacter.getStats() + "\n" + theCharacter.getStatusEffects().toString());
+            theTooltip.setText(theCharacter.getStats() + "\n" + theCharacter.getStatusEffects().getEffects());
             
-            theStatus.setText(theCharacter.getStatusEffects().toString());
+            theStatus.setText(theCharacter.getStatusEffects().getEffects());
             theLabel.setTooltip(theStatus);
             Image icon = null;
             //Adding image to label depending on status

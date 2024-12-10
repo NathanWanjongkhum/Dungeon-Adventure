@@ -17,7 +17,7 @@ public class Admin extends Hero {
     public String getStats() {
         StringBuilder builder = new StringBuilder();
         builder.append(super.getStats());
-        builder.append("Special Move: Instakills\n");
+        builder.append("\nSpecial Move: Instakills\n");
         return builder.toString();
     }
     @Override

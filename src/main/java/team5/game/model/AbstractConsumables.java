@@ -26,14 +26,18 @@ public abstract class AbstractConsumables implements Consumable, Serializable {
                                                   // update counts during the game
         myCount = theCount;
     }
+    //Shallow copy of consumables
+    protected AbstractConsumables(AbstractConsumables theOther) {
+        this.myCount = theOther.getCount();
+    }
 
     @Override
     public int getCount() {
         return myCount;
     }
     @Override
-    public void setCount(int count) {
-        myCount = count;
+    public void setCount(int theCount) {
+        myCount = theCount;
     }
 
     @Override

@@ -11,6 +11,10 @@ public class HealingPotion extends AbstractConsumables {
         super();
         myHealthRestore = HEALTH_RESTORE;
     }
+    public HealingPotion(final HealingPotion theOther) {
+        super(theOther);
+        this.myHealthRestore = theOther.getHealthRestore();
+    }
     /**
      * Gets the amount of health a potion retores
      * 
@@ -35,5 +39,9 @@ public class HealingPotion extends AbstractConsumables {
     @Override
     public String getDescription() {
         return String.format("Heals %s hp when used", myHealthRestore);
+    }
+    @Override
+    public HealingPotion copy() {
+        return new HealingPotion(this);
     }
 }

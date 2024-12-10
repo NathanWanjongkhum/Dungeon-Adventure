@@ -15,6 +15,12 @@ public class AttackPotion extends AbstractConsumables {
         myAttackIncrease = ATTACK_INCREASE;
         myTurns = TURNS;
     }
+    private AttackPotion(final AttackPotion theOther) {
+        super(theOther);
+        this.myAttackIncrease = theOther.getAttackIncrease();
+        this.myTurns = theOther.getEffectTurns();
+
+    }
     /**
      * Gets the amount of health a potion retores
      * 
@@ -47,5 +53,9 @@ public class AttackPotion extends AbstractConsumables {
     public String getDescription() {
         return String.format("Increase attack by %s for %s turns.\n" + 
                             "This also increase special moves potency.", myAttackIncrease, myTurns);
+    }
+    @Override
+    public AttackPotion copy() {
+        return new AttackPotion(this);
     }
 }
