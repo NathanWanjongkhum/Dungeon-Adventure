@@ -40,7 +40,7 @@ public class HeroViewerController {
         
     }
     private void setHP() {
-        myHP.setText(myHero.getHealth() + "/" + myHero.getMaxHealth());
+        myHP.setText("HP " + myHero.getHealth() + "/" + myHero.getMaxHealth());
         final double hp = (double) myHero.getHealth() / myHero.getMaxHealth();
         myHPBar.setProgress(hp);
         if (hp < 0.25) {

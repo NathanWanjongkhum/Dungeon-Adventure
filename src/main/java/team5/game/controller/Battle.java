@@ -145,6 +145,9 @@ public class Battle {
             final int damage = theConsu.useItem(myMonster);
             myText += String.format("%s used Bomb\nIt dealt %d to %s\n", theHero.getName(), 
                                     damage, myMonster.getName());
+            if (myMonster.getHealth() < 1) {
+                myText += String.format("%s has defeated %s!\n", theHero.getName(), myMonster.getName());
+            } 
         } else {
             theConsu.useItem(theHero);
             myText += String.format("%s used a %s.\n", theHero.getName(), getConsumableName(theConsu.getName()));
