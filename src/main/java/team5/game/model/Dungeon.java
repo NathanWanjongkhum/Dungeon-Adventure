@@ -220,7 +220,7 @@ public class Dungeon implements Serializable {
         while (index < theMonsters.length) {
             Room room = getRandomRoom();
 
-            if (room == getStartRoom()) {
+            if (room == getStartRoom() || room.getItem() != null) {
                 continue;
             }
 
