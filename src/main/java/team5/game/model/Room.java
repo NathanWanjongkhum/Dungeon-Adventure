@@ -12,6 +12,7 @@ public class Room implements Serializable {
     private boolean[] myDoors;
     /** The item in the room */
     private Item myItem;
+
     /**
      * The monster in the room.
      * 
@@ -20,6 +21,7 @@ public class Room implements Serializable {
      */
     private Monster myMonster;
 
+    /** The serial version UID for serialization */
     private static final long serialVersionUID = 1L;
 
     /**
@@ -71,6 +73,8 @@ public class Room implements Serializable {
     public void setMonster(final Monster theMonster) {
         myMonster = theMonster;
     }
+
+    /** Remove the monster in the room */
     public void removeMonster() {
         myMonster = null;
     }
@@ -111,6 +115,10 @@ public class Room implements Serializable {
         return sb.toString();
     }
 
+    /**
+     * Removes the door on the given direction. Stopping the player from going
+     * through the door.
+     */
     public void removeDoor(final Direction thDirection) {
         myDoors[thDirection.ordinal()] = false;
     }

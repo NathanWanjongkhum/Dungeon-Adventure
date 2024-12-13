@@ -16,7 +16,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DatabaseHandler is a class that handles the database connection. This is to
+ * avoid instances of the connection, fetching, or setting being handled
+ * improperly
+ */
 public class DatabaseHandler {
+    /** The database URL */
     public static final String URL = "jdbc:sqlite:my.db";
 
     /** Close the connection to the database */
@@ -70,6 +76,11 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Select all the monsters from the database
+     *
+     * @return an array of monsters
+     */
     public static Monster[] getMonsters() {
         List<Monster> monsters = new ArrayList<>();
 

@@ -30,6 +30,11 @@ import team5.game.model.PillarOfOO;
 import team5.game.model.Room;
 import team5.game.view.App;
 
+/**
+ * The GUI Controller for DungeonScene. Handles the dungeon maze and the player
+ * character. Also handles the inventory and the pillars. Draws the dungeon
+ * layout and entities on top of it.
+ */
 public class DungeonController {
     /** The original size of the tiles sprite */
     private static final int ORIGINAL_TILE_SIZE = 32;
@@ -53,51 +58,67 @@ public class DungeonController {
     /** What the game is drawn on */
     @FXML
     private Canvas gameCanvas;
-    /** The base pane */
 
     /** The graphics context for drawing on the canvas */
     private GraphicsContext gc;
     /** Determine if keyboard inputs should be counted */
-    //This is a band aid fix
     private boolean myEnable;
+
+    /** The attack potion label */
     @FXML
     private Label myAttackPotion;
 
+    /** The bomb label */
     @FXML
     private Label myBomb;
 
+    /** The HP label */
     @FXML
     private Label myHPLabel;
 
+    /** The healing potion label */
     @FXML
     private Label myHealingPotion;
 
+    /** The hero bar */
     @FXML
     private ProgressBar myHeroBar;
 
+    /** The hero name label */
     @FXML
     private Label myHeroName;
 
+    /** The hero type label */
     @FXML
     private Label myHeroType;
 
+    /** The abstraction pillar */
     @FXML
     private Text myAbstraction;
 
+    /** The encapsulation pillar */
     @FXML
     private Text myEncapsulation;
 
+    /** The inheritance pillar */
     @FXML
     private Text myInheritance;
 
+    /** The polymorphism pillar */
     @FXML
     private Text myPolymorphism;
 
+    /** The pane for the dungeon */
     @FXML
     private Pane myPane;
 
+    /** The inventory */
     private Inventory myInventory;
 
+    /**
+     * Default constructor for dungeon controller. Does work that must be done
+     * before initialization.
+     */
     public DungeonController() {
         // Set up the dungeon and hero
         myDungeon = GameState.getInstance().getDungeon();
@@ -122,19 +143,26 @@ public class DungeonController {
             setZoom(myDungeon.getPillarCount() + 1);
         }
 
-
         GameState.saveGame();
         myEnable = true;
     }
 
+    /**
+     * Initializes the dungeon controller. Sets up the dungeon, hero, and
+     * inventory.
+     * 
+     * @throws IOException if the screen can't be loaded
+     */
     @FXML
     private void initialize() {
         // Initializes the canvas
         BackgroundImage back = App.getBackgroundImage("maze background");
         myPane.setBackground(new Background(back));
-        if(GameState.getInstance().isCheats() && myInventory.isEmpty()) {
+
+        if (GameState.getInstance().isCheats() && myInventory.isEmpty()) {
             giveItems();
         }
+
         disablePillars();
         setNoItems();
         heroGUISetup();
@@ -269,7 +297,7 @@ public class DungeonController {
     }
 
     private void drawItem(final Item theItem, final double theScreenX, final double theScreenY) {
-        //Adding an outline
+        // Adding an outline
         gc.setFill(Color.BLACK);
         gc.fillOval(theScreenX, theScreenY, myTileSize, myTileSize);
         switch (theItem.getName()) {
@@ -368,7 +396,9 @@ public class DungeonController {
             System.err.println("Error handling key press: " + e.getMessage());
         }
     }
-    //I think the keyevents also effected the battle scene so was thinking it would also 
+
+    // I think the keyevents also effected the battle scene so was thinking it would
+    // also
     private void escapeSettings() throws IOException {
         if (myEnable) {
             App.createPopUpScene("Settings");
@@ -415,6 +445,7 @@ public class DungeonController {
         } else {
             myHero.getInventory().addItem(item);
         }
+
         setItems();
         room.removeItem();
     }
@@ -435,7 +466,7 @@ public class DungeonController {
         } else {
             setZoom(myDungeon.getPillarCount() + 1);
         }
-        
+
     }
 
     /**
@@ -453,18 +484,27 @@ public class DungeonController {
         myEnable = false;
     }
 
-
+    /**
+     * Sets up the GUI elements for the hero
+     */
     private void heroGUISetup() {
         myHeroName.setText(myHero.getName());
         myHeroType.setText(myHero.getClass().getSimpleName());
+
         setHP();
         setItems();
     }
+
+    /**
+     * Sets the HP of the hero
+     */
     private void setHP() {
         final double hp = (double) myHero.getHealth() / myHero.getMaxHealth();
         final String character = "HP " + myHero.getHealth() + "/" + myHero.getMaxHealth();
+
         myHPLabel.setText(character);
         myHeroBar.setProgress(hp);
+
         if (hp < 0.25) {
             myHeroBar.setStyle("-fx-accent: red;");
         } else if (hp < 0.5) {
@@ -473,10 +513,14 @@ public class DungeonController {
             myHeroBar.setStyle("-fx-accent: green");
         }
     }
+
+    /**
+     * Sets the items in the inventory
+     */
     private void setItems() {
         int index = 0;
         if (!myInventory.isEmpty()) {
-            for (Item c: myInventory.getItems()) {
+            for (Item c : myInventory.getItems()) {
                 if (c != null && c.isPillar()) {
                     setPillar(index);
                 } else if (c != null && c.isConsumable()) {
@@ -486,16 +530,23 @@ public class DungeonController {
             }
         }
     }
+
+    /**
+     * Sets the abstraction, encapsulation, inheritance, or polymorphism
+     * pillars as visible
+     * 
+     * @param theIndex the index of the pillar
+     */
     private void setPillar(final int theIndex) {
-        PillarOfOO item = ((PillarOfOO)myInventory.getItem(theIndex));
-        switch(item.getPillar().name()) {
+        PillarOfOO item = ((PillarOfOO) myInventory.getItem(theIndex));
+        switch (item.getPillar().name()) {
             case "ABSTRACTION":
                 myAbstraction.setVisible(true);
                 break;
-            case "ENCAPSULATION": 
+            case "ENCAPSULATION":
                 myEncapsulation.setVisible(true);
                 break;
-            case "INHERITANCE": 
+            case "INHERITANCE":
                 myInheritance.setVisible(true);
                 break;
             case "POLYMORPHISM":
@@ -505,9 +556,15 @@ public class DungeonController {
                 break;
         }
     }
+
+    /**
+     * Sets the attack potion, healing potion, and bomb consumables
+     * 
+     * @param theIndex the index of the consumable
+     */
     private void setConsumable(final int theIndex) {
-        Consumable item = ((Consumable)myInventory.getItem(theIndex));
-        switch(item.getName()) {
+        Consumable item = ((Consumable) myInventory.getItem(theIndex));
+        switch (item.getName()) {
             case "AttackPotion":
                 myAttackPotion.setText("x" + item.getCount());
                 break;
@@ -521,20 +578,37 @@ public class DungeonController {
                 break;
         }
     }
+
+    /**
+     * Disables the abstraction, encapsulation, inheritance, and polymorphism
+     * pillars visibility
+     */
     private void disablePillars() {
         myAbstraction.setVisible(false);
         myEncapsulation.setVisible(false);
         myInheritance.setVisible(false);
         myPolymorphism.setVisible(false);
     }
+
+    /**
+     * Sets the attack potion, healing potion, and bomb text to 0
+     */
     private void setNoItems() {
         myAttackPotion.setText("x0");
         myHealingPotion.setText("x0");
         myBomb.setText("x0");
     }
+
+    /**
+     * Opens the item bag scene popup
+     * 
+     * @param event the mouse event
+     * @throws IOException if the screen can't be loaded
+     */
     @FXML
     void openItemBag(MouseEvent event) throws IOException {
         App.createPopUpScene("ItemBag");
+
         if (GameState.getInstance().getHero().isConUsed()) {
             final Consumable consumable = GameState.getInstance().getHero().useConsumable();
             consumable.useItem(myHero);
@@ -543,14 +617,26 @@ public class DungeonController {
         }
 
     }
+
+    /**
+     * Opens the hero stats
+     * 
+     * @param event the mouse event
+     * @throws IOException if the screen can't be loaded
+     */
     @FXML
     void openHeroStats(MouseEvent event) throws IOException {
         App.createPopUpScene("HeroViewer");
     }
+
+    /**
+     * Gives the player items
+     */
     private void giveItems() {
         final AttackPotion potion = new AttackPotion();
         final Bomb bomb = new Bomb();
         final HealingPotion healing = new HealingPotion();
+
         for (int i = 0; i < ITEM_AMOUNT; i++) {
             myHero.getInventory().addItem(potion);
             System.out.println(potion.getCount());

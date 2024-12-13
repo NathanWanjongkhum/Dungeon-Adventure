@@ -2,9 +2,13 @@ package team5.game.model;
 
 import java.util.Random;
 
+/**
+ * The Warrior Hero Class. Used by player in battles.
+ */
 public class Warrior extends Hero {
     /** Different special attack text for the different outcomes */
     private String mySpecialText;
+
     /**
      * Warrior Hero constructor
      * 
@@ -14,6 +18,7 @@ public class Warrior extends Hero {
         super(theName, 500, 20, 8, new SpecialAttack(0, 15));
         mySpecialText = "";
     }
+
     /**
      * The Warrior's special attack is random effects
      */
@@ -23,7 +28,8 @@ public class Warrior extends Hero {
         double multiplier = 1 + Math.random();
         Random rand = new Random();
         int value = rand.nextInt(10);
-        switch(value) {
+
+        switch (value) {
             case 1:
                 multiplier += 2;
                 mySpecialText = "Triple Damage!\n";
@@ -42,7 +48,6 @@ public class Warrior extends Hero {
                 this.getStatusEffects().setRegenDuration(2);
                 mySpecialText = "Gained Regeneration for 10 HP for 2 turns!\n";
                 break;
-
             case 5:
                 multiplier += 1;
                 mySpecialText = "Double damage!\n";
@@ -68,19 +73,24 @@ public class Warrior extends Hero {
                 mySpecialText = "Something good happened!\n";
                 break;
         }
+
         damage = (int) (damage * multiplier);
         damage = this.checkVulnerableDamage(theOther, damage);
         theOther.setHealth(theOther.getHealth() - damage);
         return damage;
     }
+
+    /** {@inheritDoc} */
     @Override
     public String getStats() {
         StringBuilder builder = new StringBuilder();
         builder.append(super.getStats());
-        builder.append("\nSpecial Move: Does average damage, but has " + 
-                        "a chance to do something special (or not)!\n");
+        builder.append("\nSpecial Move: Does average damage, but has " +
+                "a chance to do something special (or not)!\n");
         return builder.toString();
     }
+
+    /** {@inheritDoc} */
     @Override
     public String specialAttackText() {
         return mySpecialText;

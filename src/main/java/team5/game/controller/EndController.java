@@ -10,6 +10,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BorderPane;
 import team5.game.model.GameState;
 import team5.game.view.App;
+
 /**
  * The GUI Controller for EndScene
  * 
@@ -18,6 +19,7 @@ import team5.game.view.App;
  */
 public class EndController {
     @FXML
+    /** The scene for background */
     private BorderPane myBack;
 
     @FXML
@@ -25,15 +27,20 @@ public class EndController {
     private Label myMessage;
 
     @FXML
+    /**
+     * Setups the EndScene by placing the background image and setting the message
+     */
     private void initialize() {
         BackgroundImage back = App.getBackgroundImage("maze background");
         myBack.setBackground(new Background(back));
+
         if (GameState.getInstance().getHero().getHealth() == 0) {
             myMessage.setText("Defeat");
         } else {
             myMessage.setText("Victory");
         }
     }
+
     @FXML
     /**
      * Returns to the home scene.

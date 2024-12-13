@@ -1,10 +1,7 @@
 package team5.game.model;
 
 /**
- * The Monster Class
- * 
- * @author
- * @version
+ * The Monster Class. Used by the game to represent monsters.
  */
 public class Monster extends AbstractDungeonCharacter {
 

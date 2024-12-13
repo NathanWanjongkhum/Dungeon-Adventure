@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import team5.game.model.GameState;
 import team5.game.view.App;
+
 /**
  * The GUI Controller for NameSelector
  * 
@@ -16,7 +17,6 @@ import team5.game.view.App;
  * @version December 5 2024
  */
 public class NameSelectorController {
-
     @FXML
     /** The text field to input name */
     private TextField myName;
@@ -33,13 +33,14 @@ public class NameSelectorController {
 
     @FXML
     /**
-     * The confirm button action
+     * The confirm button action. Only enables the next button if the name is not
+     * empty.
      * 
      * @param theEvent the button press
      */
     private void confirm(final ActionEvent theEvent) {
         myConfirmedName = myName.getText();
-        //Only goes next if name is inputted
+
         if (!myConfirmedName.equals("")) {
             GameState.getInstance().setName(myConfirmedName);
             myNameDisplay.setText("Welcome " + myConfirmedName);

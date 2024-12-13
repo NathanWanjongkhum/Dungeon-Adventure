@@ -6,7 +6,12 @@ import java.util.Random;
 
 import javafx.scene.image.Image;
 
+/**
+ * Abstract class for dungeon characters. Handles common methods for all dungeon
+ * characters.
+ */
 public abstract class AbstractDungeonCharacter implements DungeonCharacter, Serializable {
+    /** The serial version UID for serialization */
     private static final long serialVersionUID = 1L;
 
     /** Constant for Damage difference */
@@ -46,36 +51,43 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
         myEffects = new StatusEffects();
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getName() {
         return myName;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getHealth() {
         return myHealth;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getMaxHealth() {
         return myMaxHealth;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getMinDamage() {
         return myMinDamage;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getMaxDamage() {
         return myMaxDamage;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getSpeed() {
         return mySpeed;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Image getImage() {
         final StringBuilder builder = new StringBuilder();
@@ -86,16 +98,19 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
         return temp;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isAlive() {
         return myHealth > 0;
     }
 
+    /** {@inheritDoc} */
     @Override
     public StatusEffects getStatusEffects() {
         return myEffects;
     }
 
+    /** {@inheritDoc} Can only set health to a positive number */
     @Override
     public void setHealth(final int theHealth) {
         if (theHealth < 0) {
@@ -105,6 +120,7 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
         }
     }
 
+    /** {@inheritDoc} Can only set min damage to a positive number */
     @Override
     public void setMinDamage(final int theDamage) {
         if (theDamage < 0) {
@@ -114,11 +130,13 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
         }
     }
 
+    /** {@inheritDoc} Can only set max damage to a positive number */
     @Override
     public void setMaxDamage(final int theDamage) {
         myMaxDamage = theDamage;
     }
 
+    /** {@inheritDoc} Can only add min damage to a positive number */
     @Override
     public void addMinDamage(final int theAddedDamage) {
         if (myMinDamage + theAddedDamage < 0) {
@@ -128,11 +146,13 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
         }
     }
 
+    /** {@inheritDoc} Can only add max damage to a positive number */
     @Override
     public void addMaxDamage(final int theAddedDamage) {
         myMaxDamage += theAddedDamage;
     }
 
+    /** {@inheritDoc} Can only set speed to a positive number */
     @Override
     public void setSpeed(final int theSpeed) {
         if (theSpeed < 0) {
@@ -142,6 +162,7 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getStats() {
         StringBuilder builder = new StringBuilder();
@@ -157,6 +178,11 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
         builder.append(mySpeed);
         return builder.toString();
     }
+
+    /**
+     * {@inheritDoc}. Checks for vulnerable damage and subtracts it from the other
+     * character.
+     */
     @Override
     public int attack(final DungeonCharacter theOther) {
         Random rand = new Random();
@@ -166,6 +192,7 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
         return damage;
     }
 
+    /** {@inheritDoc}. Heals can at most heal to max health */
     @Override
     public void heal(final int theHeal) {
         if (getHealth() + theHeal >= getMaxHealth()) {
@@ -175,6 +202,7 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
         }
     }
 
+    /** {@inheritDoc}. Damage is multiplied by 2 if vulnerable */
     @Override
     public int checkVulnerableDamage(final DungeonCharacter theOther, final int theDamage) {
         int damage = theDamage;
@@ -183,6 +211,8 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
         }
         return damage;
     }
+
+    /** {@inheritDoc} */
     @Override
     public boolean equals(final Object theOther) {
         if (this == theOther) {
@@ -201,6 +231,8 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
                 Objects.equals(myMaxDamage, character.getMaxDamage()) &&
                 Objects.equals(mySpeed, character.getSpeed());
     }
+
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         return Objects.hash(myName, myHealth, myMinDamage, myMaxDamage, mySpeed);

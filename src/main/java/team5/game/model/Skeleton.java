@@ -1,5 +1,8 @@
 package team5.game.model;
 
+/**
+ * The Skeleton Monster Class. Used to combat the player.
+ */
 public class Skeleton extends Monster {
     /**
      * Constructor for Skeleton

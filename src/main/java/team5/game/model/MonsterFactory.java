@@ -2,9 +2,6 @@ package team5.game.model;
 
 /**
  * The Monster Factory to create monsters
- * 
- * @author
- * @version
  */
 public class MonsterFactory {
     /**

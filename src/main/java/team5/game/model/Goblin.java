@@ -1,9 +1,7 @@
 package team5.game.model;
+
 /**
  * The Goblin Monster Class
- * 
- * @author
- * @version
  */
 public class Goblin extends Monster {
     /**

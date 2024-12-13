@@ -1,9 +1,7 @@
 package team5.game.model;
+
 /**
- * The Ogre Monster Class
- * 
- * @author
- * @version
+ * The Ogre Monster Class. Used to combat the player.
  */
 public class Ogre extends Monster {
     /**

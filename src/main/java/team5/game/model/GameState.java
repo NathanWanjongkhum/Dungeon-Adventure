@@ -3,6 +3,12 @@ package team5.game.model;
 import java.io.IOException;
 import java.io.Serializable;
 
+/**
+ * GameState is a class that represents the game state. It holds the dungeon,
+ * the hero, and the monsters. It also holds the cheats and battles flags. The
+ * GameState is a singleton class. It is used to save and load the game state.
+ * Shares state across the application.
+ */
 public class GameState implements Serializable {
     /** The single instance of this class */
     private static GameState instance;
@@ -19,6 +25,7 @@ public class GameState implements Serializable {
     /** Indicator for battles */
     private boolean myBattling;
 
+    /** The serial version UID for serialization */
     private static final long serialVersionUID = 1L;
 
     /**
@@ -152,15 +159,39 @@ public class GameState implements Serializable {
     public void setMonsters(Monster[] theMonsters) {
         instance.myMonsters = theMonsters;
     }
+
+    /**
+     * Gets the cheats flag
+     * 
+     * @return true if cheats are enabled, false otherwise
+     */
     public boolean isCheats() {
         return myCheats;
     }
+
+    /**
+     * Sets the cheats flag
+     * 
+     * @param theCheats the cheats flag
+     */
     public void setCheats(final boolean theCheats) {
         myCheats = theCheats;
     }
+
+    /**
+     * Gets the battles flag
+     * 
+     * @return true if battles are enabled, false otherwise
+     */
     public boolean isBattling() {
         return myBattling;
     }
+
+    /**
+     * Sets the battles flag
+     * 
+     * @param theBattling the battles flag
+     */
     public void setBattling(final boolean theBattling) {
         myBattling = theBattling;
     }

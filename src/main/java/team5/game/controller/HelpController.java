@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import team5.game.model.Monster;
 import team5.game.model.MonsterFactory;
 import team5.game.view.App;
+
 /**
  * The GUI Controller for HelpScene
  * 
@@ -16,7 +17,6 @@ import team5.game.view.App;
  * @version December 5 2024
  */
 public class HelpController {
-
     @FXML
     /** The menu container */
     private VBox myMenu;
@@ -36,10 +36,12 @@ public class HelpController {
         Monster goblin = MonsterFactory.createMonster('G', "Random Goblin Name");
         Monster skeleton = MonsterFactory.createMonster('S', "Random Skeleton Name");
         Monster ogre = MonsterFactory.createMonster('O', "Random Ogre Name");
+
         myGoblinDesciption.setText(goblin.getStats());
         mySkeletonDesciption.setText(skeleton.getStats());
         myOgreDescription.setText(ogre.getStats());
     }
+
     @FXML
     /**
      * The exit button action

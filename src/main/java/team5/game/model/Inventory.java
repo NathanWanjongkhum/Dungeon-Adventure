@@ -12,11 +12,13 @@ public class Inventory implements Serializable {
     private Item[] myItems;
     /** The serial number */
     private static final long serialVersionUID = 1L;
+
     /** Empty Inventory constructor */
     protected Inventory() {
         myInventorySize = 0;
         myItems = new Item[0];
     }
+
     /**
      * Create an empty inventory
      * 
@@ -48,7 +50,7 @@ public class Inventory implements Serializable {
         }
 
         for (int i = 0; i < myInventorySize; i++) {
-            //Need to clone the item
+            // Need to clone the item
             if (myItems[i] == null) {
                 myItems[i] = theItem.copy();
                 return true;
@@ -102,6 +104,12 @@ public class Inventory implements Serializable {
         }
     }
 
+    /**
+     * Get the index of the item
+     * 
+     * @param theItem the item
+     * @return the index of the item
+     */
     public int getItem(final Item theItem) {
         int index = 0;
         while (!myItems[index].getName().equals(theItem.getName())) {
@@ -125,6 +133,12 @@ public class Inventory implements Serializable {
         return true;
     }
 
+    /**
+     * Check if the inventory is empty. Checks if the first slot is null since items
+     * are always added to the first empty slot.
+     * 
+     * @return true if the inventory is empty
+     */
     public boolean isEmpty() {
         return getItem(0) == null;
     }
@@ -138,14 +152,8 @@ public class Inventory implements Serializable {
     private boolean inBounds(final int index) {
         return index >= 0 && index < myInventorySize;
     }
-    // private Inventory copy() {
-    //     final Inventory inventory = new Inventory(myInventorySize);
-    //     for (final Item item: getItems()) {
-    //         inventory.addItem(item);
-    //     }
-    //     return inventory;
-    // }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

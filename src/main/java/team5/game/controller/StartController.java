@@ -12,11 +12,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import team5.game.model.GameState;
 import team5.game.view.App;
+
 /**
  * The GUI Controller for StartScreenController
- * 
- * @author 
- * @version December 5 2024
  */
 public class StartController {
    @FXML
@@ -26,7 +24,7 @@ public class StartController {
    @FXML
    /** The backmost container of the scene */
    private VBox myScene;
-   
+
    @FXML
    /** Label to indicate cheats enabled */
    private Label myCheatIndicator;
@@ -35,15 +33,17 @@ public class StartController {
    /** The amount of clicks that occured */
    private int myCount;
 
-
    @FXML
-    private void initialize() {
+   private void initialize() {
       myCheats = false;
+
       BackgroundImage back = App.getBackgroundImage("TitleScreen");
       myScene.setBackground(new Background(back));
+
       GameState.getInstance().setCheats(false);
       myCount = 0;
-    }
+   }
+
    @FXML
    /**
     * Exits the game button
@@ -69,7 +69,7 @@ public class StartController {
 
    @FXML
    /**
-    * Changes the scene to name selection 
+    * Changes the scene to name selection
     *
     * @param theEvent the button press
     * @throws IOException when the fxml is not found
@@ -77,9 +77,10 @@ public class StartController {
    private void switchToHeroCreation(final ActionEvent theEvent) throws IOException {
       App.setRoot("NameSelection");
    }
+
    @FXML
    /**
-    * The cheats enabler 
+    * The cheats enabler
     *
     * @param theEvent the mouse clicks
     */

@@ -4,9 +4,6 @@ import java.io.Serializable;
 
 /**
  * Special attack object
- * 
- * @author Holden Tsang
- * @version
  */
 public class SpecialAttack implements Serializable {
     /** The amount of turns the special attack needs */
@@ -16,6 +13,7 @@ public class SpecialAttack implements Serializable {
     /** The amount of turns for special attack */
     private int myMaxTurns;
 
+    /** The serial version UID for serialization */
     private static final long serialVersionUID = 1L;
 
     /**
@@ -75,6 +73,12 @@ public class SpecialAttack implements Serializable {
         myTurns = theTurns;
         myMaxTurns = theTurns;
     }
+
+    /**
+     * Adds turns to the special attack
+     *
+     * @param theTurns the turns to add
+     */
     protected void addTurns(final int theTurns) {
         myTurns += theTurns;
     }
@@ -87,6 +91,12 @@ public class SpecialAttack implements Serializable {
     protected void setDamage(final int theDamage) {
         myDamage = theDamage;
     }
+
+    /**
+     * Adds damage to the special attack
+     * 
+     * @param theAddedDamage
+     */
     protected void addDamage(final int theAddedDamage) {
         myDamage += theAddedDamage;
     }

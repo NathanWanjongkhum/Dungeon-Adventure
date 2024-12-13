@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import team5.game.model.GameState;
 import team5.game.view.App;
+
 /**
  * The GUI Controller for SettingsController
  * 
@@ -13,7 +14,6 @@ import team5.game.view.App;
  * @version December 5 2024
  */
 public class SettingsController {
-    
     @FXML
     /**
      * The help action button
@@ -22,8 +22,9 @@ public class SettingsController {
      * @throws IOException when the fxml file is not found
      */
     private void getHelp(final ActionEvent theEvent) throws IOException {
-           App.setPopUpRoot("Help");
+        App.setPopUpRoot("Help");
     }
+
     @FXML
     /**
      * The home button action
@@ -65,15 +66,16 @@ public class SettingsController {
      */
     private void saveGame(final ActionEvent theEvent) {
         GameState.saveGame();
-        //Indivator of game saved
         close();
     }
+
     @FXML
     void heroSelect(final ActionEvent theEvent) throws IOException {
         App.setRoot("HeroSelection");
         close();
     }
-    /**Closes the popup */
+
+    /** Closes the popup */
     private void close() {
         App.closePopUp();
     }

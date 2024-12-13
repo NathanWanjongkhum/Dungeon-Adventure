@@ -10,9 +10,12 @@ import java.util.Random;
  * Dungeon is a class that represents a dungeon.
  */
 public class Dungeon implements Serializable {
-    private static final String[] OGRE_NAMES = {"Og", "Shrek", "Negark", "Dokog", "Murog"};
-    private static final String[] GOBLIN_NAMES = {"Gob", "Boblin", "Gober", "Goberd", "Goblug"};
-    private static final String[] SKELETON_NAMES = {"Bones", "Skele", "Skull", "Rattle", "Skele-Tom"};
+    /** The names of the ogres */
+    private static final String[] OGRE_NAMES = { "Og", "Shrek", "Negark", "Dokog", "Murog" };
+    /** The names of the goblins */
+    private static final String[] GOBLIN_NAMES = { "Gob", "Boblin", "Gober", "Goberd", "Goblug" };
+    /** The names of the skeletons */
+    private static final String[] SKELETON_NAMES = { "Bones", "Skele", "Skull", "Rattle", "Skele-Tom" };
 
     /** The dungeon */
     private Room[][] myDungeon;
@@ -27,6 +30,7 @@ public class Dungeon implements Serializable {
     /** A random number generator */
     private Random random = new Random();
 
+    /** The serial version UID for serialization */
     private static final long serialVersionUID = 1L;
 
     /**
@@ -43,7 +47,8 @@ public class Dungeon implements Serializable {
     }
 
     /**
-     * Uses a DungeonBuilder to initialize the dungeon.
+     * Uses a DungeonBuilder to initialize the dungeon. Then populates the dungeon
+     * with monsters, pillars, and items.
      */
     public final void init() {
         if (myDungeon != null) {
@@ -189,9 +194,9 @@ public class Dungeon implements Serializable {
         }
 
         final char monsterTypes[] = new char[] { 'O', 'G', 'S' };
-        
+
         Monster monsters[] = new Monster[monsterCount];
-        //Creating monster
+        // Creating monster
         for (int i = 0; i < monsterCount; i++) {
             char type = monsterTypes[i % monsterTypes.length];
             String name = "";
@@ -201,7 +206,7 @@ public class Dungeon implements Serializable {
                 case 'G' -> name = GOBLIN_NAMES[random.nextInt(5)];
                 default -> throw new IllegalStateException("Unexpected monster" + type);
             }
-            
+
             monsters[i] = MonsterFactory.createMonster(type, name);
         }
 
@@ -323,7 +328,6 @@ public class Dungeon implements Serializable {
     private Item getRandomItem() {
         int itemType = random.nextInt(3);
         Item item = null;
-        // TODO: Add more items
         switch (itemType) {
             case 0 -> item = new HealingPotion();
             case 1 -> item = new Bomb();

@@ -22,6 +22,7 @@ import team5.game.model.GameState;
 import team5.game.model.Hero;
 import team5.game.model.Monster;
 import team5.game.view.App;
+
 /**
  * The GUI Controller for BattleScene
  * 
@@ -42,7 +43,7 @@ public class BattleController {
     private Label myHPLevel;
 
     @FXML
-    /**The Hero HP Bar */
+    /** The Hero HP Bar */
     private ProgressBar myHeroBar;
 
     @FXML
@@ -74,7 +75,7 @@ public class BattleController {
     private Label myName;
 
     @FXML
-    /**The button to go next */
+    /** The button to go next */
     private Button myNext;
 
     @FXML
@@ -105,7 +106,7 @@ public class BattleController {
     private Tooltip myMonsterTooltip;
     /** An image for Hero effects */
     private ImageView myHeroEffects;
-    /** An image for Monster effects*/
+    /** An image for Monster effects */
     private ImageView myMonsterEffects;
     /** Tooltip for status effects on hero */
     private Tooltip myHeroEffectTooltip;
@@ -119,7 +120,7 @@ public class BattleController {
         myHero = GameState.getInstance().getHero();
         myMonster = GameState.getInstance().getDungeon().getRoom(myHero.getX(), myHero.getY()).getMonster();
 
-        //CustomBackground code
+        // CustomBackground code
         BackgroundImage back = App.getBackgroundImage("battle background");
         myBackground.setBackground(new Background(back));
         myControls.setStyle("-fx-background-color: black; -fx-effect: innershadow(gaussian, #66524d, 7, 0.9, 0, 0)");
@@ -133,6 +134,7 @@ public class BattleController {
         setHP();
         myLog.appendText("Battles had started with " + myMonster.getName() + "\n");
     }
+
     /**
      * Initialize the dungeon character's names.
      */
@@ -143,6 +145,7 @@ public class BattleController {
         myMonsterName.setText(myMonster.getName());
         myMonsterBar.setStyle("-fx-accent: green");
     }
+
     /**
      * Initialize the hero and monster's image properties.
      */
@@ -151,20 +154,22 @@ public class BattleController {
         initImages(myMonsterImage, myMonster, myMonsterTooltip);
         myMonsterImage.setScaleX(-1);
     }
+
     /**
      * Initialize the dungeon character's images and adds tooltip to image.
      * 
-     * @param theView an imageview of the character.
+     * @param theView      an imageview of the character.
      * @param theCharacter the dungeon character being added.
-     * @param theTooltip the tooltip to be added to the image.
+     * @param theTooltip   the tooltip to be added to the image.
      */
     private void initImages(final ImageView theView, final DungeonCharacter theCharacter, Tooltip theTooltip) {
         theView.setImage(theCharacter.getImage());
         theTooltip.setStyle("-fx-font-size: 15; -fx-text-fill: white;" +
-                            "-fx-font-family: 'High Tower Text'");
+                "-fx-font-family: 'High Tower Text'");
         Tooltip.install(theView, theTooltip);
 
     }
+
     /**
      * Initialize the status indication.
      */
@@ -176,6 +181,7 @@ public class BattleController {
         setTooltipTheme(myHeroEffectTooltip);
         setTooltipTheme(myMonsterEffectTooltip);
     }
+
     /**
      * Sets the tooltip theme for the game.
      * 
@@ -183,9 +189,10 @@ public class BattleController {
      */
     private void setTooltipTheme(final Tooltip theTooltip) {
         theTooltip.setStyle("-fx-font-size: 15; -fx-text-fill: white;" +
-                            "-fx-font-family: 'High Tower Text'");
+                "-fx-font-family: 'High Tower Text'");
         theTooltip.setShowDelay(Duration.seconds(0.5));
     }
+
     /**
      * Sets the hp of hero and monster.
      */
@@ -193,12 +200,13 @@ public class BattleController {
         setCharHP(myHero, myHPLevel, myHeroBar);
         setCharHP(myMonster, myMonsterHPLevel, myMonsterBar);
     }
+
     /**
      * Sets the hp of the dungeon character.
      * 
      * @param theCharacter the dungeon character to be updated.
-     * @param theLabel the hp label to be changed.
-     * @param theBar the hp bar for the dungeon character.
+     * @param theLabel     the hp label to be changed.
+     * @param theBar       the hp bar for the dungeon character.
      */
     private void setCharHP(final DungeonCharacter theCharacter, final Label theLabel, final ProgressBar theBar) {
         final String character = "HP " + theCharacter.getHealth() + "/" + theCharacter.getMaxHealth();
@@ -206,11 +214,12 @@ public class BattleController {
         final double hp = (double) theCharacter.getHealth() / theCharacter.getMaxHealth();
         setHPBar(theBar, hp);
     }
+
     /**
      * Updates the hp bar of the character.
      * 
      * @param theBar the dungeon character's item bar.
-     * @param theHP the hp percentage to update the bar.
+     * @param theHP  the hp percentage to update the bar.
      */
     private void setHPBar(final ProgressBar theBar, final double theHP) {
         theBar.setProgress(theHP);
@@ -222,6 +231,7 @@ public class BattleController {
             theBar.setStyle("-fx-accent: green");
         }
     }
+
     @FXML
     /**
      * The attack button action.
@@ -232,6 +242,7 @@ public class BattleController {
     private void attack(final ActionEvent theEvent) throws IOException {
         attackAction();
     }
+
     /**
      * The attack action.
      * 
@@ -252,6 +263,7 @@ public class BattleController {
     private void useSpecialAttack(final ActionEvent theEvent) throws IOException {
         specialAction();
     }
+
     /**
      * The special attack action.
      * 
@@ -267,6 +279,7 @@ public class BattleController {
         myBattle.battle("special");
         battleCondition();
     }
+
     @FXML
     /**
      * The item button action.
@@ -280,6 +293,7 @@ public class BattleController {
             useItem();
         }
     }
+
     /**
      * The item action.
      * 
@@ -290,6 +304,7 @@ public class BattleController {
         myBattle.battle("item");
         battleCondition();
     }
+
     @FXML
     /**
      * The retreat button action
@@ -304,7 +319,7 @@ public class BattleController {
     }
 
     @FXML
-        /**
+    /**
      * The end battle button action
      * 
      * @param theEvent the button press
@@ -319,6 +334,7 @@ public class BattleController {
         }
         GameState.getInstance().setBattling(false);
     }
+
     /**
      * Adds text to the end of battle and updates status when necessary
      * 
@@ -329,6 +345,7 @@ public class BattleController {
         displayEffect(myHero, myHeroTooltip, myHPLevel, myHeroEffectTooltip, myHeroEffects);
         displayEffect(myMonster, myMonsterTooltip, myMonsterHPLevel, myMonsterEffectTooltip, myMonsterEffects);
     }
+
     /**
      * The battle updates after action
      * 
@@ -341,27 +358,28 @@ public class BattleController {
             over();
         }
     }
+
     /**
      * Updates effects and displays if necessary.
      * 
      * @param theCharacter the dungeon character.
-     * @param theTooltip the tooltip of the character.
-     * @param theLabel the hp label for dungeon character.
-     * @param theStatus the tooltip for status effects.
-     * @param theIcon the status effect icon.
+     * @param theTooltip   the tooltip of the character.
+     * @param theLabel     the hp label for dungeon character.
+     * @param theStatus    the tooltip for status effects.
+     * @param theIcon      the status effect icon.
      * @throws IOException when image is not found.
      */
-    private void displayEffect(final DungeonCharacter theCharacter, final Tooltip theTooltip, 
-                                final Label theLabel, final Tooltip theStatus, final ImageView theIcon) throws IOException {
+    private void displayEffect(final DungeonCharacter theCharacter, final Tooltip theTooltip,
+            final Label theLabel, final Tooltip theStatus, final ImageView theIcon) throws IOException {
         if (theCharacter.getStatusEffects().hasEffect()) {
             theTooltip.setText(theCharacter.getStats() + "\n" + theCharacter.getStatusEffects().getEffects());
-            
+
             theStatus.setText(theCharacter.getStatusEffects().getEffects());
             theLabel.setTooltip(theStatus);
             Image icon = null;
-            //Adding image to label depending on status
+            // Adding image to label depending on status
             if (theCharacter.getStatusEffects().hasMultipleStatus()) {
-                 icon = getImage("bothStatus");
+                icon = getImage("bothStatus");
             } else if (theCharacter.getStatusEffects().isVulnerable()) {
                 icon = getImage("debuff");
             } else {
@@ -375,6 +393,7 @@ public class BattleController {
             theLabel.setTooltip(null);
         }
     }
+
     /**
      * Gets the image from resources with the correct file name.
      * 
@@ -390,6 +409,7 @@ public class BattleController {
         final Image temp = new Image(getClass().getResource(builder.toString()).toString());
         return temp;
     }
+
     /**
      * Set buttons when battle is over
      */
@@ -397,6 +417,7 @@ public class BattleController {
         setBattleButtons(false);
         setNextButton(true);
     }
+
     /**
      * Sets all buttons to desired state.
      * True sets buttons to be on and false turns them off.
@@ -410,6 +431,7 @@ public class BattleController {
         myRetreat.setDisable(!theBoolean);
 
     }
+
     /**
      * Determines if the next button should be turned on or off.
      * 

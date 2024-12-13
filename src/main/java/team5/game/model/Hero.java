@@ -1,6 +1,13 @@
 package team5.game.model;
 
+/**
+ * Hero is an abstract class that represents the player's character. It is
+ * extended by the Archer, Ogre, and Skeleton classes. It holds the inventory,
+ * the special attack, and the consumable. It also holds the direction the
+ * character is facing. The hero is a part of the game state.
+ */
 public abstract class Hero extends AbstractDungeonCharacter implements Special {
+    /** The max number of items in the inventory */
     private static final int ITEM_COUNT = 7;
     /** The direction the hero is facing */
     private Direction myDirection;
@@ -8,7 +15,9 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special {
     private final Inventory myInventory;
     /** Special Attack of hero */
     private final SpecialAttack mySpecial;
+    /** The consumable item */
     private Consumable myConsumable;
+    /** Indicator for consumable usage */
     private boolean myUsed;
     /** The x coordinate of the hero */
     private int myX;
@@ -27,6 +36,7 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special {
     public Hero(final String theName, final int theHealth, final int theDamage, final int theSpeed,
             final SpecialAttack theSpecial) {
         super(theName, theHealth, theDamage, theSpeed);
+
         myDirection = Direction.NORTH;
         myInventory = new Inventory(ITEM_COUNT);
         mySpecial = theSpecial;
@@ -90,6 +100,12 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special {
         myY = theY;
     }
 
+    /**
+     * Get the coordinates of the location relative to the hero in some direction
+     * 
+     * @param theDirection the direction
+     * @return the coordinates
+     */
     public int[] getDirectionsLocation(final Direction theDirection) {
         final int dx = theDirection.calculateNewX(getX());
         final int dy = theDirection.calculateNewY(getY());
@@ -125,25 +141,43 @@ public abstract class Hero extends AbstractDungeonCharacter implements Special {
         return mySpecial;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void resetTurns() {
         mySpecial.setTurns(0);
     }
 
+    /**
+     * Use the consumable on the hero
+     * 
+     * @param theConsumable the consumable being used
+     */
     public void setConsumable(Consumable theConsumable) {
         myConsumable = theConsumable;
         myUsed = true;
     }
 
+    /**
+     * Use the consumable on the hero
+     * 
+     * @return the consumable being used
+     */
     public Consumable useConsumable() {
         myUsed = false;
         return myConsumable;
     }
 
+    /**
+     * Get if the consumable is used
+     * 
+     * @return true if consumable is used, false otherwise
+     */
+
     public boolean isConUsed() {
         return myUsed;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void addMinDamage(final int theAddedDamage) {
         super.addMinDamage(theAddedDamage);

@@ -14,7 +14,6 @@ import team5.game.model.GameState;
 import team5.game.view.App;
 
 /**
- * a
  * The controller for the dungeon settings screen.
  */
 public class CustomDungeonSettingController {

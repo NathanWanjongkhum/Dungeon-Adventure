@@ -31,7 +31,7 @@ public class DungeonSettingController {
     @FXML
     private ChoiceBox<Difficulty> myDifficulty;
 
-    private final String[] mySizes = {"SMALL", "MEDIUM", "LARGE"};
+    private final String[] mySizes = { "SMALL", "MEDIUM", "LARGE" };
 
     /** Initialize the controller */
     @FXML
@@ -50,18 +50,7 @@ public class DungeonSettingController {
      */
     @FXML
     private void start() throws IOException {
-        // final int width = Integer.parseInt(myWidth.getText());
-        // final int height = Integer.parseInt(myHeight.getText());
         final Difficulty difficulty = myDifficulty.getValue();
-
-        // if (width <= 0 || height <= 0 || difficulty == null) {
-        //     throw new IllegalArgumentException("Invalid parameters");
-        // }
-
-        // if (width < 10 || height < 10) {
-        //     // Needs enough space for the pillars to be safley placed
-        //     throw new IllegalArgumentException("Dungeon size too small");
-        // }
 
         // Sets the dungeon
         final int size = getDungeonSize(mySize.getValue());
@@ -80,13 +69,28 @@ public class DungeonSettingController {
     private void back() throws IOException {
         App.setRoot("HeroSelection");
     }
+
+    /**
+     * Sets the dungeon size
+     * 
+     * @param event the action event
+     * @throws IOException
+     */
     @FXML
     void setCustomDungeonSettings(ActionEvent event) throws IOException {
         App.setRoot("CustomDungeonSetting");
     }
+
+    /**
+     * Gets the dungeon size
+     *
+     * @param theSize the size
+     * @return the size
+     */
     private int getDungeonSize(final String theSize) {
         int size = 0;
-        switch(theSize) {
+
+        switch (theSize) {
             case "SMALL":
                 size = 10;
                 break;
@@ -99,6 +103,7 @@ public class DungeonSettingController {
             default:
                 break;
         }
+
         return size;
     }
 }
