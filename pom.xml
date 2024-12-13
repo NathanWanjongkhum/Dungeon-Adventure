@@ -100,7 +100,7 @@
                         <!-- Usage: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>team5.game.App</mainClass>
+                            <mainClass>team5.game.view.App</mainClass> 
                         </configuration>
                     </execution>
                 </executions>
