@@ -13,7 +13,7 @@ public class Mage extends Hero {
      * 
      * @param theName the name of the mage hero
      */
-    public Mage(final String theName) {
+    protected Mage(final String theName) {
         super(theName, 250, 50, 10, new SpecialAttack(TURNS, 300));
     }
     /**

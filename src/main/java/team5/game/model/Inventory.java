@@ -13,7 +13,7 @@ public class Inventory implements Serializable {
     /** The serial number */
     private static final long serialVersionUID = 1L;
     /** Empty Inventory constructor */
-    public Inventory() {
+    protected Inventory() {
         myInventorySize = 0;
         myItems = new Item[0];
     }
@@ -22,7 +22,7 @@ public class Inventory implements Serializable {
      * 
      * @param theSize the size of the inventory
      */
-    public Inventory(final int theSize) {
+    protected Inventory(final int theSize) {
         myInventorySize = theSize;
         myItems = new Item[theSize];
     }

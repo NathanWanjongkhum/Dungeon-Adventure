@@ -9,7 +9,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+/**
+ * Test class for Dungeon
+ * 
+ * @author Nathan Wanjongkhum
+ * @version 7 December 2024
+ */
 public class DungeonTest {
     /** The difficulty of the dungeon */
     private static final Difficulty DUNGEON_DIFFICULTY = Difficulty.EASY;

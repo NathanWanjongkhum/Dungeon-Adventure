@@ -6,8 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import team5.game.controller.MonsterFactory;
-
 /**
  * Dungeon is a class that represents a dungeon.
  */

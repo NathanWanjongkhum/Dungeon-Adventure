@@ -6,7 +6,7 @@ public class Skeleton extends Monster {
      * 
      * @param theName the name of skeleton
      */
-    public Skeleton(final String theName) {
+    protected Skeleton(final String theName) {
         super(theName, 100, 10, 5);
     }
 }

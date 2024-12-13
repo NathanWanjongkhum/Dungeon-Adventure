@@ -1,4 +1,4 @@
-package team5.game.view;
+package team5.game.controller;
 
 import java.io.IOException;
 
@@ -6,9 +6,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import team5.game.App;
-import team5.game.controller.MonsterFactory;
 import team5.game.model.Monster;
+import team5.game.model.MonsterFactory;
+import team5.game.view.App;
 /**
  * The GUI Controller for HelpScene
  * 

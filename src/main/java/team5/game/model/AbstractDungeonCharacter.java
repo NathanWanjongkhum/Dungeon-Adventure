@@ -1,6 +1,7 @@
 package team5.game.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Random;
 
 import javafx.scene.image.Image;
@@ -167,8 +168,6 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
 
     @Override
     public void heal(final int theHeal) {
-        // Random rand = new Random();
-        // int heal = rand.nextInt(theHeal + 1);
         if (getHealth() + theHeal >= getMaxHealth()) {
             setHealth(getMaxHealth());
         } else {
@@ -183,6 +182,28 @@ public abstract class AbstractDungeonCharacter implements DungeonCharacter, Seri
             damage *= 2;
         }
         return damage;
+    }
+    @Override
+    public boolean equals(final Object theOther) {
+        if (this == theOther) {
+            return true;
+        }
+        if (theOther == null) {
+            return false;
+        }
+        if (!(theOther instanceof DungeonCharacter)) {
+            return false;
+        }
+        final DungeonCharacter character = (DungeonCharacter) theOther;
+        return Objects.equals(myName, character.getName()) &&
+                Objects.equals(myHealth, character.getHealth()) &&
+                Objects.equals(myMinDamage, character.getMinDamage()) &&
+                Objects.equals(myMaxDamage, character.getMaxDamage()) &&
+                Objects.equals(mySpeed, character.getSpeed());
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(myName, myHealth, myMinDamage, myMaxDamage, mySpeed);
     }
 
 }

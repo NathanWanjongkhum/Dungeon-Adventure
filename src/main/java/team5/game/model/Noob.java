@@ -1,7 +1,7 @@
 package team5.game.model;
 
 public class Noob extends Hero{
-    public Noob(final String theName) {
+    protected Noob(final String theName) {
         super(theName, 1, 0, 1, new SpecialAttack(0, 0));
     }
     @Override

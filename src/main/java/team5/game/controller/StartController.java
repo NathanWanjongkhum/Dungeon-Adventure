@@ -1,4 +1,4 @@
-package team5.game.view;
+package team5.game.controller;
 
 import java.io.IOException;
 
@@ -10,8 +10,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import team5.game.App;
 import team5.game.model.GameState;
+import team5.game.view.App;
 /**
  * The GUI Controller for StartScreenController
  * 

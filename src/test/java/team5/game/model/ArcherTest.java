@@ -3,12 +3,22 @@ package team5.game.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
-
+/**
+ * Tests for archer hero class
+ * 
+ * @author Holden Tsang and Nathan Wanjongkhum
+ * @version 12 Dec 2024
+ */
 public class ArcherTest {
+    /** The archer health */
     private static final int ARCHER_HEALTH = 150;
+    /** The archer damage */
     private static final int ARCHER_DAMAGE = 10;
+    /** The archer min damage */
     private static final int ARCHER_MIN_DAMAGE = 5;
+    /** The archer max damage */
     private static final int ARCHER_MAX_DAMAGE = 15;
+    /** The archer speed */
     private static final int ARCHER_SPEED = 20;
 
     /** Test for Archer Constructor */
@@ -78,7 +88,7 @@ public class ArcherTest {
         final Archer a = new Archer("Arch");
         String stats = a.getStats();
         assertEquals(stats,
-                "Name: Arch\nHP: 150/150\nDamage Range: 5 - 15\nSpeed: 20\nSpecial Move: Does low damage, but makes enemies take double damage on the next attack\n");
+                "Name: Arch\nClass: Archer\nHP: 150/150\nDamage Range: 5 - 15\nSpeed: 20\nSpecial Move: Does low damage, but makes enemies take double damage on the next attack\n");
     }
 
     /** Test for Archer specialAttackText method */
@@ -113,7 +123,7 @@ public class ArcherTest {
     public void testCheckVulnerableDamage() {
         final Archer a = new Archer("Arch");
         final Monster m = new Ogre("Ogre");
-        int damage = a.checkVulnerableDamage(m, 10);
+        int damage = a.checkVulnerableDamage(m, ARCHER_DAMAGE);
         assertEquals(damage, ARCHER_DAMAGE);
     }
 
@@ -122,9 +132,9 @@ public class ArcherTest {
     public void testCheckVulnerableDamageVulnerable() {
         final Archer a = new Archer("Arch");
         final Monster m = new Ogre("Ogre");
-        a.getSpecialAttack().setTurns(1);
-        int damage = a.checkVulnerableDamage(m, 10);
-        assertEquals(damage, ARCHER_DAMAGE);
+        m.getStatusEffects().setVulnerableDuration(1);
+        int damage = a.checkVulnerableDamage(m, ARCHER_DAMAGE);
+        assertEquals(damage, ARCHER_DAMAGE * 2);
     }
 
     /** Test for Archer addMinDamage method */

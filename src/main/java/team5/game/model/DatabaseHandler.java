@@ -1,4 +1,4 @@
-package team5.game;
+package team5.game.model;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,9 +15,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import team5.game.controller.MonsterFactory;
-import team5.game.model.Monster;
 
 public class DatabaseHandler {
     public static final String URL = "jdbc:sqlite:my.db";

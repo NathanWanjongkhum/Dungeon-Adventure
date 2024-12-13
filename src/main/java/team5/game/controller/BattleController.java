@@ -1,4 +1,4 @@
-package team5.game.view;
+package team5.game.controller;
 
 import java.io.IOException;
 
@@ -16,12 +16,12 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
-import team5.game.App;
-import team5.game.controller.Battle;
+import team5.game.model.Battle;
 import team5.game.model.DungeonCharacter;
 import team5.game.model.GameState;
 import team5.game.model.Hero;
 import team5.game.model.Monster;
+import team5.game.view.App;
 /**
  * The GUI Controller for BattleScene
  * 

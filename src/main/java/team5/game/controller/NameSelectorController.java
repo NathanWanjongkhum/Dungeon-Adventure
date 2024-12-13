@@ -1,4 +1,4 @@
-package team5.game.view;
+package team5.game.controller;
 
 import java.io.IOException;
 
@@ -7,8 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import team5.game.App;
 import team5.game.model.GameState;
+import team5.game.view.App;
 /**
  * The GUI Controller for NameSelector
  * 

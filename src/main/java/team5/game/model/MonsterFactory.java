@@ -1,9 +1,4 @@
-package team5.game.controller;
-
-import team5.game.model.Goblin;
-import team5.game.model.Monster;
-import team5.game.model.Ogre;
-import team5.game.model.Skeleton;
+package team5.game.model;
 
 /**
  * The Monster Factory to create monsters

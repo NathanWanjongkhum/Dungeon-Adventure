@@ -27,7 +27,7 @@ public class StatusEffects implements Serializable {
     /**
      * Constructor for status effect
      */
-    public StatusEffects() {
+    protected StatusEffects() {
         myVulnerable = false;
         myRegen = false;
         myDamageIncrease = false;

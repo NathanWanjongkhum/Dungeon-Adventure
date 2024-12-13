@@ -13,6 +13,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for DungeonBuilder
+ * 
+ * @author Nathan Wanjongkhum
+ * @version 26 November 2024
  */
 public class DungeonBuilderTest {
     /** The difficulty of the dungeon */

@@ -1,11 +1,5 @@
-package team5.game.controller;
+package team5.game.model;
 
-import team5.game.model.AttackPotion;
-import team5.game.model.Consumable;
-import team5.game.model.DungeonCharacter;
-import team5.game.model.HealingPotion;
-import team5.game.model.Hero;
-import team5.game.model.Monster;
 /**
  * A controller class for battles.
  * Heros have 3 actions while monsters only attack. 
@@ -123,7 +117,7 @@ public class Battle {
         int charge = theHero.getSpecialAttack().getTurns();
         if (charge > 0) {
             myText += String.format("%s is charging their special attack!\n", myHero.getName());
-            myHero.getSpecialAttack().setTurns(myHero.getSpecialAttack().getTurns() - 1);
+            myHero.getSpecialAttack().addTurns(-1);
         } else if (myHero.getStatusEffects().isRegen() && damage == 0){ //Priestess;
             myText += myHero.specialAttackText();
             theHero.resetTurns();
@@ -145,6 +139,9 @@ public class Battle {
             final int damage = theConsu.useItem(myMonster);
             myText += String.format("%s used Bomb\nIt dealt %d to %s\n", theHero.getName(), 
                                     damage, myMonster.getName());
+            if (myMonster.getHealth() < 1) {
+                myText += String.format("%s has defeated %s!\n", theHero.getName(), myMonster.getName());
+            } 
         } else {
             theConsu.useItem(theHero);
             myText += String.format("%s used a %s.\n", theHero.getName(), getConsumableName(theConsu.getName()));

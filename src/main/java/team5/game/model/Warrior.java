@@ -10,7 +10,7 @@ public class Warrior extends Hero {
      * 
      * @param theName the name of the hero
      */
-    public Warrior(final String theName) {
+    protected Warrior(final String theName) {
         super(theName, 500, 20, 8, new SpecialAttack(0, 15));
         mySpecialText = "";
     }
