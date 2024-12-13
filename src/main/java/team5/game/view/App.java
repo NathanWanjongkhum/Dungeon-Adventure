@@ -1,4 +1,4 @@
-package team5.game;
+package team5.game.view;
 
 import java.io.IOException;
 

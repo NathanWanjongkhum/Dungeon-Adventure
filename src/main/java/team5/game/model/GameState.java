@@ -3,8 +3,6 @@ package team5.game.model;
 import java.io.IOException;
 import java.io.Serializable;
 
-import team5.game.DatabaseHandler;
-
 public class GameState implements Serializable {
     /** The single instance of this class */
     private static GameState instance;

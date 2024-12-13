@@ -27,7 +27,7 @@ public class Room implements Serializable {
      * 
      * @param type
      */
-    public Room() {
+    protected Room() {
         myDoors = new boolean[NUM_DIRECTIONS];
     }
 

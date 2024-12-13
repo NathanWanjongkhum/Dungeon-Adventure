@@ -3,29 +3,30 @@ package team5.game.model;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
+
 /**
- * Tests for skeleton monster class
+ * Tests for goblin monster class
  * 
  * @author Holden Tsang and Nathan Wanjongkhum
  * @version 12 Dec 2024
  */
-public class SkeletonTest {
-    /** Test for Skeleton Constructor */
+public class GoblinTest {
 
+    /** Test for Goblin Constructor */
     @Test
     public void testSkeletonConstructor() {
-        final Skeleton s = new Skeleton("Bones");
-        assertTrue(s.getName().equals("Bones"));
-        assertTrue(s.getHealth() == 100);
-        assertTrue(s.getMaxDamage() == 15);
-        assertTrue(s.getMinDamage() == 5);
-        assertTrue(s.getSpeed() == 5);
+        final Goblin s = new Goblin("Gob");
+        assertTrue(s.getName().equals("Gob"));
+        assertTrue(s.getHealth() == 50);
+        assertTrue(s.getMaxDamage() == 10);
+        assertTrue(s.getMinDamage() == 0);
+        assertTrue(s.getSpeed() == 3);
     }
 
-    /** Test for Skeleton Setter methods */
+    /** Test for Goblin Setter methods */
     @Test
     public void testSkeletonSetters() {
-        final Skeleton s = new Skeleton("Bones");
+        final Goblin s = new Goblin("Gob");
         s.setHealth(5);
         assertTrue(s.getHealth() == 5);
         s.setMaxDamage(0);

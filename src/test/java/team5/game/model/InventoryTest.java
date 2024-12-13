@@ -6,7 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
+/**
+ * Tests for inventory
+ * 
+ * @author Holden Tsang and Nathan Wanjongkhum
+ * @version 12 Dec 2024
+ */
 public class InventoryTest {
     /** The size of the inventory */
     private static final int TEST_SIZE = 2;

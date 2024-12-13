@@ -11,7 +11,7 @@ public class Ogre extends Monster {
      * 
      * @param theName the name of the ogre
      */
-    public Ogre(final String theName) {
+    protected Ogre(final String theName) {
         super(theName, 200, 5, 10);
     }
 }

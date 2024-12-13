@@ -1,4 +1,4 @@
-package team5.game.view;
+package team5.game.controller;
 
 import java.io.IOException;
 
@@ -14,7 +14,6 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import team5.game.App;
 import team5.game.model.AttackPotion;
 import team5.game.model.Bomb;
 import team5.game.model.Consumable;
@@ -29,6 +28,7 @@ import team5.game.model.Item;
 import team5.game.model.Monster;
 import team5.game.model.PillarOfOO;
 import team5.game.model.Room;
+import team5.game.view.App;
 
 public class DungeonController {
     /** The original size of the tiles sprite */
@@ -559,24 +559,4 @@ public class DungeonController {
             System.out.println(myHero.getInventory().toString());
         }
     }
-    // private void useItem(final Consumable theConsumable) {
-    //     if (theConsumable.getName().equals("Bomb")) {
-    //         final int x = GameState.getInstance().getHero().getX();
-    //         final int y = GameState.getInstance().getHero().getY();
-    //         final int radius = ((Bomb) theConsumable).getRadius();
-    //         Monster monster = null;
-    //         for (int row = x - radius; row < x + 1; row++) {
-    //             for (int col = y - radius; col < y + radius; col++) {
-    //                 monster = GameState.getInstance().getDungeon().getRoom(row, col).getMonster();
-    //                 if (monster != null) {
-    //                     monster.setHealth(monster.getHealth() - ((Bomb) theConsumable).getDamage());
-    //                 }
-    //             }
-    //         }
-    //     } else if (theConsumable.getName().equals("HealingPotion")) {
-    //         myHero.heal(100);
-
-    //     }
-        
-    // }
 }

@@ -1,4 +1,4 @@
-package team5.game.view;
+package team5.game.controller;
 
 import java.io.IOException;
 
@@ -11,10 +11,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.VBox;
-import team5.game.App;
-import team5.game.controller.HeroFactory;
 import team5.game.model.GameState;
 import team5.game.model.Hero;
+import team5.game.model.HeroFactory;
+import team5.game.view.App;
 /**
  * The GUI Controller for HeroPickerController
  * 

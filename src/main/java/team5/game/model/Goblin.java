@@ -11,7 +11,7 @@ public class Goblin extends Monster {
      * 
      * @param theName the name of the goblin
      */
-    public Goblin(final String theName) {
+    protected Goblin(final String theName) {
         super(theName, 50, 5, 3);
     }
 }

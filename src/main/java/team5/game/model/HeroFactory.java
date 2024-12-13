@@ -1,13 +1,4 @@
-package team5.game.controller;
-
-import team5.game.model.Admin;
-import team5.game.model.Archer;
-import team5.game.model.GameState;
-import team5.game.model.Hero;
-import team5.game.model.Mage;
-import team5.game.model.Noob;
-import team5.game.model.Priestess;
-import team5.game.model.Warrior;
+package team5.game.model;
 
 /**
  * The Hero Factory to create heroes

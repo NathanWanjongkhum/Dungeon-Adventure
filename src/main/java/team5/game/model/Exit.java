@@ -7,10 +7,10 @@ public class Exit implements Item, Serializable {
     private int myCount;
 
 
-    public Exit() {
+    protected Exit() {
         myCount = 1;
     }
-    public Exit(final Exit theOther) {
+    protected Exit(final Exit theOther) {
         this.myCount = theOther.getCount();
     }
     @Override

@@ -1,10 +1,9 @@
-package team5.game.view;
+package team5.game.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import team5.game.App;
 import team5.game.model.AttackPotion;
 import team5.game.model.Bomb;
 import team5.game.model.Consumable;
@@ -13,6 +12,7 @@ import team5.game.model.HealingPotion;
 import team5.game.model.Hero;
 import team5.game.model.Inventory;
 import team5.game.model.Item;
+import team5.game.view.App;
 /**
  * The GUI Controller for HeroPickerController
  * 

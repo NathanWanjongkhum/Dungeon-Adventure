@@ -22,7 +22,7 @@ public class PillarOfOO implements Item, Serializable {
     /**
      * PillarOfOO constructor
      */
-    public PillarOfOO(final PillarType thePillarType) {
+    protected PillarOfOO(final PillarType thePillarType) {
         myCount = 1;
         myPillar = thePillarType;
     }

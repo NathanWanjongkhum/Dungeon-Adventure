@@ -12,7 +12,7 @@ public class Archer extends Hero {
      * 
      * @param theName the name of the archer
      */
-    public Archer(final String theName) {
+    protected Archer(final String theName) {
         super(theName, 150, 10, 20, new SpecialAttack(0, 5));
     }
     @Override

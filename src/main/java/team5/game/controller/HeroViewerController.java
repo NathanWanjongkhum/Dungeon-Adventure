@@ -1,13 +1,13 @@
-package team5.game.view;
+package team5.game.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
-import team5.game.App;
 import team5.game.model.GameState;
 import team5.game.model.Hero;
+import team5.game.view.App;
 
 public class HeroViewerController {
     @FXML

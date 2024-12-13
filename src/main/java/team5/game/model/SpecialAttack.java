@@ -21,7 +21,7 @@ public class SpecialAttack implements Serializable {
     /**
      * Default Constructor for SpecialAttack
      */
-    public SpecialAttack() {
+    protected SpecialAttack() {
         myTurns = 1;
         myDamage = 0;
         myMaxTurns = 1;
@@ -71,8 +71,12 @@ public class SpecialAttack implements Serializable {
      * 
      * @param theTurns
      */
-    public void setTurns(final int theTurns) {
+    protected void setTurns(final int theTurns) {
         myTurns = theTurns;
+        myMaxTurns = theTurns;
+    }
+    protected void addTurns(final int theTurns) {
+        myTurns += theTurns;
     }
 
     /**

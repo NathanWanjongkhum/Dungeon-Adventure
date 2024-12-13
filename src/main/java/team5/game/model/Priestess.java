@@ -13,7 +13,7 @@ public class Priestess extends Hero {
      * 
      * @param theName the name of the hero
      */
-    public Priestess(final String theName) {
+    protected Priestess(final String theName) {
         super(theName, 100, 20, 25, new SpecialAttack(TURNS, 5));
     }
     /**

@@ -1,6 +1,7 @@
 package team5.game.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Consumables is an item that can be collected and consumed by the player.
@@ -55,5 +56,23 @@ public abstract class AbstractConsumables implements Consumable, Serializable {
     @Override
     public String getName() {
         return getClass().getSimpleName();
+    }
+    @Override
+    public boolean equals(final Object theOther) {
+        if (this == theOther) {
+            return true;
+        }
+        if (theOther == null) {
+            return false;
+        }
+        if (!(theOther instanceof Consumable)) {
+            return false;
+        }
+        final Consumable consumable = (Consumable) theOther;
+        return Objects.equals(this.getName(), consumable.getName());
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName());
     }
 }
