@@ -103,7 +103,7 @@ public class ItemController {
     }
 
     /** Sets the text of items at current inventory index */
-    private void setText(Item theItem, final int theIndex) {
+    private void setText(final Item theItem, final int theIndex) {
         // In loop in initialize check if consumable
         Consumable item = ((Consumable) myInventory.getItem(theIndex));
         switch (theItem.getName()) {
@@ -129,7 +129,7 @@ public class ItemController {
     }
 
     /** Enables the button if there is a more than 0 consumable */
-    private void setButtons(Consumable theConsumable, Button theButton) {
+    private void setButtons(final Consumable theConsumable, final Button theButton) {
         if (theConsumable.getCount() < 1) {
             theButton.setDisable(true);
         } else {
@@ -165,7 +165,7 @@ public class ItemController {
      * 
      * @param theEvent the button press
      */
-    void useBomb(final ActionEvent theEvent) {
+    private void useBomb(final ActionEvent theEvent) {
         Consumable con = getConsumable("Bomb");
         GameState.getInstance().getHero().setConsumable(con);
         close();
@@ -177,7 +177,7 @@ public class ItemController {
      * 
      * @param theEvent the button press
      */
-    void useHealingPotion(final ActionEvent theEvent) {
+    private void useHealingPotion(final ActionEvent theEvent) {
         Consumable con = getConsumable("HealingPotion");
         GameState.getInstance().getHero().setConsumable(con);
         close();
@@ -189,7 +189,7 @@ public class ItemController {
      * 
      * @param theEvent the button press
      */
-    void cancel(final ActionEvent theEvent) {
+    private void cancel(final ActionEvent theEvent) {
         close();
     }
 
@@ -199,7 +199,7 @@ public class ItemController {
     }
 
     /** Gets the consumable item with item name */
-    private Consumable getConsumable(String theItem) {
+    private Consumable getConsumable(final String theItem) {
         Consumable consumable = null;
         if (myInventory != null) {
             for (Item c : myInventory.getItems()) {

@@ -70,7 +70,7 @@ public class SettingsController {
     }
 
     @FXML
-    void heroSelect(final ActionEvent theEvent) throws IOException {
+    private void heroSelect(final ActionEvent theEvent) throws IOException {
         App.setRoot("HeroSelection");
         close();
     }

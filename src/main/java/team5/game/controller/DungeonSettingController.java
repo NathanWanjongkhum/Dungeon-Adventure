@@ -77,7 +77,7 @@ public class DungeonSettingController {
      * @throws IOException
      */
     @FXML
-    void setCustomDungeonSettings(ActionEvent event) throws IOException {
+    private void setCustomDungeonSettings(final ActionEvent thEvent) throws IOException {
         App.setRoot("CustomDungeonSetting");
     }
 

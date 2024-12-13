@@ -57,10 +57,10 @@ public class DungeonController {
 
     /** What the game is drawn on */
     @FXML
-    private Canvas gameCanvas;
+    private Canvas myGameCanvas;
 
     /** The graphics context for drawing on the canvas */
-    private GraphicsContext gc;
+    private GraphicsContext myGC;
     /** Determine if keyboard inputs should be counted */
     private boolean myEnable;
 
@@ -174,8 +174,8 @@ public class DungeonController {
      * Initialize the canvas.
      */
     private void initializeCanvas() {
-        gc = gameCanvas.getGraphicsContext2D();
-        gameCanvas.sceneProperty().addListener((obs, oldScene, newScene) -> {
+        myGC = myGameCanvas.getGraphicsContext2D();
+        myGameCanvas.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 newScene.setOnKeyPressed(this::handleKeyPressed);
             }
@@ -185,7 +185,7 @@ public class DungeonController {
     /**
      * Render the dungeon
      */
-    void render() {
+    private void render() {
         if (GameState.getInstance() == null) {
             System.err.println("Game state not initialized");
             return;
@@ -199,11 +199,11 @@ public class DungeonController {
             return;
         }
 
-        gc.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
+        myGC.clearRect(0, 0, myGameCanvas.getWidth(), myGameCanvas.getHeight());
 
         // Debug border
-        // gc.setStroke(Color.BLACK);
-        // gc.strokeRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
+        // myGC.setStroke(Color.BLACK);
+        // myGC.strokeRect(0, 0, myGameCanvas.getWidth(), myGameCanvas.getHeight());
 
         // Get hero's position (currently center of dungeon)
         final int heroWorldX = myHero.getX();
@@ -216,8 +216,8 @@ public class DungeonController {
         final int endY = Math.min(myDungeon.getHeight(), startY + myMaxScreenRows);
 
         // Calculate offset to center the viewport
-        final double offsetX = (gameCanvas.getWidth() - (myMaxScreenCols * myTileSize) / 2.0) / 2.0;
-        final double offsetY = (gameCanvas.getHeight() - (myMaxScreenRows * myTileSize) / 2.0) / 2.0;
+        final double offsetX = (myGameCanvas.getWidth() - (myMaxScreenCols * myTileSize) / 2.0) / 2.0;
+        final double offsetY = (myGameCanvas.getHeight() - (myMaxScreenRows * myTileSize) / 2.0) / 2.0;
 
         // Render visible portion of the dungeon
         for (int x = startX; x < endX; x++) {
@@ -250,14 +250,14 @@ public class DungeonController {
         Room room = myDungeon.getRoom(theWorldX, theWorldY);
 
         if (room == null) {
-            gc.setFill(Color.DARKGRAY);
-            gc.fillRect(theScreenX, theScreenY, myTileSize, myTileSize);
+            myGC.setFill(Color.DARKGRAY);
+            myGC.fillRect(theScreenX, theScreenY, myTileSize, myTileSize);
             return;
         }
 
         // Draw floor
-        gc.setFill(Color.LIGHTGRAY);
-        gc.fillRect(theScreenX, theScreenY, myTileSize, myTileSize);
+        myGC.setFill(Color.LIGHTGRAY);
+        myGC.fillRect(theScreenX, theScreenY, myTileSize, myTileSize);
 
         if (room.getItem() != null) {
             drawItem(room.getItem(), theScreenX, theScreenY);
@@ -268,55 +268,55 @@ public class DungeonController {
 
         boolean[] doors = room.getDoors();
 
-        gc.setStroke(Color.BLACK);
-        gc.setLineWidth(2);
+        myGC.setStroke(Color.BLACK);
+        myGC.setLineWidth(2);
 
         // Draw walls based on door configuration
         // Draw walls where there are no doors
 
         // North wall
         if (!doors[0]) {
-            gc.strokeLine(theScreenX, theScreenY,
+            myGC.strokeLine(theScreenX, theScreenY,
                     theScreenX + myTileSize, theScreenY);
         }
         // East wall
         if (!doors[1]) {
-            gc.strokeLine(theScreenX + myTileSize, theScreenY,
+            myGC.strokeLine(theScreenX + myTileSize, theScreenY,
                     theScreenX + myTileSize, theScreenY + myTileSize);
         }
         // South wall
         if (!doors[2]) {
-            gc.strokeLine(theScreenX, theScreenY + myTileSize,
+            myGC.strokeLine(theScreenX, theScreenY + myTileSize,
                     theScreenX + myTileSize, theScreenY + myTileSize);
         }
         // West wall
         if (!doors[3]) {
-            gc.strokeLine(theScreenX, theScreenY,
+            myGC.strokeLine(theScreenX, theScreenY,
                     theScreenX, theScreenY + myTileSize);
         }
     }
 
     private void drawItem(final Item theItem, final double theScreenX, final double theScreenY) {
         // Adding an outline
-        gc.setFill(Color.BLACK);
-        gc.fillOval(theScreenX, theScreenY, myTileSize, myTileSize);
+        myGC.setFill(Color.BLACK);
+        myGC.fillOval(theScreenX, theScreenY, myTileSize, myTileSize);
         switch (theItem.getName()) {
-            case "Exit" -> gc.setFill(Color.PURPLE);
-            case "HealingPotion" -> gc.setFill(Color.PINK);
-            case "Bomb" -> gc.setFill(Color.BLACK);
-            case "PillarOfOO" -> gc.setFill(Color.YELLOW);
-            case "AttackPotion" -> gc.setFill(Color.CYAN);
+            case "Exit" -> myGC.setFill(Color.PURPLE);
+            case "HealingPotion" -> myGC.setFill(Color.PINK);
+            case "Bomb" -> myGC.setFill(Color.BLACK);
+            case "PillarOfOO" -> myGC.setFill(Color.YELLOW);
+            case "AttackPotion" -> myGC.setFill(Color.CYAN);
             default -> System.err.println("Unknown item: " + theItem.getClass().getName());
         }
         //
-        gc.fillOval(theScreenX + 1, theScreenY + 1, myTileSize - 2, myTileSize - 2);
+        myGC.fillOval(theScreenX + 1, theScreenY + 1, myTileSize - 2, myTileSize - 2);
     }
 
     private void drawMonster(final Monster theMonster, final double theScreenX, final double theScreenY) {
-        gc.setFill(Color.BLACK);
-        gc.fillOval(theScreenX, theScreenY, myTileSize, myTileSize);
-        gc.setFill(Color.RED);
-        gc.fillOval(theScreenX + 1, theScreenY + 1, myTileSize - 2, myTileSize - 2);
+        myGC.setFill(Color.BLACK);
+        myGC.fillOval(theScreenX, theScreenY, myTileSize, myTileSize);
+        myGC.setFill(Color.RED);
+        myGC.fillOval(theScreenX + 1, theScreenY + 1, myTileSize - 2, myTileSize - 2);
     }
 
     /**
@@ -338,10 +338,10 @@ public class DungeonController {
      * @param theHeroScreenY where the hero is on the screen vertically
      */
     private void drawHero(final double theHeroScreenX, final double theHeroScreenY) {
-        gc.setFill(Color.BLACK);
-        gc.fillOval(theHeroScreenX, theHeroScreenY, myTileSize, myTileSize);
-        gc.setFill(Color.GREEN);
-        gc.fillOval(theHeroScreenX + 1, theHeroScreenY + 1, myTileSize - 2, myTileSize - 2);
+        myGC.setFill(Color.BLACK);
+        myGC.fillOval(theHeroScreenX, theHeroScreenY, myTileSize, myTileSize);
+        myGC.setFill(Color.GREEN);
+        myGC.fillOval(theHeroScreenX + 1, theHeroScreenY + 1, myTileSize - 2, myTileSize - 2);
     }
 
     /**
@@ -428,11 +428,11 @@ public class DungeonController {
     /**
      * Handle the item in the room
      * 
-     * @param room the room
+     * @param theRoom the room
      * @throws IOException if the screen can't be loaded
      */
-    private void handleRoomItem(Room room) throws IOException {
-        Item item = room.getItem();
+    private void handleRoomItem(final Room theRoom) throws IOException {
+        Item item = theRoom.getItem();
         if (item == null) {
             return;
         }
@@ -447,7 +447,7 @@ public class DungeonController {
         }
 
         setItems();
-        room.removeItem();
+        theRoom.removeItem();
     }
 
     /**
@@ -472,11 +472,11 @@ public class DungeonController {
     /**
      * Handle the monster in the room
      * 
-     * @param room the room
+     * @param theRoom the room
      * @throws IOException if the screen can't be loaded
      */
-    private void handleRoomMonster(Room room) throws IOException {
-        if (room.getMonster() == null) {
+    private void handleRoomMonster(final Room theRoom) throws IOException {
+        if (theRoom.getMonster() == null) {
             return;
         }
         App.setRoot("BattleScene");
@@ -606,7 +606,7 @@ public class DungeonController {
      * @throws IOException if the screen can't be loaded
      */
     @FXML
-    void openItemBag(MouseEvent event) throws IOException {
+    private void openItemBag(final MouseEvent theEvent) throws IOException {
         App.createPopUpScene("ItemBag");
 
         if (GameState.getInstance().getHero().isConUsed()) {
@@ -625,7 +625,7 @@ public class DungeonController {
      * @throws IOException if the screen can't be loaded
      */
     @FXML
-    void openHeroStats(MouseEvent event) throws IOException {
+    private void openHeroStats(final MouseEvent theEvent) throws IOException {
         App.createPopUpScene("HeroViewer");
     }
 
